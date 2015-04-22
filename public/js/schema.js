@@ -59,10 +59,8 @@ $( document ).ready(function() {
                     , error: function(obj, textStatus, errorThrown){
                     } 
                     , success: function(data){ 
-                        console.log(data);
                         if(data.length != ''){
                             for (var k in data) {
-                                console.log(k);
                                 if($("#"+k).length > 0)
                                     $("#"+k).val(data[k]);
                             };

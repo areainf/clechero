@@ -22,6 +22,8 @@ class DairycontrolController Extends BaseController {
   }
 
   public function analisis() {
+    if (!$this->registry->schema->analisis())
+      $this->registry->schema->createAnalisis();
     $this->render('analisis'); 
   }
   
