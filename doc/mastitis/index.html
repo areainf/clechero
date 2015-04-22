@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Mastitis - Estimación de Pérdidas</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link rel="icon" type="image/png" href="iconos/cow-icon1.png" />
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <!-- Ionicons -->
+        <link href="ionicons-1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <!-- Morris chart -->
+        <link href="css/morris/morris.css" rel="stylesheet" type="text/css" />
+        <!-- jvectormap -->
+        <!--link href="css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" /-->
+        <!-- Date Picker -->
+        <!--link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" /-->
+        <!-- Daterange picker -->
+        <!--link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" /-->
+        <!-- bootstrap wysihtml5 - text editor -->
+        <!--link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /-->
+               <!-- DATA TABLES -->
+        <link href="css/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+        
+        
+         <!--link href="http://cdn.datatables.net/responsive/1.0.2/css/dataTables.responsive.css" rel="stylesheet" type="text/css" /-->
+        
+        <!-- Theme style -->
+        <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+        
+        
+        
+    </head>
+    <body class="skin-blue" onload="init()">
+        <!-- header logo: style can be found in header.less -->
+        <header class="header">
+            <a href="index.html" class="logo">
+                <!-- Add the class icon to your logo image or logo icon to add the margining -->
+                Mastitis 
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                                           
+            </nav>
+        </header>
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+           
+            <!-- Right side column. Contains the navbar and content of the page -->
+            <aside >
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        Mastitis
+                        <small>Estimación de Pérdidas</small>
+                    </h1>
+                 </section>
+                <!-- Main content -->
+                <section class="content">
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Left col -->
+                        <section class="col-lg-12 connectedSortable">                            
+  
+<div class="nav-tabs-custom">
+    <!-- Tabs within a box -->
+    <ul class="nav nav-tabs pull-right">
+       <li><div class="small-box bg-red"><div class="inner"><p>Pérdidas</p></div>    
+                                         <div class="icon"><i class="ion ion-pie-graph"></i></div>
+                                         <a href="#pp3" data-toggle="tab" class="small-box-footer">
+                                              Ver... <i class="fa fa-arrow-circle-right"></i>
+                                         </a>
+           </div></li>
+       <li><div class="small-box bg-yellow"><div class="inner"><p>Rodeos</p></div>    
+                                         <div class="icon"><i class="ion ion-ribbon-b"></i></div>
+                                         <a href="#pp2" data-toggle="tab" class="small-box-footer">
+                                              Ver... <i class="fa fa-arrow-circle-right"></i>
+                                         </a>
+           </div></li>
+       <li><div class="small-box bg-green"><div class="inner"><p>Controles</p></div>    
+                                         <div class="icon"><i class="ion ion-stats-bars"></i></div>
+                                         <a href="#pp1" data-toggle="tab" class="small-box-footer">
+                                              Ver... <i class="fa fa-arrow-circle-right"></i>
+                                         </a>
+           </div></li>		  		  
+       <li class="active"><div class="small-box bg-aqua"><div class="inner"><p>Tambos</p></div>    
+                                         <div class="icon"><i class="ion ion-bag"></i></div>
+                                         <a href="#pp" data-toggle="tab" class="small-box-footer">
+                                              Ver... <i class="fa fa-arrow-circle-right"></i>
+                                         </a>
+           </div></li>	      
+       <li class="pull-left header"><i class="fa fa-inbox"></i> Mastitis</li>
+   </ul>
+   
+   <!-- Tab Tambos -->
+   <div class="tab-content no-padding">
+       <div class="chart tab-pane active" id="pp" style="position: relative; height:auto;">
+          <div class="box box-success">
+	   	     <h2> Tambos </h2>
+				  
+             <p>
+                <div class="box box-success">
+				<div class="box-body table-responsive" id="tambosDiv">
+					 <table id="example1" class="table table-bordered table-striped dt-responsive">
+					 <thead>
+					 <tr>
+					 <th> Número </th><th> Nombre </th> <th> Dueño </th> <th> Veterinario </th> <th> e-mail </th> <th> Télefono </th><th> Acción </th>
+					 </tr>
+                     </thead>
+                     <tbody> </tbody>
+				     </table>
+				</div>	
+			    </div>
+			 </p>
+                          
+             <form role="form" id="formulario" action="javascript:void(0);">				 
+				<div class="row"> 
+   			   
+   			    <div class="col-md-6">
+				<div class="form-group">
+				<label>Número del Tambo</label>
+				<input type="number" id="nrotambo1"  class="form-control" required />  
+				<label>Nombre del Tambo</label>
+				<input type="text" id="nombretambo1" class="form-control" required />
+				<label>Dueño</label>
+				<input type="text" id="dueniotambo1"  class="form-control" required />  				
+				<!--input type="hidden" type="number" id="idetambo1" /-->				
+			    <!--input type="button" value="Guardar" onclick="guardarTambo(idetambo1.value, nrotambo1.value,nombretambo1.value)" /-->
+			    </div>
+			    <!--input type="submit" class="btn btn-primary" value="Guardar" onclick="guardarTambo(idetambo1.value, nrotambo1.value,nombretambo1.value)">
+			    <input type="reset" class="btn btn-primary" value="Limpiar">
+			    -->
+			    </div>
+			    
+			    <div class="col-md-6">
+				<div class="form-group">	
+				<label>Veterinario Asesor</label>
+				<input type="text" id="vettambo1"  class="form-control" required /> 				
+				<label>E-mail</label>
+				<input type="text" id="mailtambo1"  class="form-control" required />  				
+				<label>Teléfono</label>
+				<input class="form-control" id="teltambo1" type="text">
+				</div>
+				</div>
+			    
+			    <input type="submit" class="btn btn-primary" value="Guardar" onclick="guardarTambo(nrotambo1.value,nombretambo1.value,dueniotambo1.value,vettambo1.value,mailtambo1.value,teltambo1.value)">
+			    <input type="reset" class="btn btn-primary" value="Limpiar">
+			    </div>
+			   
+	   	     </form>
+	   	     
+	      </div>
+       </div>
+       
+               
+    <!-- Tab Controles -->           
+    <div class="chart tab-pane" id="pp1" style="position: relative; height:auto;">
+		<div class="box box-success">
+	   	     <h2> Controles Lecheros </h2>
+	   	     <div class="callout callout-info">
+             <h4>Tambo Número <label id="labeltabcontroltambo"> </label> - Nombre : <label id="labeltabcontroltambo1"> </label></h4>
+             </div>
+             
+              <p>
+                <div class="box box-success">
+				<div class="box-body table-responsive" id="ordeniesDiv">
+					 <table id="example2" class="table table-bordered table-striped dt-responsive">
+					 <thead>
+					 <tr>
+					 <th> ID </th><th> Año </th><th> Mes </th> <th> Litros Leche </th> <th> Precio Litro </th> <th> Sellador </th> <th> ab mc </th><th> ab seca </th><th> Acción </th>
+					 </tr>
+                     </thead>
+                     <tbody> </tbody>
+				     </table>
+				</div>	
+			    </div>
+			 </p>
+            
+             <form role="form" id="formulario1" action="javascript:void(0);">				 
+				<div class="row"> 
+   			
+                <div class="col-md-6">
+				<div class="form-group">
+				<label>Año</label>
+				<input type="number" id="anioordenie1"  class="form-control" min="2000" max="2030" step="1"required />  
+				<label>Mes</label>
+				<input type="number" id="mesordenie1" class="form-control" min="1" max="12" step="1" required />
+				<label>Litros Leche</label>
+				<input type="number" id="litroslecheordenie1"  class="form-control" step="any" required />  				
+				<label>Precio Leche</label>
+				<input type="number" id="preciolecheordenie1"  class="form-control" step="any" required />
+
+				<input type="hidden" type="number" id="ordenieid1" /-->				
+			    <!--input type="button" value="Guardar" onclick="guardarTambo(idetambo1.value, nrotambo1.value,nombretambo1.value)" /-->
+			    </div>
+			    <!--input type="submit" class="btn btn-primary" value="Guardar" onclick="guardarTambo(idetambo1.value, nrotambo1.value,nombretambo1.value)">
+			    <input type="reset" class="btn btn-primary" value="Limpiar">
+			    -->
+			    </div>
+			    
+			    <div class="col-md-6">
+				<div class="form-group">	
+				<label>Sellador</label>
+				<input type="number" id="selladorordenie1"  class="form-control" step="any" required /> 				
+				<label>ab mc</label>
+				<input type="number" id="abmcordenie1"  class="form-control" step="any" required />  				
+				<label>ab seca</label>
+				<input class="form-control" id="absecaordenie1" type="number" step="any" required>
+				</div>
+				</div>
+			    
+			    <input type="submit" class="btn btn-primary" value="Guardar" onclick="guardarOrdenie(ordenieid1.value,anioordenie1.value,mesordenie1.value,litroslecheordenie1.value,preciolecheordenie1.value, selladorordenie1.value,abmcordenie1.value,absecaordenie1.value)">
+			    <input type="reset" class="btn btn-primary" value="Limpiar">
+			    </div>
+			    
+	   	     </form>
+	   	    
+		</div>
+	</div>	
+                     
+    <!-- Tab Rodeos -->                                
+    <div class="chart tab-pane" id="pp2" style="position: relative; height:auto;">
+        		<div class="box box-success">
+	   	     <h2> Rodeo </h2>
+	   	     <div class="callout callout-info">
+             <h4>Tambo Número <label id="labeltabvacastambo"> </label> - Nombre : <label id="labeltabvacastambo1"> </label></h4>
+             <h4> Control Lechero </label><label id="labeltabvacasmes"></label>/<label id="labeltabvacasanio"></label> </h4>
+             </div>
+	   	                  
+             <p>
+                <div class="box box-success">
+				<div class="box-body table-responsive" id="vacasDiv">
+					 <table id="example3" class="table table-bordered table-striped dt-responsive">
+					 <thead>
+					 <tr>
+					 <th> ID </th><th> Vaca </th><th> rcs </th> <th> dl </th> <th> nop </th> <th> mc </th> <th> Acción </th>
+					 </tr>
+                     </thead>
+                     <tbody> </tbody>
+				     </table>
+				</div>	
+			    </div>
+			 </p>
+             
+             <form role="form" id="formulario2" action="javascript:void(0);">				 
+				<div class="row"> 
+   			
+                <div class="col-md-6">
+				<div class="form-group">
+				<label>Vaca</label>
+				<input type="number" id="codvaca1"  class="form-control" required />  
+				<label>rcs</label>
+				<input type="number" id="rcsvaca1" class="form-control" step="any" required />
+				<label>dl</label>
+				<input type="number" id="dlvaca1"  class="form-control" min="0" max="500" required />  				
+				<label>nop</label>
+				<input type="number" id="nopvaca1"  class="form-control" min="1" max="33" step="1" required />
+				<label>mc</label>
+				<input type="number" id="mcvaca1"  class="form-control" min="0" max="1" step="1" required />
+
+				<input type="hidden" type="number" id="vacaide1" />	
+				<input type="hidden" type="number" id="ordenieidvaca1" />				
+			    
+			    </div>
+			    
+			    <input type="submit" class="btn btn-primary" value="Guardar" onclick="guardarVaca(vacaide1.value,codvaca1.value,rcsvaca1.value,dlvaca1.value,nopvaca1.value,mcvaca1.value)">
+			    <input type="reset" class="btn btn-primary" value="Limpiar">
+			    </div>
+			    		    			    
+			    </div>
+			    
+	   	     </form>
+	   	   
+	   	     <div class="box box-success">  
+	   	       <select name="format" hidden>
+                 <option value="csv" selected > CSV</option>
+                 <!--option value="json"> JSON</option-->
+                 <!--option value="form"> FORMULAE</option-->
+               </select><br />
+               <!--<input type="radio" name="format" value="csv" checked> CSV<br>
+               <input type="radio" name="format" value="json"> JSON<br>
+               <input type="radio" name="format" value="form"> FORMULAE<br> -->
+
+               <div id="drop" hidden>Drop an XLSX / XLSM / XLSB / ODS file here to see sheet data</div> 
+
+               <p><input type="file" class="btn btn-primary" name="xlfile" id="xlf" />  (XLSX,XLSM,XLSB,ODS)</p>
+               <!--textarea id="b64data">... or paste a base64-encoding here</textarea>
+               <input type="button" id="dotext" value="Click here to process the base64 text" onclick="b64it();"/><br />
+                 Advanced Demo Options: <br /-->
+               <!--Use Web Workers: (when available) --><input type="hidden" type="checkbox" name="useworker"  disabled> <!--<br /> -->
+               <!--Use Transferrables: (when available) --><input type="hidden" type="checkbox" name="xferable" disabled> <!-- <br /> -->
+               <!--Use readAsBinaryString: (when available)--> <input type="hidden" type="checkbox" name="userabs" disabled> <!--<br /> -->
+               <!--pre id="out"></pre-->
+           </div>
+		</div>      
+    </div>
+    
+    
+    <!-- Tab Perdidas -->
+    <div class="chart tab-pane" id="pp3" style="position: relative; height:auto;">
+       <div class="row">
+                        <!-- Left col -->
+         <section class="col-lg-12 connectedSortable"> 
+             <div class="box box-success">
+	   	                             
+             <h2>Cálculo de Pérdidas </h2>                          
+	   	     <div class="callout callout-info">
+             <h4>Tambo Número <label id="labeltabrestambo"> </label> - Nombre : <label id="labeltabrestambo1"> </label></h4>
+             <h4> Control Lechero </label><label id="labeltabresmes"></label>/<label id="labeltabresanio"></label> </h4>
+             </div>
+             </div>
+             
+             <div class="box box-success">     
+             <form role="form" id="formulario1" action="javascript:void(0);">				 
+				<div class="row">    			
+                <div class="col-md-7">
+					<label>Cota para cálculo de reinfecciones</label>
+				<div class="form-group">
+					<div class="col-xs-3">				    
+				       <input type="number" id="cotareinfecciones1"  class="form-control" step="any" value="5.0" required />
+				    </div>
+				</div><br>
+				<label>Período para Calculo de Percentiles</label>
+				<div class="form-group">	   
+   			        <div class="col-xs-3">	 
+				       <label>Mes</label>
+				       <input type="number" id="mesreinfecciones1" class="form-control" min="1" max="12" step="1" required />
+				       </div>
+				       <div class="col-xs-3">
+				       <label>Año</label>
+				       <input type="number" id="anioreinfecciones1"  class="form-control" min="2000" max="2030" step="1" required />  
+				    </div>
+				    <div class="col-xs-3">
+						<br>
+				        <input type="submit" class="btn btn-primary" value="Calcular" onclick="calcular()">           
+                   </div> 
+				</div>
+				</div>
+				
+            </form> 
+            </div>               
+                  
+        <div class="box box-success">
+			 <h2>Pérdidas del Rodeo</h2>
+			 <div class="row">
+                        <!-- Left col -->
+               <section class="col-md-6 connectedSortable"> 
+				   <div class="callout callout-info">
+                     <h4>Total de Pérdida : <label id="labelresperd"> </label> lts.</h4> 
+                     <h4>Pérdida por MSC: <label id="labelresperdmsc"> </label> lts.</h4> 
+                     <h4>Pérdida por MC: <label id="labelresperdmc"> </label> lts.</h4> 
+                     <h4>Cantidad de Vacas en el Rodeo: <label id="labelrescantvacas"> </label>.</h4> 
+                     <h4>Cantidad de Vacas con MC: <label id="labelrescantvacasmc"> </label>.</h4>                      
+                   </div>
+               </section>
+               <section class="col-md-6 connectedSortable"> 
+				   <div class="callout callout-info">
+                     <h4>Costo Indirecto : $<label id="labelrescostoind"> </label>.</h4> 
+                     <h4>Costo Directo: $<label id="labelrescostodir"> </label>.</h4> 
+                     <h4>Costo Total: $<label id="labelrescostotot"> </label>.</h4> 
+                   </div>
+               </section>
+              </div>   				   				              
+           <h3>Litros de Pérdidas por Vaca</h3>
+           <div  id="grafico-perdidas">
+               <!-- Morris chart - Sales -->
+               <div id="perdidas-chart" style="position: relative; height: 300px;"></div>
+               <!--  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>  -->
+           </div>
+            <h3>Cantidad de Vacas por Litros de Pérdida</h3>
+            <div id="grafico-perdidas1">
+                    <div id="barras-chart" style="height: 300px;"></div>
+            </div><!-- /.box-body-->
+            <div class="row">
+                        <!-- Left col -->
+               <section class="col-md-6 connectedSortable"> 
+                    <h3>Reinfecciones</h3>
+                    <div id="grafico-perdidas2">
+                        <div id="reinfecciones-chart" style="height: 300px;"></div>
+                    </div><!-- /.box-body-->
+               </section>     
+               <section class="col-md-6 connectedSortable"> 
+                    <h3>Percentiles</h3>
+                    <div id="grafico-perdidas3">
+                        <div id="percentiles-chart" style="height: 300px;"></div>
+                    </div><!-- /.box-body-->
+               </section>
+            </div>    
+            
+        </div>                     
+      </section>
+               
+    </div>
+  
+  </div>
+   
+</div>
+
+
+     </section><!-- right col -->
+                    </div><!-- /.row (main row) -->
+
+                </section><!-- /.content -->
+            </aside><!-- /.right-side -->
+        
+
+</div><!-- ./wrapper -->
+
+
+
+
+
+
+
+
+
+
+
+
+        <script src="js/plugins/jquery.min.js"></script>
+        <script src="js/plugins/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery-ui.min.js" type="text/javascript"></script>
+        <!-- Morris.js charts -->
+        <script src="js/plugins/raphael-min.js"></script>
+        <script src="js/plugins/morris/morris.min.js" type="text/javascript"></script>
+        <!-- Sparkline -->
+        <!--script src="js/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script-->
+        <!-- jvectormap -->
+        <!--script src="js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script-->
+        <!--script src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script-->
+        <!-- jQuery Knob Chart -->
+        <!--script src="js/plugins/jqueryKnob/jquery.knob.js" type="text/javascript"></script-->
+        <!-- daterangepicker -->
+        <!--script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script-->
+        <!-- datepicker -->
+        <!--script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script-->
+        <!-- Bootstrap WYSIHTML5 -->
+        <!--script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script-->
+        
+        <!--script src="js/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script-->
+        <!--script src="js/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script-->
+        <!--script src="js/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script-->
+                
+        <!-- iCheck -->
+        <!--script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script-->
+        
+        <script src="js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+        <script src="js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+        
+        <!--script src="http://cdn.datatables.net/responsive/1.0.2/js/dataTables.responsive.js" type="text/javascript"></script-->
+        
+         <!--script src="js/plugins/flot/jquery.flot.min.js" type="text/javascript"></script-->
+        <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+        <script type="text/javascript" src="js/plugins/flot/jquery.flot.js"></script>
+        <script src="js/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+        <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+        <script src="js/plugins/flot/jquery.flot.pie.min.js" type="text/javascript"></script>
+        <!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+        <script src="js/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+        
+       
+       <!--script type="text/javascript" src="js/plugins/flot/jquery.flot.time.js"></script-->   
+       <!--script type="text/javascript" src="js/plugins/flot/jquery.flot.symbol.js"></script-->
+       <script type="text/javascript" src="js/plugins/flot/jquery.flot.axislabels.js"></script>
+
+        
+        <!-- AdminLTE App -->
+        <!--script src="js/AdminLTE/app.js" type="text/javascript"></script-->
+
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <!--script src="js/AdminLTE/dashboard.js" type="text/javascript"></script-->
+
+        <!-- AdminLTE for demo purposes -->
+        <!--script src="js/AdminLTE/demo.js" type="text/javascript"></script-->
+        
+        
+
+<script type="text/javascript">
+	
+	
+	$('input[type=reset]').click(function(){
+    $('#idetambo1').val('');
+    });
+
+	$('input[type=reset]').click(function(){
+    $('#ordenieid1').val('');
+    });
+	
+	$('input[type=reset]').click(function(){
+    $('#vacaide1').val('');
+    });
+    
+ 	
+    var db;
+    function init() {
+        db = openDatabase("DBprueba3", "0.1", "DatabasePrueba", 200000);
+        if (db) {
+            // Database opened
+            db.transaction( function(tx) {
+                tx.executeSql("CREATE TABLE IF NOT EXISTS tambos(nrotambo integer primary key, nombretambo text, duenio text, veterinario text, mail text, tel integer)")});  
+            db.transaction( function(tx) {
+                tx.executeSql("CREATE TABLE IF NOT EXISTS ordenie(ordenieid integer primary key autoincrement, nrotambo integer, anio integer, mes integer, litroleche integer,precioleche integer, sellador integer, abmc integer, abseca integer)")});
+            db.transaction( function(tx) {
+                tx.executeSql("CREATE TABLE IF NOT EXISTS vacas(vacaid integer primary key autoincrement, ordenieid integer, vaca integer, rcs integer, dl integer, nop integer, mc integer)")});
+            }
+            listTambos();
+            
+            
+     }
+
+ function calcular() {
+        var idordenievacas1 = document.getElementById("ordenieidvaca1");
+        var preciolecheordenie1 = document.getElementById("litroslecheordenie1");
+        var preciolecheordenie1 = document.getElementById("preciolecheordenie1");
+        var selladorordenie1 = document.getElementById("selladorordenie1");
+        var abmcordenie1 = document.getElementById("abmcordenie1");
+        var absecaordenie1 = document.getElementById("absecaordenie1");
+       
+        db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM vacas WHERE ordenieid=? ORDER BY vaca", [idordenievacas1.value],
+                function(tx, result){
+                    var output = [];
+                    var total = 0;
+                    var cantvacas = result.rows.length;
+                    var cantvacamc = 0;
+                    var cantvacasmc = 0; 
+                    var perdidamc = 0;
+                    var perdidasmc = 0;
+                    
+                    for(var i=0; i < result.rows.length; i++) {
+                        var resultado = 0; 
+                        
+                        var rcs;
+                        rcs = Math.log(result.rows.item(i)['rcs']);
+                        
+                        var dl = result.rows.item(i)['dl'];
+                        var dlcat = result.rows.item(i)['dl'];
+                        if (dlcat<100){
+						    dlcat=1; 
+						}else{if (dl<180){
+							dlcat=2;
+						}else{
+						    dlcat=3;
+						}} 
+						
+						var nop = result.rows.item(i)['nop'];
+						if (nop==1){
+							nop=1;
+						}else{
+						    nop=0;	
+						}
+                        
+                        var mc = result.rows.item(i)['mc'];
+                        
+                        var perdida;
+                        
+                        if ((dl>=0)&&(dl<15)){if (nop==1){perdida=0.49}else{perdida=0.88}}
+                        if ((dl>=15)&&(dl<30)){if (nop==1){perdida=0.46}else{perdida=0.84}}
+                        if ((dl>=30)&&(dl<45)){if (nop==1){perdida=0.43}else{perdida=0.8}}
+                        if ((dl>=45)&&(dl<60)){if (nop==1){perdida=0.4}else{perdida=0.78}}
+                        if ((dl>=60)&&(dl<75)){if (nop==1){perdida=0.38}else{perdida=0.76}}
+                        if ((dl>=75)&&(dl<90)){if (nop==1){perdida=0.36}else{perdida=0.76}}
+                        if ((dl>=90)&&(dl<105)){if (nop==1){perdida=0.35}else{perdida=0.76}}
+                        if ((dl>=105)&&(dl<120)){if (nop==1){perdida=0.34}else{perdida=0.78}}
+                        if ((dl>=120)&&(dl<135)){if (nop==1){perdida=0.34}else{perdida=0.81}}
+                        if ((dl>=135)&&(dl<150)){if (nop==1){perdida=0.33}else{perdida=0.84}}
+                        if ((dl>=150)&&(dl<165)){if (nop==1){perdida=0.33}else{perdida=0.89}}
+                        if ((dl>=165)&&(dl<180)){if (nop==1){perdida=0.34}else{perdida=0.95}}
+                        if ((dl>=180)&&(dl<195)){if (nop==1){perdida=0.35}else{perdida=1.02}}
+                        if ((dl>=195)&&(dl<210)){if (nop==1){perdida=0.36}else{perdida=1.1}}
+                        if ((dl>=210)&&(dl<225)){if (nop==1){perdida=0.38}else{perdida=1.19}}
+                        if ((dl>=225)&&(dl<240)){if (nop==1){perdida=0.4}else{perdida=1.29}}
+                        if ((dl>=240)&&(dl<255)){if (nop==1){perdida=0.42}else{perdida=1.4}}
+                        if ((dl>=225)&&(dl<270)){if (nop==1){perdida=0.45}else{perdida=1.52}}
+                        if ((dl>=270)&&(dl<285)){if (nop==1){perdida=0.48}else{perdida=1.66}}
+                        if ((dl>=285)&&(dl<300)){if (nop==1){perdida=0.52}else{perdida=1.8}}
+                        if (dl>=300){if (nop==1){perdida=0.52}else{perdida=1.8}}
+
+                        if (mc==1){
+							resultado = litroslecheordenie1.value/cantvacas;
+							cantvacamc = cantvacamc +1;
+							perdidamc = perdidamc + (litroslecheordenie1.value/cantvacas); 
+						}else{
+						    resultado = (rcs - 2) * perdida;	
+						    cantvacasmc = cantvacasmc +1;
+						    perdidasmc = perdidasmc + (rcs - 2) * perdida;
+						}
+
+                        var graphPoint = {};
+                        graphPoint.y = result.rows.item(i)['vaca'];
+                        graphPoint.item1 = resultado; 
+
+                        output.push(graphPoint);
+                       // output.push("{y:\'"+result.rows.item(i)['vaca']+"\', item1: "+resultado+"}");
+                        
+                       total = total + resultado;         
+                      // alert("vaca :"+result.rows.item(i)['vaca']+"="+resultado);                                
+                    }
+       //               alert(output);   
+                        
+/*     output = [
+            {y: '1', item1: 2.666},
+            {y: '2', item1: 2.778},
+            {y: '3', item1: 4.912},
+            {y: '4', item1: 3.767}   
+        ];
+  */      
+   //     alert(output);
+   //     alert(output[0].y);
+   
+     var place = document.getElementById("grafico-perdidas");
+        if (place.getElementsByTagName("div").length > 0 )
+            place.removeChild(place.getElementsByTagName("div")[0]);
+
+    place.innerHTML += "<div class=\"chart tab-pane active\" id=\"perdidas-chart\" style=\"position: relative; height: 300px;\"></div>";
+
+    //output.sort(function(a,b) { return parseFloat(a.item1) - parseFloat(b.item1) });
+    var promedio = 0;
+    for(var i=0; i < output.length; i++) {
+	       	promedio = promedio + output[i].item1;
+	}
+            promedio = promedio / output.length;
+	
+     // Morris.Bar
+     var line = new Morris.Line({
+        element: 'perdidas-chart',
+        resize: true,
+        data: output,
+        xkey: 'y',
+        ykeys: ['item1'],
+        labels: ['Pérdida'],
+        lineColors: ['#3c8dbc'],
+        lineWidth: 2,
+        hideHover: 'auto',
+        gridTextColor: "#3c8dbc",
+        gridStrokeWidth: 0.4,
+        pointSize: [4,0],
+        pointStrokeColors: ["#a0d0e0"],
+        gridLineColor: "#a0d0e0",
+        gridTextFamily: "Open Sans",
+        gridTextSize: 10,
+        goals:[promedio],
+//      events: ['6'],
+//      stacked: true,
+//      labels: ['Series A', 'Series B'],
+        postUnits: ' lts',
+        parseTime:false
+    });
+    //     line.setData(output);                    
+    //    alert("Perdida Total = "+total+".\nCantidad de Vacas ="+ cantvacas+".\n Vacas con MC ="+cantvacamc+".\n Vacas con MSC ="+cantvacasmc+".\n Perdidas MC ="+perdidamc+".\n Perdidas MSC ="+ perdidasmc);
+        //alert("1 ="+(cantvacas*selladorordenie1.value)+"\n2 ="+(abmcordenie1.value*cantvacamc)+"\n3 ="+((cantvacas/365)*absecaordenie1.value));
+        var costoindirecto = (cantvacas*selladorordenie1.value)+(abmcordenie1.value*cantvacamc)+((cantvacas/365)*absecaordenie1.value);
+   //     alert("Costo Directo =$"+(total*preciolecheordenie1.value)+".\nCosto Indirecto =$"+costoindirecto+".\nCosto Total =$"+(total*preciolecheordenie1.value+costoindirecto)+".")
+	         
+        var labelrescantvacas = document.getElementById("labelrescantvacas");
+        var labelrescantvacasmc = document.getElementById("labelrescantvacasmc");
+        var labelresperdmc = document.getElementById("labelresperdmc");
+        var labelresperdmsc = document.getElementById("labelresperdmsc");
+        var labelresperd = document.getElementById("labelresperd");
+        
+        var labelrescostoind = document.getElementById("labelrescostoind");       
+        var labelrescostodir = document.getElementById("labelrescostodir");
+        var labelrescostotot = document.getElementById("labelrescostotot");
+               
+        labelrescantvacas.innerText = cantvacas;
+        labelrescantvacasmc.innerText = cantvacamc;
+        labelresperdmc.innerText = perdidamc;
+        labelresperdmsc.innerText = perdidasmc;
+        labelresperd.innerText = total;
+	           
+	    labelrescostoind.innerText = costoindirecto;       
+        labelrescostodir.innerText = (total*preciolecheordenie1.value);       
+        labelrescostotot.innerText = (total*preciolecheordenie1.value+costoindirecto);       
+	           
+	   output.sort(function(a,b) { return parseFloat(a.item1) - parseFloat(b.item1) });
+       var cant25 = Math.floor(output.length / 4);
+       var cant50 = Math.floor(output.length / 2);
+       var cant75 = Math.floor((output.length / 4) * 3);
+    //   var result25 = 0;
+    // alert("25 "+cant25+" 50 "+cant50+" 75 "+cant75);
+       
+       var cota = output[output.length-1].item1/10;
+       var cotaact = cota;
+       var cant_cota = 0;
+       var ciclo = 0; 
+       var dato = [];
+       var dato1 = [];
+       var bar_data = {};
+        bar_data.data = [];
+        bar_data.label = "Nro. Vacas";
+        bar_data.color = "#3c8dbc";
+        bar_data.bars = {show: true, align: "center", barWidth: 0.5,fill: true, lineWidth: 1};
+        
+       var prom_data = {};
+         prom_data.data = [];
+         prom_data.label = "Promedio Lts. Pérdida";
+         prom_data.lines = { show: true,fill: false};
+         prom_data.points = {show: true,fillColor: '#AA4643'};
+         prom_data.color = '#AA4643';
+         prom_data.yaxis = 2;
+       
+     //  alert("cota "+cota+" cota_act "+cotaact+" ciclo "+ciclo+" output "+output[ciclo]);        
+       
+       while (ciclo < output.length){		   
+		     var cant_cota = 0;
+		     var prom_cota =0;
+		     dato = [];
+		     dato1 = [];
+		     while((ciclo < output.length) && (output[ciclo].item1<cotaact)){
+		//		    alert("cota "+cota+" cota_act "+cotaact+" ciclo "+ciclo+" output "+output[ciclo].item1);
+				    prom_cota = prom_cota + output[ciclo].item1;
+				    ciclo = ciclo+1;
+				    cant_cota = cant_cota+1;
+				 }
+	//	     alert("cota "+cota+" cota_act "+cotaact+" ciclo "+ciclo+" output "+output[ciclo-1].item1); 
+			 dato.push(cotaact.toFixed(2));
+			 dato.push(cant_cota); 	 			
+			 bar_data.data.push(dato);	 
+			 
+			 dato1.push(cotaact.toFixed(2));
+			 if (cant_cota>0) dato1.push(prom_cota/cant_cota);
+			 else dato1.push(0); 	 
+			 prom_data.data.push(dato1);
+			 
+			 cotaact = cotaact + cota;
+		   }
+       
+  /*     for(var i1=0; i1 < cant25; i1++) {
+	       	result25 = result25 + output[i1].item1;
+	   }
+       var result50 = result25;
+       for(var i2=cant25; i2 < cant50; i2++) {
+	       	result50 = result50 + output[i2].item1;
+	   }
+       var result75 = result50;
+       for(var i3=cant50; i3 < cant75; i3++) {
+	       	result75 = result75 + output[i3].item1;
+	   }
+       alert("25 ="+result25+"\n50 ="+result50+"\n75 ="+result75);    
+    */   
+         var place1 = document.getElementById("grafico-perdidas1");
+        if (place1.getElementsByTagName("div").length > 0 )
+            place1.removeChild(place1.getElementsByTagName("div")[0]);
+
+    place1.innerHTML += "<div id=\"barras-chart\" style=\"height: 300px;\"></div>";
+       
+        
+      /*  var bar_data = {
+                    data: [[0.1, 10], [0.5, 8], [0.9, 4], [1.0, 13], [2.0, 17], [3.0, 9]],
+                    color: "#3c8dbc"
+                };*/
+                $.plot($("#barras-chart"), [bar_data,prom_data], {
+                    grid: {
+                        borderWidth: 1,
+                        borderColor: "#f3f3f3",
+                        tickColor: "#f3f3f3"
+                    },
+                   
+                    yaxes: [
+            {
+                tickFormatter: function (val, axis) {
+                    return val + " vacas";
+                },
+                //max: 65,
+                axisLabel: "Cant. Vacas",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+                axisLabelPadding: 5
+            },
+            {
+                position: 0,
+                tickFormatter: function (val, axis) {
+                    return val + " lts.";
+                },
+              //  max: 40,
+                axisLabel: "Promedio lts. Pérdida ",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+                axisLabelPadding: 5
+            }
+        ],
+                    xaxis: {
+			   mode: "categories",			
+            tickLength: 0, // hide gridlines
+            axisLabel: "Litros",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+            axisLabelPadding: 5
+        }
+                });   
+ 
+         calcular_reinfecciones();       
+         calcular_percentiles();   
+         alert("Cálculo terminado. ");  	         
+     });
+    });     	 
+}
+
+ function calcular_reinfecciones() {
+ 
+     var mes_actual = document.getElementById("mesordenie1").value;
+     var anio_actual = document.getElementById("anioordenie1").value;
+     var mes_ant = mes_actual-1;
+     var anio_ant = anio_actual;
+     
+     if (mes_actual==1) {mes_ant=12; anio_ant=anio_actual-1;}
+     
+     var tambo_actual = document.getElementById("nrotambo1").value;
+     var idordenievacas1 = document.getElementById("ordenieidvaca1").value;
+     var idordenievacas2;      
+     
+     db.transaction( function(tx) {
+            tx.executeSql("SELECT ordenieid FROM ordenie WHERE nrotambo=? AND anio=? AND mes=?", [tambo_actual,anio_ant,mes_ant],
+                function(tx, result){
+                   if (result.rows.length>0) idordenievacas2 = result.rows.item(0)['ordenieid'];
+                   else idordenievacas2 = 0;
+
+    // alert("1: "+idordenievacas1+". 2: "+idordenievacas2);
+     
+      db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM vacas WHERE ordenieid=? OR ordenieid=? ORDER BY vaca,ordenieid", [idordenievacas1, idordenievacas2],
+                function(tx, result){
+                    var output = [];
+                    var total = 0;
+                    var cantvacas = result.rows.length;
+                    var cantvacamc = 0;
+                    var cantvacasmc = 0; 
+                    var perdidamc = 0;
+                    var perdidasmc = 0;
+                    
+                    
+                    for(var i=0; i < result.rows.length; i++) {
+                        var resultado = 0; 
+                        
+                        var rcs;
+                        rcs = Math.log(result.rows.item(i)['rcs']);
+                        
+                        var dl = result.rows.item(i)['dl'];
+                        var dlcat = result.rows.item(i)['dl'];
+                        if (dlcat<100){
+						    dlcat=1; 
+						}else{if (dl<180){
+							dlcat=2;
+						}else{
+						    dlcat=3;
+						}} 
+						
+						var nop = result.rows.item(i)['nop'];
+						if (nop==1){
+							nop=1;
+						}else{
+						    nop=0;	
+						}
+                        
+                        var mc = result.rows.item(i)['mc'];
+                        
+                        var perdida;
+                        
+                        if ((dl>=0)&&(dl<15)){if (nop==1){perdida=0.49}else{perdida=0.88}}
+                        if ((dl>=15)&&(dl<30)){if (nop==1){perdida=0.46}else{perdida=0.84}}
+                        if ((dl>=30)&&(dl<45)){if (nop==1){perdida=0.43}else{perdida=0.8}}
+                        if ((dl>=45)&&(dl<60)){if (nop==1){perdida=0.4}else{perdida=0.78}}
+                        if ((dl>=60)&&(dl<75)){if (nop==1){perdida=0.38}else{perdida=0.76}}
+                        if ((dl>=75)&&(dl<90)){if (nop==1){perdida=0.36}else{perdida=0.76}}
+                        if ((dl>=90)&&(dl<105)){if (nop==1){perdida=0.35}else{perdida=0.76}}
+                        if ((dl>=105)&&(dl<120)){if (nop==1){perdida=0.34}else{perdida=0.78}}
+                        if ((dl>=120)&&(dl<135)){if (nop==1){perdida=0.34}else{perdida=0.81}}
+                        if ((dl>=135)&&(dl<150)){if (nop==1){perdida=0.33}else{perdida=0.84}}
+                        if ((dl>=150)&&(dl<165)){if (nop==1){perdida=0.33}else{perdida=0.89}}
+                        if ((dl>=165)&&(dl<180)){if (nop==1){perdida=0.34}else{perdida=0.95}}
+                        if ((dl>=180)&&(dl<195)){if (nop==1){perdida=0.35}else{perdida=1.02}}
+                        if ((dl>=195)&&(dl<210)){if (nop==1){perdida=0.36}else{perdida=1.1}}
+                        if ((dl>=210)&&(dl<225)){if (nop==1){perdida=0.38}else{perdida=1.19}}
+                        if ((dl>=225)&&(dl<240)){if (nop==1){perdida=0.4}else{perdida=1.29}}
+                        if ((dl>=240)&&(dl<255)){if (nop==1){perdida=0.42}else{perdida=1.4}}
+                        if ((dl>=225)&&(dl<270)){if (nop==1){perdida=0.45}else{perdida=1.52}}
+                        if ((dl>=270)&&(dl<285)){if (nop==1){perdida=0.48}else{perdida=1.66}}
+                        if ((dl>=285)&&(dl<300)){if (nop==1){perdida=0.52}else{perdida=1.8}}
+                        if (dl>=300){if (nop==1){perdida=0.52}else{perdida=1.8}}
+
+                        if (mc==1){
+							//resultado = litroslecheordenie1.value/cantvacas;
+							resultado = rcs;
+							cantvacamc = cantvacamc +1;
+							perdidamc = perdidamc + (litroslecheordenie1.value/cantvacas); 
+						}else{
+						    //resultado = (rcs - 2) * perdida;	
+						    resultado = rcs;
+						    cantvacasmc = cantvacasmc +1;
+						    perdidasmc = perdidasmc + (rcs - 2) * perdida;
+						}
+
+                        var graphPoint = {};
+                        graphPoint.y = result.rows.item(i)['vaca'];
+                        graphPoint.item1 = resultado; 
+
+                        output.push(graphPoint);
+                       // output.push("{y:\'"+result.rows.item(i)['vaca']+"\', item1: "+resultado+"}");
+                        
+                       total = total + resultado;         
+                  //     alert("vaca :"+result.rows.item(i)['vaca']+"="+resultado);                                          
+                                               
+                    } //end for
+
+                                     
+                  //  alert("llego aca");
+                      var j = 0;
+                      var cant_reinfecciones = 0;
+                      var cant_vacas_curadas = 0;
+                      var cant_vacas_enfermas = 0;
+                      var cant_vacas_sanas = 0;
+                      var cant_vacas_repet = 0;
+
+                     // resultado = rcs;
+                     
+                     var creinf = document.getElementById("cotareinfecciones1").value;
+                     
+                      while (j < output.length-1){
+					//	  alert("ciclo"+j);
+						     if (output[j].y==output[j+1].y){
+						//	   alert("id1 "+idordenievacas1+" - id2 "+idordenievacas2+" - j "+output[j].item1+" - j+1 "+output[j+1].item1); 	 
+							   if (idordenievacas1<idordenievacas2){
+								    if ((output[j].item1>creinf) && (output[j+1].item1>creinf)) cant_reinfecciones = cant_reinfecciones + 1;
+								    if ((output[j].item1>creinf) && (output[j+1].item1<=creinf)) cant_vacas_enfermas = cant_vacas_enfermas + 1;            
+								    if ((output[j].item1<=creinf) && (output[j+1].item1>creinf)) cant_vacas_curadas = cant_vacas_curadas + 1;
+								    if ((output[j].item1<=creinf) && (output[j+1].item1<=creinf)) cant_vacas_sanas = cant_vacas_sanas + 1;
+								}else{
+									if ((output[j].item1>creinf) && (output[j+1].item1>creinf)) cant_reinfecciones = cant_reinfecciones + 1;
+								    if ((output[j].item1<=creinf) && (output[j+1].item1>creinf)) cant_vacas_enfermas = cant_vacas_enfermas + 1;            
+								    if ((output[j].item1>creinf) && (output[j+1].item1<=creinf)) cant_vacas_curadas = cant_vacas_curadas + 1;
+								    if ((output[j].item1<=creinf) && (output[j+1].item1<=creinf)) cant_vacas_sanas = cant_vacas_sanas + 1;
+								}    
+								    cant_vacas_repet = cant_vacas_repet +1;
+								    j = j+2;
+								 }
+						     else
+						            j=j+1;
+						  }               
+                    
+                     
+                    
+                    
+               //     alert("Cantidad de Vacas Cotejadas: "+cant_vacas_repet+".\nCantidad de Reinfecciones: "+cant_reinfecciones+".\n"+"Cantidad de Sanas: "+cant_vacas_sanas+".\nCantidad de Infecciones nuevas: "+cant_vacas_enfermas+".\nCantidad de Curadas: "+cant_vacas_curadas);
+
+                    var bar_data = {};
+                   bar_data.data = [];
+                   bar_data.label = "Nro. Vacas";
+                     bar_data.color = "#3c8dbc";
+                    bar_data.bars = {show: true, align: "center", barWidth: 0.2,fill: true, lineWidth: 1};
+                    var dato = [] 
+			        dato.push("Reinfecciones");
+			        dato.push(cant_reinfecciones); 	 			
+			        bar_data.data.push(dato);	
+			        dato = [] 
+			        dato.push("Sanas");
+			        dato.push(cant_vacas_sanas); 	 			
+			        bar_data.data.push(dato);	
+			        dato = [] 
+			        dato.push("Infecciones nuevas");
+			        dato.push(cant_vacas_enfermas);
+			        bar_data.data.push(dato); 
+			        dato = [] 
+			        dato.push("Curadas");
+			        dato.push(cant_vacas_curadas);
+			        bar_data.data.push(dato); 
+
+         var place1 = document.getElementById("grafico-perdidas2");
+        if (place1.getElementsByTagName("div").length > 0 )
+            place1.removeChild(place1.getElementsByTagName("div")[0]);
+
+    place1.innerHTML += "<div id=\"reinfecciones-chart\" style=\"height: 300px;\"></div>";
+   
+                $.plot($("#reinfecciones-chart"), [bar_data], {
+                    grid: {
+                        borderWidth: 1,
+                        borderColor: "#f3f3f3",
+                        tickColor: "#f3f3f3"
+                    },
+                   
+                    yaxes: [
+            {
+                tickFormatter: function (val, axis) {
+                    return val + " vacas";
+                },
+                //max: 65,
+                axisLabel: "Cant. Vacas",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+                axisLabelPadding: 5
+            }
+        ],
+                    xaxis: {
+			   mode: "categories",			
+            tickLength: 0, // hide gridlines
+            axisLabel: "",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+            axisLabelPadding: 5
+        }
+                });   
+       
+                  }); // end function
+               });// end transaction      
+            }); // end function primer select
+         });  // end transaction primer select         
+}
+
+p25_data = {};
+        p25_data.data = [];
+        p25_data.label = "P25";
+        p25_data.lines = { show: true,fill: false}; 
+        p25_data.points = {show: true,fillColor: '#3c8dbc'};
+        p25_data.color = "#3c8dbc";
+        
+      p50_data = {};
+         p50_data.data = [];
+         p50_data.label = "P50";
+         p50_data.lines = { show: true,fill: false};
+         p50_data.points = {show: true,fillColor: '#00A65A'};
+         p50_data.color = '#00A65A';
+       
+       p75_data = {};
+         p75_data.data = [];
+         p75_data.label = "P75";
+         p75_data.lines = { show: true,fill: false};
+         p75_data.points = {show: true,fillColor: '#F56954'};
+         p75_data.color = '#F56954';
+
+
+function retornar_idordenie(identordenie1,mes_ant,anio_ant){
+ db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM vacas WHERE ordenieid=? ORDER BY vaca", [identordenie1],
+                function(tx, result){
+                    var output = [];
+                    var total = 0;
+                    var cantvacas = result.rows.length;
+                    var cantvacamc = 0;
+                    var cantvacasmc = 0; 
+                    var perdidamc = 0;
+                    var perdidasmc = 0;
+                    
+                    
+                    for(var i=0; i < result.rows.length; i++) {
+                        var resultado = 0; 
+                        
+                        var rcs;
+                        rcs = Math.log(result.rows.item(i)['rcs']);
+                        
+                        var dl = result.rows.item(i)['dl'];
+                        var dlcat = result.rows.item(i)['dl'];
+                        if (dlcat<100){
+						    dlcat=1; 
+						}else{if (dl<180){
+							dlcat=2;
+						}else{
+						    dlcat=3;
+						}} 
+						
+						var nop = result.rows.item(i)['nop'];
+						if (nop==1){
+							nop=1;
+						}else{
+						    nop=0;	
+						}
+                        
+                        var mc = result.rows.item(i)['mc'];
+                        
+                        var perdida;
+                        
+                        if ((dl>=0)&&(dl<15)){if (nop==1){perdida=0.49}else{perdida=0.88}}
+                        if ((dl>=15)&&(dl<30)){if (nop==1){perdida=0.46}else{perdida=0.84}}
+                        if ((dl>=30)&&(dl<45)){if (nop==1){perdida=0.43}else{perdida=0.8}}
+                        if ((dl>=45)&&(dl<60)){if (nop==1){perdida=0.4}else{perdida=0.78}}
+                        if ((dl>=60)&&(dl<75)){if (nop==1){perdida=0.38}else{perdida=0.76}}
+                        if ((dl>=75)&&(dl<90)){if (nop==1){perdida=0.36}else{perdida=0.76}}
+                        if ((dl>=90)&&(dl<105)){if (nop==1){perdida=0.35}else{perdida=0.76}}
+                        if ((dl>=105)&&(dl<120)){if (nop==1){perdida=0.34}else{perdida=0.78}}
+                        if ((dl>=120)&&(dl<135)){if (nop==1){perdida=0.34}else{perdida=0.81}}
+                        if ((dl>=135)&&(dl<150)){if (nop==1){perdida=0.33}else{perdida=0.84}}
+                        if ((dl>=150)&&(dl<165)){if (nop==1){perdida=0.33}else{perdida=0.89}}
+                        if ((dl>=165)&&(dl<180)){if (nop==1){perdida=0.34}else{perdida=0.95}}
+                        if ((dl>=180)&&(dl<195)){if (nop==1){perdida=0.35}else{perdida=1.02}}
+                        if ((dl>=195)&&(dl<210)){if (nop==1){perdida=0.36}else{perdida=1.1}}
+                        if ((dl>=210)&&(dl<225)){if (nop==1){perdida=0.38}else{perdida=1.19}}
+                        if ((dl>=225)&&(dl<240)){if (nop==1){perdida=0.4}else{perdida=1.29}}
+                        if ((dl>=240)&&(dl<255)){if (nop==1){perdida=0.42}else{perdida=1.4}}
+                        if ((dl>=225)&&(dl<270)){if (nop==1){perdida=0.45}else{perdida=1.52}}
+                        if ((dl>=270)&&(dl<285)){if (nop==1){perdida=0.48}else{perdida=1.66}}
+                        if ((dl>=285)&&(dl<300)){if (nop==1){perdida=0.52}else{perdida=1.8}}
+                        if (dl>=300){if (nop==1){perdida=0.52}else{perdida=1.8}}
+
+                        if (mc==1){
+							resultado = litroslecheordenie1.value/cantvacas;
+							cantvacamc = cantvacamc +1;
+							perdidamc = perdidamc + (litroslecheordenie1.value/cantvacas); 
+						}else{
+						    resultado = (rcs - 2) * perdida;	
+						    cantvacasmc = cantvacasmc +1;
+						    perdidasmc = perdidasmc + (rcs - 2) * perdida;
+						}
+
+                        var graphPoint = {};
+                        graphPoint.y = result.rows.item(i)['vaca'];
+                        graphPoint.item1 = resultado; 
+
+                        output.push(graphPoint);
+                       // output.push("{y:\'"+result.rows.item(i)['vaca']+"\', item1: "+resultado+"}");
+                        
+                       total = total + resultado;         
+                  //     alert("vaca :"+result.rows.item(i)['vaca']+"="+resultado);                                          
+                                               
+                    } //end for
+                    
+                    output.sort(function(a,b) { return parseFloat(a.item1) - parseFloat(b.item1) });
+                    var cant25 = Math.floor(output.length / 4);
+                    var cant50 = Math.floor(output.length / 2);
+                    var cant75 = Math.floor((output.length / 4) * 3);
+                    
+             //       alert("cant25: "+cant25+" "+" cant50: "+cant50+" "+" cant75: "+cant75+" - longitud: "+output.length);
+                    
+                    var x = {};
+                    x.P25 = output[cant25].item1; 
+                    x.P50 = output[cant50].item1;
+                    x.P75 = output[cant75].item1;
+                   
+               //     alert("Percentiles "+mes_ant+"/"+anio_ant+": \nP25 ="+x.P25+".\nP50: "+x.P50+".\nP75: "+x.P75);
+                    
+                    var dato = [];
+                    dato.push(mes_ant+"/"+anio_ant);
+			        dato.push(x.P25); 	 			
+			        p25_data.data.push(dato);	 
+			 
+			        var dato1 = [];
+                    dato1.push(mes_ant+"/"+anio_ant);
+			        dato1.push(x.P50); 	 			
+			        p50_data.data.push(dato1);  
+			 
+                    var dato2 = [];
+                    dato2.push(mes_ant+"/"+anio_ant);
+			        dato2.push(x.P75); 	 			
+			        p75_data.data.push(dato2);
+                    
+                                     
+                     var place1 = document.getElementById("grafico-perdidas3");
+        if (place1.getElementsByTagName("div").length > 0 )
+            place1.removeChild(place1.getElementsByTagName("div")[0]);
+
+    place1.innerHTML += "<div id=\"percentiles-chart\" style=\"height: 300px;\"></div>";
+       
+                $.plot($("#percentiles-chart"), [p25_data,p50_data,p75_data], {
+                    grid: {
+                        borderWidth: 1,
+                        borderColor: "#f3f3f3",
+                        tickColor: "#f3f3f3"
+                    },
+                    yaxes: [
+            {
+                tickFormatter: function (val, axis) {
+                    return val + " lts.";
+                },
+                //max: 65,
+                axisLabel: "Litros",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+                axisLabelPadding: 5
+            }
+        ],
+                     xaxis: {
+			   mode: "categories",			
+            tickLength: 0, // hide gridlines
+            axisLabel: "",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+            axisLabelPadding: 5
+        }
+                });
+                    
+                    
+                    
+                  }); // end function
+                  
+                  
+               });// end transaction                      
+}
+
+
+
+
+
+function calcular_percentiles(){
+     var mes_actual = parseInt(document.getElementById("mesordenie1").value);
+     var anio_actual = parseInt(document.getElementById("anioordenie1").value);
+    
+     var mes_ant = parseInt(document.getElementById("mesreinfecciones1").value);
+     var anio_ant = parseInt(document.getElementById("anioreinfecciones1").value);
+  
+     var tambo_actual = document.getElementById("nrotambo1").value;
+     var identordenie1 = 0;
+     
+      p25_data.data = [];
+      p50_data.data = [];
+      p75_data.data = [];
+      
+    
+       	db.transaction( function(tx) {
+          tx.executeSql("SELECT ordenieid, mes,anio FROM ordenie WHERE nrotambo=? AND ((anio>=? AND anio<=?) AND (mes>=? OR mes<=?)) ORDER BY anio,mes", [tambo_actual,anio_ant,anio_actual,mes_ant,mes_actual],
+            function(tx, result){
+ //            alert("tambo XXX"+tambo_actual+" "+mes_ant+"/"+anio_ant); 
+                var cant_cont = 0; 
+                //result.sort(function(a,b) { return parseFloat(a.item1) - parseFloat(b.item1) });
+                while (cant_cont <result.rows.length) {
+                     aux = result.rows.item(cant_cont)['ordenieid'];
+           
+                      var identordenie1 = aux;        
+                  
+                  retornar_idordenie(identordenie1,result.rows.item(cant_cont)['mes'],result.rows.item(cant_cont)['anio']);
+                  
+                //   alert("cant_cont "+cant_cont);
+               cant_cont = cant_cont+1;    
+            }// end while hay periodo       
+         
+           });
+        });  
+  
+   //  alert("termino percentiles");
+}
+
+
+
+ function showVacas(users) {
+	   $("#example3").dataTable().fnDestroy();
+	 
+	 var place = document.getElementById("vacasDiv");
+        if (place.getElementsByTagName("table").length > 0 )
+            place.removeChild(place.getElementsByTagName("table")[0]);
+
+     place.innerHTML += "<table id=\"example3\" class=\"table table-bordered table-striped responsive\"><thead><tr><th> ID </th><th> Vaca </th><th> rcs </th> <th> dl </th> <th> nop </th> <th> mc </th> <th> Acción </th></tr></thead><tbody></tbody></table>";
+
+	   
+	   
+	   
+       //$("#example1").dataTable().fnClearTable();   
+       $("#example3").dataTable({
+			"aaData": users,
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bSort": true,
+			"bInfo": true,
+			"responsive": true,
+			"bAutoWidth": true,
+			"bDestroy": true,
+			"aoColumnDefs":[
+				{"aTargets":[ 0 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 1 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 2 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 3 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 4 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 5 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 6 ]
+				, "bSortable": false
+				, "sType": "html"
+				, "mRender": function ( idvac, type, full )  {
+				return  '<button class=\"btn btn-default pull-right\" onclick=\'removeVaca('+idvac+')\'><i class="fa fa-trash-o"></i></button><button class=\"btn btn-default pull-right\" onclick=\'selectVaca('+idvac+')\'><i class="fa fa-edit"></i></button>';
+				                                                                                
+				}
+				}
+			]
+		});    
+    }
+
+    function listVacas() {
+        var idordenievacas1 = document.getElementById("ordenieidvaca1");
+        db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM vacas WHERE ordenieid=? ORDER BY vaca", [idordenievacas1.value],
+                function(tx, result){
+                    var output = [];
+                    for(var i=0; i < result.rows.length; i++) {
+                        output.push([result.rows.item(i)['vacaid'],
+                                result.rows.item(i)['vaca'],
+                                result.rows.item(i)['rcs'],
+                                result.rows.item(i)['dl'],
+                                result.rows.item(i)['nop'],                                
+                                result.rows.item(i)['mc'],
+                                result.rows.item(i)['vacaid']]);                                
+                    }
+ 			        showVacas(output);
+	            });
+            });
+    }
+ 
+ 
+       function guardarVaca(ide,vaca,rcs,dl,nop,mc){
+		   
+        if (vaca && rcs && dl && nop &&  mc){
+           if(ide){
+             db.transaction(function(tx){
+                tx.executeSql('UPDATE vacas SET vaca=?, rcs=?, dl=?, nop=?, mc=?  WHERE vacaid = ?', [vaca,rcs,dl,nop,mc,ide]);
+                alert("Modificó la vaca "+vaca);
+                listVacas();
+             });
+         }else{
+			var idordenie1 = document.getElementById("ordenieidvaca1"); 
+            db.transaction(function(tx){
+               tx.executeSql('INSERT INTO vacas(ordenieid,vaca,rcs,dl,nop,mc) VALUES(?,?,?,?,?,?)', [idordenie1.value,vaca,rcs,dl,nop,mc]);
+               alert("Insertó la vaca "+vaca);
+               listVacas();
+            });
+         }
+               }
+      }
+ 
+     function removeVaca(userId) {
+        db.transaction(function(tx) {
+            tx.executeSql("DELETE FROM vacas WHERE vacaid=?",[userId], listVacas);
+            var idvaca1 = document.getElementById("vacaide1");
+            idvaca1.value = '';
+        });
+     }
+
+
+	 function selectVaca(userId) {
+		 var ordenieidevar = document.getElementById("ordenieidvaca1");
+
+        db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM vacas WHERE vacaid=?",[userId], function(tx, result){ 
+               var cod1 = document.getElementById("codvaca1");
+               var rcs1 = document.getElementById("rcsvaca1");
+               var dl1 = document.getElementById("dlvaca1");
+               var nop1 = document.getElementById("nopvaca1");
+			   var mc1 = document.getElementById("mcvaca1");
+               var idordenievaca1 = document.getElementById("ordenieidvaca1");
+               var idvaca1 = document.getElementById("vacaide1");
+
+               cod1.value = result.rows.item(0)['vaca'];
+               rcs1.value = result.rows.item(0)['rcs'];
+               dl1.value = result.rows.item(0)['dl'];
+               nop1.value = result.rows.item(0)['nop'];
+               mc1.value = result.rows.item(0)['mc'];
+               idordenievaca1.value = result.rows.item(0)['ordenieid'];
+               idvaca1.value = result.rows.item(0)['vacaid'];               
+            });
+        });    
+        listVacas();     
+     }
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ function showOrdenies(users) {
+	 
+	  $("#example2").dataTable().fnDestroy();
+	 
+	 var place = document.getElementById("ordeniesDiv");
+        if (place.getElementsByTagName("table").length > 0 )
+            place.removeChild(place.getElementsByTagName("table")[0]);
+
+     place.innerHTML += "<table id=\"example2\" class=\"table table-bordered table-striped dt-responsive\"><thead><tr><th>ID</th><th>Año</th><th>Mes</th><th>Litros Leche</th><th>Precio Litro</th><th>Sellador</th><th>ab mc</th><th>ab seca</th><th>Acción</th></tr></thead><tbody></tbody></table>";
+
+	 
+	 
+	 // 
+     //  $("#example2").dataTable().fnClearTable();   
+       $("#example2").dataTable({
+			"aaData": users,
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bSort": true,
+			"bInfo": true,
+			"responsive": true,
+			"bAutoWidth": true,
+			"bDestroy": true,
+			"aoColumnDefs":[
+				{"aTargets":[ 0 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 1 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 2 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 3 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 4 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 5 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 6 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 7 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 8 ]
+				, "bSortable": false
+				, "sType": "html"
+				, "mRender": function ( nroord, type, full )  {
+				return  '<button class=\"btn btn-default pull-right\" onclick=\'removeOrdenie('+nroord+')\'><i class="fa fa-trash-o"></i></button><button class=\"btn btn-default pull-right\" onclick=\'selectOrdenie('+nroord+')\'><i class="fa fa-edit"></i></button>';
+				                                                                                
+				}
+				}
+			]
+		});
+		 
+    }
+
+    function listOrdenies() {
+        var idtambo1 = document.getElementById("nrotambo1");
+        
+        db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM ordenie WHERE nrotambo=? ORDER BY anio,mes", [idtambo1.value],
+                function(tx, result){
+                    var output = [];
+                    for(var i=0; i < result.rows.length; i++) {
+                        output.push([result.rows.item(i)['ordenieid'],
+                                result.rows.item(i)['anio'],
+                                result.rows.item(i)['mes'],
+                                result.rows.item(i)['litroleche'],
+                                result.rows.item(i)['precioleche'],
+                                result.rows.item(i)['sellador'],
+                                result.rows.item(i)['abmc'],                                
+                                result.rows.item(i)['abseca'],
+                                result.rows.item(i)['ordenieid']]);
+                    }
+ 			        showOrdenies(output);
+	            });
+            });
+    }
+ 
+ 
+       function guardarOrdenie(ide,anio,mes,litro,precio,sellador,abmc,abseca){
+		  
+        if (anio && mes && litro && precio && sellador && abmc && abseca){
+           if(ide){
+             db.transaction(function(tx){
+                tx.executeSql('UPDATE ordenie SET anio=?, mes=?,litroleche=?,precioleche=?, sellador=?,abmc=?, abseca=?  WHERE ordenieid = ?', [anio,mes,litro,precio,sellador,abmc,abseca,ide]);
+                alert("Modificó el control del año "+anio+" mes "+mes+".");
+             });
+         }else{
+			var idtambo1 = document.getElementById("nrotambo1");           
+            db.transaction(function(tx){
+               tx.executeSql('INSERT INTO ordenie(nrotambo,anio,mes,litroleche,precioleche,sellador,abmc,abseca) VALUES(?,?,?,?,?,?,?,?)', [idtambo1.value,anio,mes,litro,precio,sellador,abmc,abseca]);
+               alert("Insertó el control del año "+anio+" mes "+mes+".");
+            });
+         }
+
+         listOrdenies();
+
+        }else{
+		  // alert("Ingrese los datos faltantes");	
+	    } 
+      }
+ 
+     function removeOrdenie(userId) {
+        db.transaction(function(tx) {
+            tx.executeSql("DELETE FROM ordenie WHERE ordenieid=?",[userId], listOrdenies);
+            var idordenie1 = document.getElementById("ordenieid1");
+            idordenie1.value = '';
+        });
+     }
+
+
+	 function selectOrdenie(userId) {
+		 
+        db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM ordenie WHERE ordenieid=?",[userId], function(tx, result){ 
+               var anioordenie1 = document.getElementById("anioordenie1");
+               var mesordenie1 = document.getElementById("mesordenie1");
+               var litroslecheordenie1 = document.getElementById("litroslecheordenie1");
+               var preciolecheordenie1 = document.getElementById("preciolecheordenie1");
+               var selladorordenie1 = document.getElementById("selladorordenie1");
+               var abmcordenie1 = document.getElementById("abmcordenie1");
+               var absecaordenie1 = document.getElementById("absecaordenie1");               
+               var idordenie1 = document.getElementById("ordenieid1");
+
+               anioordenie1.value = result.rows.item(0)['anio'];
+               mesordenie1.value = result.rows.item(0)['mes'];
+               litroslecheordenie1.value = result.rows.item(0)['litroleche'];
+               preciolecheordenie1.value = result.rows.item(0)['precioleche'];
+               selladorordenie1.value = result.rows.item(0)['sellador'];
+               abmcordenie1.value = result.rows.item(0)['abmc'];
+               absecaordenie1.value = result.rows.item(0)['abseca'];               
+               idordenie1.value = result.rows.item(0)['ordenieid'];
+               
+               var nrotabcon1 = document.getElementById("labeltabcontroltambo");
+               var nomtabcon1 = document.getElementById("labeltabcontroltambo1");
+               
+               var nrotabvac = document.getElementById("labeltabvacastambo");
+               var nomtabvac = document.getElementById("labeltabvacastambo1");
+               var aniotabvac = document.getElementById("labeltabvacasanio");
+               var mestabvac = document.getElementById("labeltabvacasmes");
+               
+               nrotabvac.innerText = nrotabcon1.innerText;
+               nomtabvac.innerText = nomtabcon1.innerText;
+               aniotabvac.innerText = result.rows.item(0)['anio'];
+               mestabvac.innerText = result.rows.item(0)['mes'];
+     
+               var nrotabres = document.getElementById("labeltabrestambo");
+               var nomtabres = document.getElementById("labeltabrestambo1");
+               var aniotabres = document.getElementById("labeltabresanio");
+               var mestabres = document.getElementById("labeltabresmes");
+               
+               nrotabres.innerText = nrotabcon1.innerText;
+               nomtabres.innerText = nomtabcon1.innerText;
+               aniotabres.innerText = result.rows.item(0)['anio'];
+               mestabres.innerText = result.rows.item(0)['mes'];
+     
+               var ordvaca = document.getElementById("ordenieidvaca1");
+               ordvaca.value = result.rows.item(0)['ordenieid'];
+               
+               var aniotabresinf = document.getElementById("anioreinfecciones1");
+               var mestabresinf = document.getElementById("mesreinfecciones1");
+               aniotabresinf.value = result.rows.item(0)['anio'];
+               mestabresinf.value = result.rows.item(0)['mes'];
+            });
+        });  
+     //   listOrdenies();
+        listVacas();           
+     }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ function showTambos(users) {
+       $("#example1").dataTable().fnDestroy();
+       
+       var place = document.getElementById("tambosDiv");
+        if (place.getElementsByTagName("table").length > 0 )
+            place.removeChild(place.getElementsByTagName("table")[0]);
+
+     place.innerHTML += "<table id=\"example1\" class=\"table table-bordered table-striped responsive\"><thead><tr><th> Número </th><th> Nombre </th> <th> Dueño </th> <th> Veterinario </th> <th> e-mail </th> <th> Télefono </th><th> Acción </th></tr></thead><tbody></tbody></table>";
+       
+       $("#example1").dataTable({
+			"aaData": users,
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bSort": true,
+			"bInfo": true,
+			"responsive": true,
+			"bAutoWidth": false,
+			"bDestroy": true,
+			"aoColumnDefs":[
+				{"aTargets":[ 0 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 1 ]
+				, "sType": "string"
+				},
+				{"aTargets":[ 2 ]
+				, "sType": "string"
+				},
+				{"aTargets":[ 3 ]
+				, "sType": "string"
+				},
+				{"aTargets":[ 4 ]
+				, "sType": "string"
+				},
+				{"aTargets":[ 5 ]
+				, "sType": "numeric"
+				},
+				{"aTargets":[ 6 ]
+				, "bSortable": false
+				, "sType": "html"
+				, "mRender": function ( nrotambo, type, full )  {
+				return  '<button class=\"btn btn-default pull-right\" onclick=\'removeTambo('+nrotambo+')\'><i class="fa fa-trash-o"></i></button><button class=\"btn btn-default pull-right\" onclick=\'selectTambo('+nrotambo+')\'><i class="fa fa-edit"></i></button>';
+				                                                                                
+				}
+				}
+			]
+		});
+    }
+
+    function listTambos() {
+        db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM tambos ORDER BY nrotambo", [],
+                function(tx, result){
+                    var output = [];
+                    for(var i=0; i < result.rows.length; i++) {
+                        output.push([result.rows.item(i)['nrotambo'],
+                                result.rows.item(i)['nombretambo'],
+                                result.rows.item(i)['duenio'],
+                                result.rows.item(i)['veterinario'],
+                                result.rows.item(i)['mail'],
+                                result.rows.item(i)['tel'],
+                                result.rows.item(i)['nrotambo']
+                                ]);
+                    }
+ 			        showTambos(output);
+	            });
+            });
+    }
+ 
+       function guardarTambo(nro, nombre, due, vet, mail, tel){
+       if (nro && nombre && due && vet && mail && tel){
+		     
+		  // alert("guardar Tambo 1");
+           db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM tambos WHERE nrotambo=?",[nro],
+                function(tx, result){
+					
+			//		alert(result.rows.length);
+					
+                   if (result.rows.length>0){
+				//	   alert("guardar Tambo 2 "+nombre);
+                        db.transaction(function(tx){
+                        tx.executeSql('UPDATE tambos SET nrotambo=?,nombretambo=?,duenio=?,veterinario=?,mail=?,tel=?  WHERE nrotambo=?', [nro,nombre,due,vet,mail,tel,nro]);
+                        alert("Modificó el Tambo "+nro+".");
+                        listTambos();
+                    });
+                    }else{
+			//			alert("guardar Tambo 3 "+nombre);
+                        db.transaction(function(tx){
+                        tx.executeSql('INSERT INTO tambos(nrotambo,nombretambo,duenio,veterinario,mail,tel) VALUES(?,?,?,?,?,?)', [nro,nombre,due,vet,mail,tel]);
+                        alert("Insertó el Tambo "+nro+".");
+                        listTambos();
+                    });
+                   }
+              //      alert("guardar Tambo 4");
+                        
+                });        
+               
+          }); 
+         }
+      }
+ 
+    
+     
+     function removeTambo(userId) {
+        db.transaction(function(tx) {
+            tx.executeSql("DELETE FROM tambos WHERE nrotambo=?",[userId], listTambos);
+             
+            /* Debo resetear form */
+            
+        });
+     }
+     
+   	 function selectTambo(userId) {
+        db.transaction( function(tx) {
+            tx.executeSql("SELECT * FROM tambos WHERE nrotambo=?",[userId], function(tx, result){ 
+               var nro = document.getElementById("nrotambo1");
+               var nom = document.getElementById("nombretambo1");
+               var duenio = document.getElementById("dueniotambo1");
+               var vet = document.getElementById("vettambo1");
+               var mail = document.getElementById("mailtambo1");
+               var tel = document.getElementById("teltambo1");
+               
+               var nrotabcon = document.getElementById("labeltabcontroltambo");
+               var nomtabcon = document.getElementById("labeltabcontroltambo1");
+               
+                             
+               nro.value = result.rows.item(0)['nrotambo'];
+               nom.value = result.rows.item(0)['nombretambo'];
+               duenio.value = result.rows.item(0)['duenio'];
+               vet.value = result.rows.item(0)['veterinario'];
+               mail.value = result.rows.item(0)['mail'];
+               tel.value = result.rows.item(0)['tel'];
+               
+               nrotabcon.innerText = result.rows.item(0)['nrotambo'];
+               nomtabcon.innerText = result.rows.item(0)['nombretambo'];
+               
+            });
+        });    
+        listOrdenies();     
+     }
+
+ 
+
+
+
+</script>
+
+<script src="js-xlsx-master/shim.js"></script>
+<script src="js-xlsx-master/jszip.js"></script>
+<script src="js-xlsx-master/xlsx.js"></script>
+<!-- uncomment the next line here and in xlsxworker.js for ODS support -->
+<script src="js-xlsx-master/dist/ods.js"></script>
+
+
+<script>
+	
+
+var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
+if(!rABS) {
+	document.getElementsByName("userabs")[0].disabled = true;
+	document.getElementsByName("userabs")[0].checked = false;
+}
+
+var use_worker = typeof Worker !== 'undefined';
+if(!use_worker) {
+	document.getElementsByName("useworker")[0].disabled = true;
+	document.getElementsByName("useworker")[0].checked = false;
+}
+
+var transferable = use_worker;
+if(!transferable) {
+	document.getElementsByName("xferable")[0].disabled = true;
+	document.getElementsByName("xferable")[0].checked = false;
+}
+
+var wtf_mode = false;
+
+function fixdata(data) {
+	var o = "", l = 0, w = 10240;
+	for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
+	o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(l*w)));
+	return o;
+}
+
+function ab2str(data) {
+	var o = "", l = 0, w = 10240;
+	for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint16Array(data.slice(l*w,l*w+w)));
+	o+=String.fromCharCode.apply(null, new Uint16Array(data.slice(l*w)));
+	return o;
+}
+
+function s2ab(s) {
+	var b = new ArrayBuffer(s.length*2), v = new Uint16Array(b);
+	for (var i=0; i != s.length; ++i) v[i] = s.charCodeAt(i);
+	return [v, b];
+}
+
+function xlsxworker_noxfer(data, cb) {
+	var worker = new Worker('./xlsxworker.js');
+	worker.onmessage = function(e) {
+		switch(e.data.t) {
+			case 'ready': break;
+			case 'e': console.error(e.data.d); break;
+			case 'xlsx': cb(JSON.parse(e.data.d)); break;
+		}
+	};
+	var arr = rABS ? data : btoa(fixdata(data));
+	worker.postMessage({d:arr,b:rABS});
+}
+
+function xlsxworker_xfer(data, cb) {
+	var worker = new Worker(rABS ? './xlsxworker2.js' : './xlsxworker1.js');
+	worker.onmessage = function(e) {
+		switch(e.data.t) {
+			case 'ready': break;
+			case 'e': console.error(e.data.d); break;
+			default: xx=ab2str(e.data).replace(/\n/g,"\\n").replace(/\r/g,"\\r"); console.log("done"); cb(JSON.parse(xx)); break;
+		}
+	};
+	if(rABS) {
+		var val = s2ab(data);
+		worker.postMessage(val[1], [val[1]]);
+	} else {
+		worker.postMessage(data, [data]);
+	}
+}
+
+function xlsxworker(data, cb) {
+	transferable = document.getElementsByName("xferable")[0].checked;
+	if(transferable) xlsxworker_xfer(data, cb);
+	else xlsxworker_noxfer(data, cb);
+}
+
+function get_radio_value( radioName ) {
+	var radios = document.getElementsByName( radioName );
+	for( var i = 0; i < radios.length; i++ ) {
+		if( radios[i].checked || radios.length === 1 ) {
+			return radios[i].value;
+		}
+	}
+}
+
+function to_json(workbook) {
+	var result = {};
+	workbook.SheetNames.forEach(function(sheetName) {
+		var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+		if(roa.length > 0){
+			result[sheetName] = roa;
+		}
+	});
+	return result;
+}
+
+function to_csv(workbook) {
+	var result = [];
+	workbook.SheetNames.forEach(function(sheetName) {
+		var csv = XLSX.utils.sheet_to_csv(workbook.Sheets[sheetName]);
+		if(csv.length > 0){
+		//	result.push("SHEET: " + sheetName);
+		//	result.push("");
+		//	alert(csv);
+		     var lista = csv.split("\n");
+		     var fila;
+		     var idordenie1 = document.getElementById("ordenieidvaca1"); 
+                        var vaca;
+                        var rcs;
+                        var dl;
+                        var nop;
+                        var mc;
+		      for(var i=1; i < lista.length-1; i++) {
+                        fila = lista[i].split(",");
+           //             alert(fila);               
+                        idordenie1 = document.getElementById("ordenieidvaca1"); 
+                        vaca = fila[3];
+             //           alert(vaca);
+                        rcs = fila[4];
+                        dl = fila[5];
+                        nop = fila[6];
+                        mc = fila[7];
+                        insertarvacas2(idordenie1.value,vaca,rcs,dl,nop,mc);	
+             }     
+		     //lista = lista.split(",");
+		      listVacas();
+         //    alert(lista); 
+			result.push(csv);
+		}
+	});
+	return result; //.join("\n");
+}
+
+function insertarvacas2(idordenie1,vaca,rcs,dl,nop,mc){
+         db.transaction(function(tx){
+						//	alert(vaca);
+                           tx.executeSql('INSERT INTO vacas(ordenieid,vaca,rcs,dl,nop,mc) VALUES(?,?,?,?,?,?)', [idordenie1,vaca,rcs,dl,nop,mc]); 
+                        //   alert(vaca);
+                                				     
+						});
+}
+
+function to_formulae(workbook) {
+	var result = [];
+	workbook.SheetNames.forEach(function(sheetName) {
+		var formulae = XLSX.utils.get_formulae(workbook.Sheets[sheetName]);
+		if(formulae.length > 0){
+			result.push("SHEET: " + sheetName);
+			result.push("");
+			result.push(formulae.join("\n"));
+		}
+	});
+	return result.join("\n");
+}
+
+var tarea = document.getElementById('b64data');
+function b64it() {
+	if(typeof console !== 'undefined') console.log("onload", new Date());
+	var wb = XLSX.read(tarea.value, {type: 'base64',WTF:wtf_mode});
+	process_wb(wb);
+}
+
+function process_wb(wb) {
+	var output = "";
+	switch(get_radio_value("format")) {
+		case "json":
+			output = JSON.stringify(to_json(wb), 2, 2);
+			break;
+		case "form":
+			output = to_formulae(wb);
+			break;
+		default:
+		output = to_csv(wb);
+	}
+//	if(out.innerText === undefined) out.textContent = output;
+//	else out.innerText = output;
+	if(typeof console !== 'undefined') console.log("output", new Date());
+}
+
+var drop = document.getElementById('drop');
+function handleDrop(e) {
+	e.stopPropagation();
+	e.preventDefault();
+	rABS = document.getElementsByName("userabs")[0].checked;
+	use_worker = document.getElementsByName("useworker")[0].checked;
+	var files = e.dataTransfer.files;
+	var i,f;
+	for (i = 0, f = files[i]; i != files.length; ++i) {
+		var reader = new FileReader();
+		var name = f.name;
+		reader.onload = function(e) {
+			if(typeof console !== 'undefined') console.log("onload", new Date(), rABS, use_worker);
+			var data = e.target.result;
+			if(use_worker) {
+				alert("1");
+				xlsxworker(data, process_wb);
+			} else {
+				var wb;
+				if(rABS) {
+					alert("2");
+					wb = XLSX.read(data, {type: 'binary'});
+				} else {
+					alert("3");
+				var arr = fixdata(data);
+					wb = XLSX.read(btoa(arr), {type: 'base64'});
+				}
+				alert("4");
+				process_wb(wb);
+			}
+		};
+		if(rABS) reader.readAsBinaryString(f);
+		else {alert("5");reader.readAsArrayBuffer(f);}
+	}
+}
+
+function handleDragover(e) {
+	e.stopPropagation();
+	e.preventDefault();
+	e.dataTransfer.dropEffect = 'copy';
+}
+
+if(drop.addEventListener) {
+	drop.addEventListener('dragenter', handleDragover, false);
+	drop.addEventListener('dragover', handleDragover, false);
+	drop.addEventListener('drop', handleDrop, false);
+}
+
+
+var xlf = document.getElementById('xlf');
+function handleFile(e) {
+	rABS = document.getElementsByName("userabs")[0].checked;
+	use_worker = document.getElementsByName("useworker")[0].checked;
+	var files = e.target.files;
+	var i,f;
+	//alert("6");
+	for (i = 0, f = files[i]; i != files.length; ++i) {
+		var reader = new FileReader();
+		var name = f.name;
+		reader.onload = function(e) {
+			if(typeof console !== 'undefined') console.log("onload", new Date(), rABS, use_worker);
+			var data = e.target.result;
+			if(use_worker) {
+				xlsxworker(data, process_wb);
+			} else {
+				var wb;
+				if(rABS) {
+					wb = XLSX.read(data, {type: 'binary'});
+				} else {
+				var arr = fixdata(data);
+					wb = XLSX.read(btoa(arr), {type: 'base64'});
+				}
+				process_wb(wb);
+			}
+		};
+		if(rABS) reader.readAsBinaryString(f);
+		else reader.readAsArrayBuffer(f);
+	}
+}
+
+
+
+if(xlf.addEventListener) xlf.addEventListener('change', handleFile, false);
+</script>
+
+    
+
+
+
+    </body>
+</html>

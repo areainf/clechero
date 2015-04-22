@@ -1,0 +1,15 @@
+
+Validar el tipo de los datos antes de crear los modelos desde el formulario
+Poner un validador js en todos los formularios.
+Poner estilo al los mensajes de error.
+Traducir la key de los mensajes de error
+Cambiar parametros  canEjecute user action por Ctrl
+Listar los tambos por veterinarios
+Sacar el mensaje de no autorizado cuando la sesion vencio.
+Que no venza la session
+
+
+PREGUNTAR
+Litros de leche entero o decimal
+NOP
+RCS se usa en un logaritmo natural , si es vacio o cero que hacer porque el ln tiende a infinito
