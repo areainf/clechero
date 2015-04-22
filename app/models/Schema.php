@@ -51,7 +51,7 @@ class Schema extends Model{
     }
 
     public function analisis(){
-        AnalisisSchema::first(array('conditions' => 
+       return AnalisisSchema::first(array('conditions' => 
             array("schema_id = ?", $this->id)));
     }
 
@@ -202,7 +202,7 @@ class Schema extends Model{
     }
 
     /*Realiza el calculo de Perdidas y Erogacines y actualiza o crea el modelo de analisis*/
-    private function createAnalisis($this){
+    public function createAnalisis(){
       $this->remove_analisis();
       $perdida_msc = $this->calculoPerdidaPorMSC();
       $perdida_mc = $this->calculoPerdidaPorMC();
