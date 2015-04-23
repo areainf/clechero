@@ -28,14 +28,19 @@ class SchemaController Extends BaseController {
       $params = $this->getData()['schema'];
       $schema = new Schema($params);
       if($this->existAndValidFile()){
-        if ($schema->is_valid() && $schema->save()){
-          if ($this->loadFile($schema)){
+        if ($schema->is_valid()){
+          global $_SQL;
+          $_SQL->query("START TRANSACTION");
+          if ($schema->save() && $this->loadFile($schema) && $schema->createAnalisis()){
+            $_SQL->query("COMMIT");
+
             //////$this->calculatePerdDML($schema);
             $this->flash->addMessage("Se agrego correctamente el Esquema de Control");
             $this->renameAction('index');
             return $this->index();
           }
           else{
+            $_SQL->query("ROLLBACK");
             return $this->add($schema);
           }
         }
@@ -68,18 +73,24 @@ class SchemaController Extends BaseController {
   public function update(){
       $params = $this->getData()['schema'];
       $schema = Schema::find($params['id']);
+      $schema_edit = new Schema($params);
       if($schema){
         if($this->existAndValidFile()){
-          if ($schema->is_valid($params) && $schema->update_attributes($params)){
-            if ($this->loadFile($schema)){
+          if ($schema->is_valid($params)){
+            global $_SQL;
+            $_SQL->query("START TRANSACTION");
+            if ( $schema->update_attributes($params) && $this->loadFile($schema) && $schema->createAnalisis()){
+              $_SQL->query("COMMIT");
               $this->flash->addMessage("Se modifico correctamente el Esquema de Control");
               $this->renameAction('index');
               return $this->index();
             }
             else{
-              $schema->delete();
+              //$schema->delete();?????????
+              $_SQL->query("ROLLBACK");
               $this->flash->addError("Ocurrio un error al subir el archivo"); 
-              $this->registry->schema = $schema;
+              // $this->registry->schema = $schema;
+               $this->registry->schema = $schema_edit;
               $this->render('_form');  
             }
           }
@@ -141,7 +152,7 @@ class SchemaController Extends BaseController {
   private function loadFile($schema){
     $file = $_FILES['dairy_control'];
     if ($file['error']['file_data'] == UPLOAD_ERR_NO_FILE)
-      return true;
+      return false;
     elseif($file['error']['file_data'] == UPLOAD_ERR_OK){
       $mimes = array('application/vnd.ms-excel','text/plain','text/csv','text/tsv');
       if(in_array($file['type']['file_data'],$mimes)){
@@ -159,9 +170,6 @@ class SchemaController Extends BaseController {
             }
             return false;
           }
-          $commit = true;
-          global $_SQL;
-          $_SQL->query("START TRANSACTION");
           $schema->remove_controls();
           $total_milk=0;
           // $default_cow_liters = ($csv->count_cattles) ? ($schema->liters_milk / ($csv->count_cattles * 1.0)) : 0;
@@ -173,52 +181,50 @@ class SchemaController Extends BaseController {
           $vacas_con_mc = 0;
           $without_milk = [];
           foreach ($csv->dairy_controls as $dc) {
+            //si tiene la leche especificada realiza calculos y lo guarda en la bd
+            // sino calcula primero cuanto se le va a asignar a cada vaca que no
+            // tiene leche y lo guarda despues
             if(!Valid::blank($dc->liters_milk)){
-              $total_milk += $dc->liters_milk;
-              //esta linea estaba en el else
-              $dc->calculateDL($schema->date);
-              if ($dc->mc){
-                $litros_con_mc += $dc->liters_milk;
-                $vacas_con_mc++;
-              }
-              else{
-                $litros_sin_mc += $dc->liters_milk;
-                $vacas_sin_mc++;
-                $dc->calculatePerdDML();
-              }
-              if (!$dc->save()){
-                  $this->flash->addErrors($dc->validation->getErrors()); 
-                  $commit = false;
-                  break;
-              }
+                $total_milk += $dc->liters_milk;
+                $dc->calculateDL($schema->date);
+                if ($dc->mc){
+                  $litros_con_mc += $dc->liters_milk;
+                  $vacas_con_mc++;
+                }
+                else{
+                  $litros_sin_mc += $dc->liters_milk;
+                  $vacas_sin_mc++;
+                  $dc->calculatePerdDML();
+                }
+                if (!$dc->save()){
+                    $this->flash->addErrors($dc->validation->getErrors()); 
+                    $commit = false;
+                    break;
+                }
             }
-            else{
-              //$dc->liters_milk = $default_cow_liters;
+            else
               $without_milk[] = $dc;
-            }
+            
           }
           if($total_milk == 0 && Valid::blank($schema->liters_milk)){
             $this->flash->addError("No se especifico la producción de leche"); 
-            $commit = false;
+            return false;
           }
-          else{
-            $prom_sin_mc = ($vacas_sin_mc > 0 && $litros_sin_mc > 0)? $litros_sin_mc / ($vacas_sin_mc * 1.0) : $default_cow_liters;
-            $prom_con_mc = ($vacas_con_mc > 0 && $litros_con_mc > 0)? $litros_con_mc / ($vacas_con_mc * 1.0) : $default_cow_liters;
-            foreach ($without_milk as $dc) {
-              if($dc->mc)
-                $dc->liters_milk = $prom_con_mc;
-              else{
-                $dc->liters_milk = $prom_sin_mc;
-                $total_milk += $dc->liters_milk;
-                $dc->calculateDL($schema->date);
-                $dc->calculatePerdDML();
-              }
-              if (!$dc->save()){
-                  $this->flash->addErrors($dc->validation->getErrors()); 
-                  $this->flash->addError(DairyControl::$_last_query); 
-                  $commit = false;
-                  break;
-              }
+          $prom_sin_mc = ($vacas_sin_mc > 0 && $litros_sin_mc > 0)? $litros_sin_mc / ($vacas_sin_mc * 1.0) : $default_cow_liters;
+          $prom_con_mc = ($vacas_con_mc > 0 && $litros_con_mc > 0)? $litros_con_mc / ($vacas_con_mc * 1.0) : $default_cow_liters;
+          foreach ($without_milk as $dc) {
+            $dc->calculateDL($schema->date);
+            if($dc->mc)
+              $dc->liters_milk = $prom_con_mc;
+            else{
+              $dc->liters_milk = $prom_sin_mc;
+              $total_milk += $dc->liters_milk;
+              $dc->calculatePerdDML();
+            }
+            if (!$dc->save()){
+                $this->flash->addErrors($dc->validation->getErrors()); 
+                $this->flash->addError(DairyControl::$_last_query); 
+                return false;
             }
           }
            if($total_milk > 0 && Valid::blank($schema->liters_milk))
@@ -227,11 +233,8 @@ class SchemaController Extends BaseController {
           //   $this->flash->addError("No se especifico la producción de leche"); 
           //   $commit = false;
           // }
-          if ($commit)
-            $_SQL->query("COMMIT");
-          else
-            $_SQL->query("ROLLBACK");
-          return $commit;
+         
+          return true;
         }
         else{
           $this->flash->addErrors($csv->errors);
@@ -255,6 +258,8 @@ class SchemaController Extends BaseController {
   //     $dc->calculatePerdDML();
   //   }
   // }
+
+
 
   private function existAndValidFile(){
     $file = $_FILES['dairy_control'];

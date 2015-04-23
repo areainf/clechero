@@ -95,13 +95,17 @@ class CsvDairyControl{
         $new_row['date_dl'] = (array_key_exists($key, $row)) ? DateHelper::ar_to_db($row[$key]) : '';
       }
       elseif($key == 'litros'){
-        $new_row['liters_milk'] = (array_key_exists($key, $row)) ? $row[$key] : '';
+        $new_row['liters_milk'] = (array_key_exists($key, $row)) ? $this->replaceComaPunto($row[$key]) : '';
       }
       else
         $new_row[$key] = $row[$key];
     }
     $new_row['schema_id'] = $this->schema->id;
     return $new_row;
+  }
+
+  private function replaceComaPunto($cad){
+    return str_replace(',', '.', $cad);
   }
 }
 ?>

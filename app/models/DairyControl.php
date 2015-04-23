@@ -17,7 +17,6 @@ class DairyControl  extends Model{
         $this->validation->minInteger($this, 'rcs', 0);
         $this->validation->integer($this, 'liters_milk');
         $this->validation->date($this, 'date_dl');
-        //$this->validation->unique($this, ['cow_id', 'schema_id']);    
         return $this->validation->is_valid;
     }
     public function cow(){
