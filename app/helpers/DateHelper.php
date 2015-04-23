@@ -13,6 +13,7 @@ class DateHelper{
   }
   public static function db_to_ar($str_fecha){
     $format1="d-m-Y";
+    if(empty($str_fecha) || $str_fecha == '0000-00-00') return "";
     try{
       $date = new DateTime($str_fecha);
       return $date->format($format1);

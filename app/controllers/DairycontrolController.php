@@ -30,7 +30,7 @@ class DairycontrolController Extends BaseController {
   public function analisis_report() {
     $schema = $this->registry->schema;
     $an = new AnalisisDairyControl($schema);
-    $name = time().".xlsx";
+    $name = $schema->id.".xlsx";
     $folderpath = $schema->folder_path().$name;
     $an->save($folderpath);
     header('Content-Type: application/csv');
