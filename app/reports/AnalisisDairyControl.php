@@ -12,6 +12,10 @@ class AnalisisDairyControl{
     $this->author();
     $this->_setDataSchema();
     $this->_setDairyControlData();
+    $this->_setStyles();
+
+    //dejamos activa la hoja 0
+    $this->objPHPExcel->setActiveSheetIndex(0);
   }
 
   private function author(){
@@ -28,8 +32,15 @@ class AnalisisDairyControl{
   private function _setDataSchema(){
     $sheet = $this->objPHPExcel->setActiveSheetIndex(0);
     $sheet->setTitle("General"); //establecer titulo de hoja
-    //write titulo
+    
     $sheet->mergeCells('A1:G1');
+    $sheet->mergeCells('A5:E5');
+    $sheet->mergeCells('B6:C6');
+    $sheet->mergeCells('D6:E6');
+    $sheet->mergeCells('A13:C13');
+    $sheet->mergeCells('A22:B22');
+
+    //write titulo
     $sheet->setCellValue('A1', 'Datos Generales')
         ->setCellValue('A2', 'Tambo')
         ->setCellValue('B2', 'Vacas Analizados')
@@ -47,18 +58,18 @@ class AnalisisDairyControl{
         ->setCellValue('G3', DateHelper::db_to_ar($this->schema->date));
 
     //write perdidas
-    $sheet->mergeCells('A4:E4');
-    $sheet->setCellValue('A4', 'Análisis del Control Lechero')
-        ->setCellValue('B4', 'Para el Tambo')
-        ->setCellValue('C4', 'Por Vaca en ordeñe')
-        ->setCellValue('B5', 'Litros')
-        ->setCellValue('C5', 'Precio')
-        ->setCellValue('D5', 'Litros')
-        ->setCellValue('E5', 'Precio')
-        ->setCellValue('A6', 'Pérdida por MSC')
-        ->setCellValue('A7', 'Pérdida por MC')
-        ->setCellValue('A8', 'Total de Pérdidas')
-        ->setCellValue('A9', 'Efecto biológico de la Enfermedad');
+    
+    $sheet->setCellValue('A5', 'Análisis del Control Lechero')
+        ->setCellValue('B6', 'Para el Tambo')
+        ->setCellValue('D6', 'Por Vaca en ordeñe')
+        ->setCellValue('B7', 'Litros')
+        ->setCellValue('C7', 'Precio')
+        ->setCellValue('D7', 'Litros')
+        ->setCellValue('E7', 'Precio')
+        ->setCellValue('A8', 'Pérdida por MSC')
+        ->setCellValue('A9', 'Pérdida por MC')
+        ->setCellValue('A10', 'Total de Pérdidas')
+        ->setCellValue('A11', 'Efecto biológico de la Enfermedad');
     $analisis = $this->schema->analisis();
     $count_cow = $this->schema->in_ordenio;
     $precio_leche = $this->schema->milk_price;
@@ -66,30 +77,30 @@ class AnalisisDairyControl{
     $perdida_mc_v = $analisis->perdida_mc / $count_cow;
     $perdida_lts_v = $analisis->perdida_lts / $count_cow;
     $costo_total_perdida_vaca = $analisis->perdida_costo / $count_cow;
-    $sheet->setCellValue('B6', $analisis->perdida_msc)
-          ->setCellValue('C6', round($analisis->perdida_msc * $precio_leche, 2))
-          ->setCellValue('D6', round($perdida_msc_v, 2))
-          ->setCellValue('E6', round($perdida_msc_v * $precio_leche, 2))
-          ->setCellValue('B7', $analisis->perdida_mc)
-          ->setCellValue('C7', round($analisis->perdida_mc * $precio_leche, 2))
-          ->setCellValue('D7', round($perdida_mc_v, 2))
-          ->setCellValue('E7', round($perdida_mc_v * $precio_leche, 2))
-          ->setCellValue('B8', $analisis->perdida_lts)
-          ->setCellValue('D8', round($perdida_lts_v, 2))
-          ->setCellValue('C9', $analisis->perdida_costo)
-          ->setCellValue('E9', round($costo_total_perdida_vaca, 2));
+    $sheet->setCellValue('B8', $analisis->perdida_msc)
+          ->setCellValue('C8', round($analisis->perdida_msc * $precio_leche, 2))
+          ->setCellValue('D8', round($perdida_msc_v, 2))
+          ->setCellValue('E8', round($perdida_msc_v * $precio_leche, 2))
+          ->setCellValue('B9', $analisis->perdida_mc)
+          ->setCellValue('C9', round($analisis->perdida_mc * $precio_leche, 2))
+          ->setCellValue('D9', round($perdida_mc_v, 2))
+          ->setCellValue('E9', round($perdida_mc_v * $precio_leche, 2))
+          ->setCellValue('B10', $analisis->perdida_lts)
+          ->setCellValue('D10', round($perdida_lts_v, 2))
+          ->setCellValue('C11', $analisis->perdida_costo)
+          ->setCellValue('E11', round($costo_total_perdida_vaca, 2));
     
     
     //write erogaciones
-    $sheet->setCellValue('A11', 'Erogaciones por esquema de control')
-        ->setCellValue('B11', 'Para el Tambo')
-        ->setCellValue('C11', 'Por vaca en ordeñe')
-        ->setCellValue('A12', 'Desinfección Pre-ordeñe')
-        ->setCellValue('A13', 'Desinfección Post-ordeñe')
-        ->setCellValue('A14', 'Tratamiento MC')
-        ->setCellValue('A15', 'Tratamiento al Secado')
-        ->setCellValue('A16', 'Costo Mantenimiento Máquina')
-        ->setCellValue('A17', 'Erogaciones por esquema de control');
+    $sheet->setCellValue('A13', 'Erogaciones por esquema de control')
+        ->setCellValue('B14', 'Para el Tambo')
+        ->setCellValue('C14', 'Por vaca en ordeñe')
+        ->setCellValue('A15', 'Desinfección Pre-ordeñe')
+        ->setCellValue('A16', 'Desinfección Post-ordeñe')
+        ->setCellValue('A17', 'Tratamiento MC')
+        ->setCellValue('A18', 'Tratamiento al Secado')
+        ->setCellValue('A19', 'Costo Mantenimiento Máquina')
+        ->setCellValue('A20', 'Erogaciones por esquema de control');
 
     $desinf_pre_o = $analisis->costo_desinf_pre_o;
     $desinf_pre_o1 = $desinf_pre_o / $count_cow;
@@ -104,30 +115,28 @@ class AnalisisDairyControl{
     $costo_mantenimiento_maquina1 = $costo_mantenimiento_maquina / $count_cow;
     $total_erogacion = $analisis->costo_total;
     $total_erogacion1 = $desinf_pre_o1 + $desinf_pos_o1 + $costo_tratamiento_mc1 + $costo_tratamiento_secado1 + $costo_mantenimiento_maquina1;    
-    $sheet->setCellValue('B12',round($desinf_pre_o, 2))
-        ->setCellValue('C12',round($desinf_pre_o1, 2))
-        ->setCellValue('B13',round($desinf_pos_o, 2))
-        ->setCellValue('C13',round($desinf_pos_o1, 2))
-        ->setCellValue('B14',round($costo_tratamiento_mc, 2))
-        ->setCellValue('C14',round($costo_tratamiento_mc1, 2))
-        ->setCellValue('B15',round($costo_tratamiento_secado, 2))
-        ->setCellValue('C15',round($costo_tratamiento_secado1, 2))
-        ->setCellValue('B16',round($costo_mantenimiento_maquina, 2))
-        ->setCellValue('C16',round($costo_mantenimiento_maquina1, 2))
-        ->setCellValue('B17',round($total_erogacion, 2))
-        ->setCellValue('C17',round($total_erogacion1, 2));
+    $sheet->setCellValue('B15',round($desinf_pre_o, 2))
+        ->setCellValue('C15',round($desinf_pre_o1, 2))
+        ->setCellValue('B16',round($desinf_pos_o, 2))
+        ->setCellValue('C16',round($desinf_pos_o1, 2))
+        ->setCellValue('B17',round($costo_tratamiento_mc, 2))
+        ->setCellValue('C17',round($costo_tratamiento_mc1, 2))
+        ->setCellValue('B18',round($costo_tratamiento_secado, 2))
+        ->setCellValue('C18',round($costo_tratamiento_secado1, 2))
+        ->setCellValue('B19',round($costo_mantenimiento_maquina, 2))
+        ->setCellValue('C19',round($costo_mantenimiento_maquina1, 2))
+        ->setCellValue('B20',round($total_erogacion, 2))
+        ->setCellValue('C20',round($total_erogacion1, 2));
 
 
     //Costo total de la enfermedad (Efecto biológico + Erogaciones por esquema de control)
-    $sheet->mergeCells('A19:B19');
-    $sheet->setCellValue('A19','Costo total de la enfermedad (Efecto biológico + Erogaciones por esquema de control)')
-        ->setCellValue('A20', 'Por Tambo')
-        ->setCellValue('B20', 'Por Vaca');
-
+    $sheet->setCellValue('A22',"Costo total de la Enfermedad")
+        ->setCellValue('A23', 'Por Tambo')
+        ->setCellValue('B23', 'Por Vaca');
     $costo_total = $total_erogacion + $analisis->perdida_costo;
     $costo_total1 = $total_erogacion1 + ($analisis->perdida_costo / $count_cow);
-    $sheet->setCellValue('A21', round($total_erogacion, 2))
-        ->setCellValue('B21', round($total_erogacion1, 2));
+    $sheet->setCellValue('A24', round($total_erogacion, 2))
+        ->setCellValue('B24', round($total_erogacion1, 2));
   }
 
   private function _setDairyControlData(){
@@ -159,6 +168,98 @@ class AnalisisDairyControl{
     }
 
  
+  }
+
+  private function _setStyles(){
+    //inicio estilos
+    $titulo = new PHPExcel_Style(); //nuevo estilo
+    $titulo->applyFromArray(
+      array('alignment' => array( //alineacion
+          'wrap' => false,
+          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER
+        ),
+        'font' => array( //fuente
+          'bold' => true,
+          'size' => 16
+        )
+    ));
+    $sheet = $this->objPHPExcel->setActiveSheetIndex(0); //seleccionar hora
+    $sheet->setSharedStyle($titulo, "A1");
+    $sheet->getRowDimension(1)->setRowHeight(30);
+    $sheet->setSharedStyle($titulo, "A5");
+    $sheet->getRowDimension(5)->setRowHeight(30);
+    $sheet->setSharedStyle($titulo, "A13");
+    $sheet->getRowDimension(13)->setRowHeight(30);
+    $sheet->setSharedStyle($titulo, "A22");
+    $sheet->getRowDimension(22)->setRowHeight(30);
+    //ancho automatico de las columnas
+    foreach(range('A','G') as $columnID) {
+        $sheet->getColumnDimension($columnID)
+            ->setAutoSize(true);
+    }
+
+
+    $subtitulo = new PHPExcel_Style(); //nuevo estilo
+    $subtitulo->applyFromArray(
+      array('fill' => array( //relleno de color
+          'type' => PHPExcel_Style_Fill::FILL_SOLID,
+          'color' => array('argb' => 'FFCCFFCC')
+        ),
+        'borders' => array( //bordes
+          'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+          'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+          'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+          'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+        ),
+        'font' => array( //fuente
+          'bold' => true,
+          'size' => 12
+        )
+    ));
+    
+    $sheet->setSharedStyle($subtitulo, "A6:E7");
+    $sheet->setSharedStyle($subtitulo, "A14:C14");
+
+    //pie de tablas
+    $footer = new PHPExcel_Style(); //nuevo estilo
+    $footer->applyFromArray(
+      array('fill' => array( //relleno de color
+          'type' => PHPExcel_Style_Fill::FILL_SOLID,
+          'color' => array('argb' => 'C9C9C9C9')
+        ),
+        'borders' => array( //bordes
+          'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+          'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+          'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+          'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+        ),
+        'font' => array( //fuente
+          'bold' => true,
+          'size' => 12
+        )
+    ));
+    //set footers
+    $sheet->setSharedStyle($footer, "A11:E11");
+    $sheet->setSharedStyle($footer, "A20:C20");
+    $sheet->setSharedStyle($footer, "A24:B24");
+
+
+    //text bold
+    $sheet->getStyle("A2:G2")->getFont()->setBold(true);
+    $sheet->getStyle("A8:A10")->getFont()->setBold(true);
+    $sheet->getStyle("B14:C14")->getFont()->setBold(true);
+    $sheet->getStyle("A15:A19")->getFont()->setBold(true);
+    $sheet->getStyle("A23:B23")->getFont()->setBold(true);
+
+     //HOJA 1
+    $sheet = $this->objPHPExcel->setActiveSheetIndex(1); //seleccionar hora
+    $sheet->getStyle("A1:I1")->getFont()->setBold(true);
+    //ancho automatico de las columnas
+    foreach(range('A','I') as $columnID) {
+        $sheet->getColumnDimension($columnID)
+            ->setAutoSize(true);
+    }
+
   }
 
   public function save($filepath){

@@ -4,7 +4,9 @@
   $analisis = $schema->analisis();
 ?>
 <div>
-<a href="<?php echo $url_report; ?>"><span class="btn btn-info">Descargar Reporte</span></a>  
+  <span class="pull-right">
+    <a href="<?php echo $url_report; ?>"><span class="btn btn-warning">Descargar Reporte</span></a>  
+  </span>
 </div>
 <!-- INICIO DATOS GENERALES -->
   <h2><small>Datos Generales</small></h2>
@@ -103,8 +105,8 @@
       $order_data = $schema->getDataDistrPerdidaMSC();
       $count_data = count($order_data);
       $cant_interval = Calculos::histrogramCantInterval($count_data);
-      $min = $order_data[0]->perdida;
-      $max = $order_data[$count_data - 1]->perdida;
+      $min = $order_data[0]->dml;
+      $max = $order_data[$count_data - 1]->dml;
       $intervals = round(($max - $min) / $cant_interval, 2);
       $interv_maxs = []; 
       $count_by_interval =[];//cantidad por intervalos
@@ -116,7 +118,7 @@
         $br = false;
         $count_by_interval[$i] = 0;
         while($index_data < $count_data && !$br){
-          if($order_data[$index_data]->perdida <= $int_max){
+          if($order_data[$index_data]->dml <= $int_max){
             $count_by_interval[$i]++;
             $index_data++;
           }

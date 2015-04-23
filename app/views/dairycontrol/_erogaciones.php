@@ -26,11 +26,10 @@
   ?>
 
 <div class="panel panel-default">
-  <div class="panel-heading">Erogaciones por esquema de control</div>
   <table class="table">
     <thead>
-      <tr>
-        <th></th>
+      <tr class="tr-report">
+        <th>Erogaciones por esquema de control</th>
         <th>Para el tambo</th>
         <th>Por vaca en ordeñe</th>
       </tr>  
