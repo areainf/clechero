@@ -11,9 +11,14 @@
 .sub_header .list-nav{
   list-style-type: none;
 }
+
 .sub_header .list-nav-right{
   float: right;
 }
+ul.list-nav li{
+  display: inline;
+}
+
 .sub_header h2, .sub_header h3{
   margin: 0px;
   padding: 5px;

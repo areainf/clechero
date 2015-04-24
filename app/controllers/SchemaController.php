@@ -24,6 +24,23 @@ class SchemaController Extends BaseController {
     $this->render('_form');
   }
 
+  public function compare() {
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+      $schemas_ids = $this->getData('schemas_ids');
+      if($schemas_ids){
+        return$this->compare_schemas($schemas_ids, $this->getData('umbral'));
+      }
+      else{
+        $this->flash->addError("Debe seleccionar los Esquemas de Control");
+        $this->registry->umbral = $this->getData('umbral');
+      }
+    }
+    else
+      $this->registry->umbral = 200;  
+    $this->registry->dairies = Security::current_user()->dairies();
+    $this->render('compare'); 
+  }
+
   public function create(){
       $params = $this->getData()['schema'];
       $schema = new Schema($params);
@@ -252,6 +269,61 @@ class SchemaController Extends BaseController {
     }
   }
 
+  private function compare_schemas($str_ids,$umbral){
+    $ids = explode(',' , $str_ids);    
+    $schema1 = Schema::find($ids[0]);
+    $schema2 = Schema::find($ids[1]);
+    $this->registry->schema1 = $schema1;
+    $this->registry->schema2 = $schema2;
+    $this->registry->umbral = $umbral;
+    //realiza la comparacion
+    $dcs1 =  $schema1->dairy_controls();
+    $dcs2 =  $schema2->dairy_controls();
+    $result = array('sanas' => 0, 'cronicas' => 0, 'nuevas_inf' => 0, 'curadas' => 0, 
+                    'noanalizadas1' => 0 , 'noanalizadas2' => 0);
+    $map = array();
+    $noanalizadas1 = array();
+    foreach ($dcs1 as $dc1) {
+      $dc2 = null;
+      foreach ($dcs2 as $k => $v ) { 
+        if($dc1->cow_id == $v->cow_id){
+          //encontro la vaca en el segundo control
+          $map[] = [$dc1, $v];
+          unset($dcs2[$k]);
+          $dc2 = $v;
+          break;
+        }
+      }
+      if($dc2 != null){
+        if($dc1->rcs > $umbral){//si enferma 1 control
+          if($dc2->rcs > $umbral)//si cronica
+            $result['cronicas']++;
+          else
+            $result['curadas']++;
+        }
+        else{
+          if($dc2->rcs > $umbral)//si nueva inf
+            $result['nuevas_inf']++;
+          else
+            $result['sanas']++;
+        }
+
+      }
+      else{
+        //no esta la vaca en el segundo control
+        $noanalizadas1[] = $dc1;
+      }
+    }
+    $result['noanalizadas1'] = count($noanalizadas1);
+    $result['noanalizadas2'] = count($dcs2);
+    $this->registry->comparacion = $result;
+    $this->registry->map = $map;
+    $this->registry->noanalizadas1 = $noanalizadas1;
+    $this->registry->noanalizadas2 = $dcs2;
+
+    $this->render('result_compare');
+
+  }
   // private function calculatePerdDML($schema){
   //   $dcs = $schema->dairy_controls();
   //   foreach ($dcs as $dc) {

@@ -1,5 +1,6 @@
 <?php
 require_once HELPERS_PATH.'FormHelper.php';
+require_once HELPERS_PATH.'DateHelper.php';
 require_once 'Datatable.php';
 class SchemaDatatable Extends Datatable{
   public $user;
@@ -17,6 +18,7 @@ class SchemaDatatable Extends Datatable{
       'tmc_ai_inyect_cantidad', 'tmc_ai_inyect_precio', 'ts_pomo_precio',
       'machine_control_price', 'machine_control_days', 'liters_milk', 'dairy_id');
     $this->user = Security::current_user();
+    $this->default_order="date desc";
     $this->setDairiesIds();
   }
 
@@ -45,7 +47,6 @@ class SchemaDatatable Extends Datatable{
     $qSqlCount = "SELECT count(id) as cant FROM ".Schema::$_table_name.' ';
     $qSql .= $qWhere.$this->_getSqlOrder().$qLimit; 
     $qSqlCount .= $qWhere;
-
     /*Cantidad de items encontrados*/
     $res_count = $_SQL->get_row($qSqlCount);
     if ($_SQL->last_error != null) {
@@ -70,7 +71,7 @@ class SchemaDatatable Extends Datatable{
           $sch = new Schema($value);
           $res[]=['id' => $value->id,
                   'dairy' => $sch->dairy()->name,
-                  'date' => $value->date,
+                  'date' => DateHelper::db_to_ar($value->date),
                   'liters_milk' => $value->liters_milk,
                   'milk_price' => $value->milk_price,
                   'desinf_pre_o' => $this->getPrecioDias($value->desinf_pre_o_precio, $value->desinf_pre_o_dias),
@@ -82,28 +83,6 @@ class SchemaDatatable Extends Datatable{
                   'machine_control_pd' => $this->getPrecioDias($value->maquina_control_precio, $value->maquina_control_dias),
                   'actions' => $this->buildLinks($value),
                  ];
-                 error_log("MAQUINA: ".$value->maquina_control_precio .' '. $value->maquina_control_dias. ' = '.$this->getPrecioDias($value->maquina_control_precio, $value->maquina_control_dias));
-          // $res[]=['id' => $value->id,
-          //         'dairy' => $sch->dairy()->name,
-          //         'date' => $value->date,
-          //         'desinf_pre_o_producto' => $value->desinf_pre_o_producto,
-          //         'desinf_pre_o_precio' => $value->desinf_pre_o_precio,
-          //         'desinf_pre_o_dias' => $value->desinf_pre_o_dias,
-          //         'desinf_post_o_producto' => $value->desinf_post_o_producto,
-          //         'desinf_post_o_precio' => $value->desinf_post_o_precio,
-          //         'desinf_post_o_dias' => $value->desinf_post_o_dias,
-          //         'tmc_ab_pomo_cantidad' => $value->tmc_ab_pomo_cantidad,
-          //         'tmc_ab_pomo_precio' => $value->tmc_ab_pomo_precio,
-          //         'tmc_ab_inyect_cantidad' => $value->tmc_ab_inyect_cantidad,
-          //         'tmc_ab_inyect_precio' => $value->tmc_ab_inyect_precio,
-          //         'tmc_ai_inyect_cantidad' => $value->tmc_ai_inyect_cantidad,
-          //         'tmc_ai_inyect_precio' => $value->tmc_ai_inyect_precio,
-          //         'ts_pomo_precio' => $value->ts_pomo_precio,
-          //         'machine_control_price' => $value->machine_control_price,
-          //         'machine_control_days' => $value->machine_control_days,
-          //         'liters_milk' => $value->liters_milk,
-          //         'actions' => $this->buildLinks($value),
-          //        ];
         }
     }
     return  json_encode(array_merge($this->infoDataTable,["data" => $res]));

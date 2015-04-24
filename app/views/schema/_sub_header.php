@@ -12,6 +12,11 @@
           <h3>Editar</h3>
         <?php
           }
+          else if($this->getAction()=='compare'){
+        ?>  
+          <h3>Comparar Controles Lecheros</h3>
+        <?php
+          }
           else{
         ?>  
           <h3>Listado</h3>
@@ -20,12 +25,23 @@
     <div class="col-md-4">        
        <ul class="list-nav list-nav-right">
           <?php if($this->getAction()=='index'){ ?>  
-          <li><a href="add" class="btn btn-info btn-xs">Nuevo</a></li>
+            <li><a href="add" class="btn btn-info btn-xs">Nuevo</a></li>
+            <li><a href="compare" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-transfer">Comparar</span></a></li>
           <?php
+            }
+            elseif($this->getAction()=='compare'){
+          ?>
+            <li><a href="add" class="btn btn-info btn-xs">Nuevo</a></li>
+            <li><a href="index" class="btn btn-info btn-xs">Listado</a></li>
+            <?php 
+              if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            ?>
+              <li><a href="compare" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-transfer">Comparar</span></a></li>
+          <?php
+              }
             }
             else{ 
           ?>  
-          <li><a href="index" class="btn btn-info btn-xs">Listado</a></li>
           <?php  } ?>  
         </ul>
     </div>
