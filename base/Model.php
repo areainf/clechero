@@ -190,8 +190,7 @@ class Model{
     if(isset($model->_type))
       $where .= ' and (type="'.$model->_type.'") ';
 
-    $query .= ' where ('.$where.')';
-
+    $query .= ' where ('.$where.') '. static::getOrder($params);
     $model::$_last_query = $query;
     global $_SQL;
     $res = $_SQL->get_results($query);

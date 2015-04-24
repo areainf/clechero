@@ -42,7 +42,7 @@
         <td><span class="badge"><?php echo round($perdida_mc_v * $precio_leche, 2) ?></span></td>
       </tr>
       <tr>
-        <td>Total de Perdidas</td>
+        <td>Total de Pérdidas</td>
         <td><span class="badge"><?php echo $analisis->perdida_lts ?></span></td>
         <td></td>
         <td><span class="badge"><?php echo round($perdida_lts_v, 2) ?></span></td>

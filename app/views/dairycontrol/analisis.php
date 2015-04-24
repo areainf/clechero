@@ -16,7 +16,7 @@
     <tr>
       <th>Tambo</th>
       <th>Análisis / Ordeño</th>
-      <th>Vacas Con MC</th>
+      <th>Con MC</th>
       <th>Producción</th>
       <th>Precio x Lt.</th>
       <th>Período evaluado</th>
@@ -173,7 +173,7 @@
       },
         series: [{
         type: 'pie',
-        name: 'Importancia Relativa Perdida',
+        name: 'Importancia Relativa Pérdida',
         data: dataset
       }]
     });

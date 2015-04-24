@@ -11,12 +11,15 @@ abstract class Datatable{
   public $dtSearch;//Text to search array(search=>'', regex=>'boolean')
   public $infoDataTable = array();
 
+  protected $default_order="";
+
+
   abstract protected function _findData();
   abstract protected function _serializeResult();
   
   public function __construct($parameters){
     $this->parameters = $parameters;
-    $this->dtColumns = array('Dairy.id', 'Dairy.number', 'Dairy.name', array('Owner.last_name', 'Owner.first_name'), array('Veterinary.last_name', 'Veterinary.first_name'), 'email', 'phone');
+    //$this->dtColumns = array('Dairy.id', 'Dairy.number', 'Dairy.name', array('Owner.last_name', 'Owner.first_name'), array('Veterinary.last_name', 'Veterinary.first_name'), 'email', 'phone');
     $this->dtStart = $this->getParams('start');
     $this->dtLength = $this->getParams('length');
     $this->dtDraw = $this->getParams('draw');
@@ -42,7 +45,7 @@ abstract class Datatable{
   }
   protected function _getSqlOrder(){
     if (empty($this->dtOrder))
-      return "";
+      return $this->default_order;
     $arr = array();
     foreach ($this->dtOrder as $value) {
       $col = $value['column'];
