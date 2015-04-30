@@ -102,14 +102,14 @@ class Schema extends Model{
     /*Cantidad de animales analizados con MC*/
     public function countCowMC($force=false){
       if(empty($this->_cant_cow_mc) || $force)
-        $this->_cant_cow_mc = DairyControl::count(['conditions' => ['schema_id = ? and mc = 1',$this->id]]);
+        $this->_cant_cow_mc = DairyControl::count(['conditions' => ['schema_id = ? and mc = 0',$this->id]]);
       return $this->_cant_cow_mc;
     }
 
     /*Cantidad de animales analizados sin MC*/
     public function countCowSMC($force=false){
       if(empty($this->_cant_cow_smc) || $force)
-        $this->_cant_cow_smc = DairyControl::count(['conditions' => ['schema_id = ? and mc = 0',$this->id]]);
+        $this->_cant_cow_smc = DairyControl::count(['conditions' => ['schema_id = ? and mc = 1',$this->id]]);
       return $this->_cant_cow_smc;
     }
 
@@ -137,10 +137,10 @@ class Schema extends Model{
       return floatval($res_sum->suma);
     }*/
 
-    /*1 Perdida por MSC. sumatoria de `(rcs-2) * perdida' si mc = 0*/
+    /*1 Perdida por MSC. sumatoria de `(rcs-2) * perdida' si mc = 1*/
     public function calculoPerdidaPorMSC(){
       global $_SQL;
-      $query = sprintf("SELECT SUM(dml) as suma FROM %s WHERE schema_id = '%s' and mc = 0", DairyControl::$_table_name, $this->id);
+      $query = sprintf("SELECT SUM(dml) as suma FROM %s WHERE schema_id = '%s' and mc = 1", DairyControl::$_table_name, $this->id);
       $res_sum = $_SQL->get_row($query);
       if ($_SQL->last_error != null) {
         $this->fatal_error($_SQL->last_error);
@@ -148,10 +148,10 @@ class Schema extends Model{
       }
       return floatval($res_sum->suma); 
     }
-    /*2 Perdida por MC. sumatoria de `perdida' si mc = 1*/
+    /*2 Perdida por MC. sumatoria de `perdida' si mc = 0*/
     public function calculoPerdidaPorMC(){
       global $_SQL;
-      $query = sprintf("SELECT SUM(liters_milk) as suma FROM %s WHERE schema_id = '%s' and mc = 1", DairyControl::$_table_name, $this->id);
+      $query = sprintf("SELECT SUM(liters_milk) as suma FROM %s WHERE schema_id = '%s' and mc = 0", DairyControl::$_table_name, $this->id);
       $res_sum = $_SQL->get_row($query);
       if ($_SQL->last_error != null) {
         $this->fatal_error($_SQL->last_error);

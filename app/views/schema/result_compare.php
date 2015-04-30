@@ -2,7 +2,7 @@
 <!-- INICIO MOSTRAR ESQUEMAS DE CONTROL -->
 <div class="row">
     <div class="col-md-6">
-        <h3><small>Esquema Nº 1</small></h3>
+        <h3><small>Control Lechero 1</small></h3>
         <table class="table">
           <thead> 
             <tr>
@@ -27,7 +27,7 @@
          </table>
     </div>
     <div class="col-md-6">
-        <h3><small>Esquema Nº 2</small></h3>
+        <h3><small>Control Lechero 2</small></h3>
         <table class="table">
           <thead> 
             <tr>
@@ -55,7 +55,11 @@
 <!-- FIN MOSTRAR ESQUEMAS DE CONTROL -->
 
 <!-- INICIO MOSTRAR COMPARACIONES -->
-<ul class="list-group">
+<ul class="list-group">  
+  <li class="list-group-item">
+    <span class="badge"><?php echo $count_analizadas; ?></span>
+    Cantidad de Vacas analizadas
+  </li>
   <li class="list-group-item">
     <span class="badge"><?php echo $umbral; ?></span>
     Punto de Corte
@@ -116,7 +120,7 @@
           $dc2 = $array_dc[1];
     ?>
     <tr>
-      <td><?php echo $dc1->cow_id ;?></td>
+      <td><?php echo $dc1->cow()->caravana ;?></td>
       <td><?php echo $dc1->rcs ;?></td>
       <td><?php echo $dc1->mc ;?></td>
       <td><?php echo $dc1->liters_milk ;?></td>
@@ -155,7 +159,7 @@
       foreach ($noanalizadas1 as $dc1) {
     ?>
     <tr>
-      <td><?php echo $dc1->cow_id ;?></td>
+      <td><?php echo $dc1->cow()->caravana ;?></td>
       <td><?php echo $dc1->rcs ;?></td>
       <td><?php echo $dc1->mc ;?></td>
       <td><?php echo $dc1->liters_milk ;?></td>
@@ -185,7 +189,7 @@
       foreach ($noanalizadas2 as $dc2) {
     ?>
     <tr>
-      <td><?php echo $dc2->cow_id ;?></td>
+      <td><?php echo $dc2->cow()->caravana;?></td>
       <td>----</td>
       <td>----</td>
       <td>----</td>

@@ -19,8 +19,8 @@ else{
             <thead>
                 <tr>
                     <th>Selección</th>
-                    <th>Esquema 1</th>
-                    <th>Esquema 2</th>
+                    <th>Control Lechero 1</th>
+                    <th>Control Lechero 2</th>
                 </tr>
             </thead>
             <tbody>
