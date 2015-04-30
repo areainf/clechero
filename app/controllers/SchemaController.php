@@ -204,7 +204,7 @@ class SchemaController Extends BaseController {
             if(!Valid::blank($dc->liters_milk)){
                 $total_milk += $dc->liters_milk;
                 $dc->calculateDL($schema->date);
-                if ($dc->mc){
+                if ($dc->hasMC()){
                   $litros_con_mc += $dc->liters_milk;
                   $vacas_con_mc++;
                 }
@@ -231,7 +231,7 @@ class SchemaController Extends BaseController {
           $prom_con_mc = ($vacas_con_mc > 0 && $litros_con_mc > 0)? $litros_con_mc / ($vacas_con_mc * 1.0) : $default_cow_liters;
           foreach ($without_milk as $dc) {
             $dc->calculateDL($schema->date);
-            if($dc->mc)
+            if($dc->hasMC())
               $dc->liters_milk = $prom_con_mc;
             else{
               $dc->liters_milk = $prom_sin_mc;

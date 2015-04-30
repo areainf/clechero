@@ -58,7 +58,7 @@ class CsvDairyControl{
       $dc = new DairyControl($row_dc);
       if (!$dc->is_valid())
         $this->count_records_errors++;
-      if($dc->mc)
+      if($dc->hasMC())
         $this->count_mc++;
       $this->dairy_controls[] = $dc;
     }
@@ -98,7 +98,8 @@ class CsvDairyControl{
         $new_row['liters_milk'] = (array_key_exists($key, $row)) ? $this->replaceComaPunto($row[$key]) : '';
       }
       else
-        $new_row[$key] = $row[$key];
+        if( array_key_exists($key, $row))
+          $new_row[$key] = $row[$key];
     }
     $new_row['schema_id'] = $this->schema->id;
     return $new_row;

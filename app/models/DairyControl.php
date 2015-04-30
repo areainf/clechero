@@ -14,7 +14,8 @@ class DairyControl  extends Model{
         $this->validation->present($this, 'cow_id');
         $this->validation->present($this, 'schema_id');
         //$this->validation->present($this, 'dl');
-        $this->validation->minInteger($this, 'rcs', 0);
+        if(!$this->hasMC())
+            $this->validation->minInteger($this, 'rcs', 0);
         $this->validation->integer($this, 'liters_milk');
         $this->validation->date($this, 'date_dl');
         return $this->validation->is_valid;
@@ -61,6 +62,10 @@ class DairyControl  extends Model{
         $rcs = $this->rcs;
         if(empty($rcs)) $rcs = 0;
         $this->dml = Calculos::dml($rcs, $this->perdida);
+    }
+
+    public function hasMC(){
+        return $this->mc == 0;
     }
 }
 ?>

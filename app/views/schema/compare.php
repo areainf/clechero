@@ -29,20 +29,21 @@ else{
                 for($i = 0; $i < $cant -1; $i++){
                     $schema1= $schemas[$i];
                     $schema2= $schemas[$i+1];
+                    $chk_id="chkb_schema_".$schema1->id+"_"+$schema2->id;
                 ?>
                 <tr>
                     <td>
-                        <label for="chkb_schema<?php echo $i; ?>">
-                            <input type="radio" name="schemas_ids" value="<?php echo $schema1->id . ',' . $schema2->id; ?>" id="chkb_schema<?php echo $i; ?>">
+                        <label for="<?php echo $chk_id; ?>">
+                            <input type="radio" name="schemas_ids" value="<?php echo $schema1->id . ',' . $schema2->id; ?>" id="<?php echo $chk_id; ?>">
                         </label>
                     </td>
                     <td>
-                        <label for="chkb_schema<?php echo $i; ?>">
+                        <label for="<?php echo $chk_id; ?>">
                             <?php echo DateHelper::db_to_ar($schema1->date); ?>
                         </label>
                     </td>
                     <td>
-                        <label for="chkb_schema<?php echo $i; ?>">
+                        <label for="<?php echo $chk_id; ?>">
                             <?php echo DateHelper::db_to_ar($schema2->date); ?>
                         </label>
                     </td>

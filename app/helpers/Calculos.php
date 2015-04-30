@@ -45,7 +45,7 @@ class Calculos{
   }
 
   public static function costo_sellador($precio, $dias){
-    if (empty($precio) || empty($dias)) return 0;
+    if (empty($precio) || empty($dias) || floatval($dias)==0.0) return 0;
     return $precio / $dias;
   }
   public static function mult($val1, $val2){
