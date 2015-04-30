@@ -282,12 +282,32 @@
             <div class="col-md-12">
               <h2 class="seccion" style="margin-left: -40px;">Control Lechero</h2>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group">
-                <span class="help-block">Seleccione el archivo donde tiene toda la información provista por el Control Lechero</span>
+                    <p class="help-block">Archivo CSV separado por coma. Debe contener como mínimo las siguientes columnas</p>
+                    <table class="table">
+                      <tr>
+                        <th>numero</th>
+                        <th>rcs</th>
+                        <th>nop</th>
+                        <th>mc</th>
+                      </tr>
+                      <tr>
+                        <td>Número de Caravana</td>
+                        <td>Recuento de células somáticas</td>
+                        <td>Número ordinal de parto</td>
+                        <td>0 si tiene Mastitis Clínia sino 1</td>
+                      </tr>
+                    </table>
+                    <p class="help-block">Opcionales. <strong>dl o fecha_dl</strong> días de lactancia o fecha última lactancia, <strong>litros</strong></p>
+              </div>
+            </div>
+            <div class="col-md-5 col-md-offset-1">
+              <div class="form-group">
                 <label class="control-label col-sm-2" for="file_data">Importar</label>
+                <span class="help-block">Seleccione el archivo donde tiene toda la información provista por el Control Lechero</span>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" id="file_data" name="dairy_control[file_data]" value="">
+                    <input type="file" id="file_data" name="dairy_control[file_data]" value="">
                 </div>
               </div>
             </div>

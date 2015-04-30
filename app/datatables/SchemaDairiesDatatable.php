@@ -63,7 +63,7 @@ class SchemaDairiesDatatable Extends Datatable{
                   'dl' => $value->dl,
                   'date_dl' => DateHelper::db_to_ar($value->date_dl),
                   'rcs' => $value->rcs,
-                  'mc' => ($value->mc == 1) ? 'Si' : 'No',
+                  'mc' => ($dc->hasMC()) ? 'Si' : 'No',
                   'liters_milk' => $value->liters_milk,
                   'perdida' => $value->perdida,
                   'dml' => $value->dml,

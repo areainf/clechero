@@ -158,7 +158,7 @@ class AnalisisDairyControl{
       $sheet->setCellValue('A'.$index,$dc->cow_id)
       ->setCellValue('B'.$index, $dc->dl)
       ->setCellValue('C'.$index, $dc->rcs)
-      ->setCellValue('D'.$index, $dc->mc ? 'Si' : 'No')
+      ->setCellValue('D'.$index, $dc->hasMC() ? 'Si' : 'No')
       ->setCellValue('E'.$index, $dc->liters_milk)
       ->setCellValue('F'.$index, $dc->nop)
       ->setCellValue('G'.$index, DateHelper::db_to_ar($dc->date_dl))
