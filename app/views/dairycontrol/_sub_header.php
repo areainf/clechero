@@ -21,7 +21,8 @@
        <ul class="list-nav list-nav-right">
           <?php 
             $url_add = Ctrl::getUrl(['control' => 'dairycontrol', 'action' => 'add', 'params'=>['schema_id'=>$schema->id]]);
-            $url_index = Ctrl::getUrl(['control' => 'dairycontrol', 'action' => 'index', 'params'=>['schema_id'=>$schema->id]]);
+            $url_view_cow = Ctrl::getUrl(['control' => 'dairycontrol', 'action' => 'index', 'params'=>['schema_id'=>$schema->id]]);
+            $url_index = Ctrl::getUrl(['control' => 'schema', 'action' => 'index']);
           if($this->getAction()=='index'){ 
           ?>  
           <!-- <li><a href="<?php echo $url_add; ?>" class="btn btn-info btn-xs">Nuevo</a></li> -->
@@ -29,6 +30,7 @@
             }
             else{ 
           ?>  
+          <li><a href="<?php echo $url_view_cow ?>" class="btn btn-info btn-xs">Ver vacas</a></li>
           <li><a href="<?php echo $url_index ?>" class="btn btn-info btn-xs">Listado</a></li>
           <?php  } ?>  
         </ul>
