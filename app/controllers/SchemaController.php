@@ -2,6 +2,7 @@
 require_once MODELS_PATH.'Schema.php';
 require_once HELPERS_PATH.'CsvDairyControl.php';
 require_once DATATABLE_PATH.'SchemaDatatable.php';
+require_once REPORT_PATH.'ReportCronicas.php';
 class SchemaController Extends BaseController {
   function __construct($ctrl) {
     parent::__construct($ctrl);
@@ -337,14 +338,40 @@ class SchemaController Extends BaseController {
     $this->render('result_compare');
 
   }
-  // private function calculatePerdDML($schema){
-  //   $dcs = $schema->dairy_controls();
-  //   foreach ($dcs as $dc) {
-  //     $dc->calculatePerdDML();
-  //   }
-  // }
 
-
+  public function downloadCronicas(){
+    $schema1 = Schema::find($this->getData('schema_1_id'));
+    $schema2 = Schema::find($this->getData('schema_2_id'));
+    $umbral = $this->getData('umbral');
+    $dcs1 =  $schema1->dairy_controls();
+    $dcs2 =  $schema2->dairy_controls();
+    $map = array();
+    /*Por cada vaca controlada en esquema1*/
+    foreach ($dcs1 as $dc1) {
+      $dc2 = null;
+      /*Busca si esta la vaca en el esquema2*/
+      foreach ($dcs2 as $dc2) { 
+        if($dc1->cow_id == $dc2->cow_id){
+          //encontro la vaca en el segundo control
+          // si no tienen mc evaluarla
+          if(!$dc1->hasMC() && !$dc2->hasMC()){
+            if($dc1->rcs > $umbral && $dc2->rcs > $umbral)//si es cronica
+              $map[] = [$dc1, $dc2];
+          }
+          break;
+        }
+      }
+    }
+    $an = new ReportCronicas($schema1, $schema2, $map);
+    $name = "cronicas_".$schema1->id."_".$schema2->id.".xlsx";
+    $folderpath = $schema1->folder_path().$name;
+    $an->save($folderpath);
+    header('Content-Type: application/csv');
+    header('Content-Disposition: attachment; filename=' . $name);
+    header('Pragma: no-cache');
+    readfile($folderpath);  
+  }
+  
 
   private function existAndValidFile(){
     $file = $_FILES['dairy_control'];
