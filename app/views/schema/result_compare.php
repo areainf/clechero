@@ -55,40 +55,79 @@
 <!-- FIN MOSTRAR ESQUEMAS DE CONTROL -->
 
 <!-- INICIO MOSTRAR COMPARACIONES -->
-<ul class="list-group">  
-  <li class="list-group-item">
-    <span class="badge"><?php echo $count_analizadas; ?></span>
-    Cantidad de Vacas analizadas
-  </li>
-  <li class="list-group-item">
-    <span class="badge"><?php echo $umbral; ?></span>
-    Punto de Corte
-  </li>
-  <li class="list-group-item">
-    <span class="badge"><?php echo $comparacion['sanas']; ?></span>
-    Número de Vacas que siguen estando sanas
-  </li>
-  <li class="list-group-item">
-    <span class="badge"><?php echo $comparacion['nuevas_inf']; ?></span>
-    Número de Vacas con Nueva Infección
-  </li>
-  <li class="list-group-item">
-    <span class="badge"><?php echo $comparacion['curadas']; ?></span>
-    Número de Vacas que se han curado
-  </li>
-  <li class="list-group-item">
-    <span class="badge"><?php echo $comparacion['cronicas']; ?></span>
-    Número de Vacas que siguen continúan enfermas
-  </li>
-  <li class="list-group-item">
-    <span class="badge"><?php echo $comparacion['noanalizadas1']; ?></span>
-    Número de vacas en el  Esquema 1 que no estan en el Esquema 2 
-  </li>
-  <li class="list-group-item">
-    <span class="badge"><?php echo $comparacion['noanalizadas2']; ?></span>
-    Número de vacas en el  Esquema 2 que no estan en el Esquema 1 
-  </li>
-</ul>
+<div class="row">
+  <div class="col-md-6">
+    <ul class="list-group">  
+      <li class="list-group-item">
+        <span class="badge"><?php echo $count_analizadas; ?></span>
+        Cantidad de Vacas analizadas
+      </li>
+      <li class="list-group-item">
+        <span class="badge"><?php echo $umbral; ?></span>
+        Punto de Corte
+      </li>
+      <li class="list-group-item">
+        <span class="badge"><?php echo $comparacion['sanas']; ?></span>
+        Número de Vacas que siguen estando sanas
+      </li>
+      <li class="list-group-item">
+        <span class="badge"><?php echo $comparacion['nuevas_inf']; ?></span>
+        Número de Vacas con Nueva Infección
+      </li>
+      <li class="list-group-item">
+        <span class="badge"><?php echo $comparacion['curadas']; ?></span>
+        Número de Vacas que se han curado
+      </li>
+      <li class="list-group-item">
+        <span class="badge"><?php echo $comparacion['cronicas']; ?></span>
+        Número de Vacas que siguen continúan enfermas
+      </li>
+    </ul>
+  </div>
+    <div class="col-md-6">
+      <ul class="list-group">  
+
+        <li class="list-group-item">
+          <span class="badge"><?php echo $comparacion['noanalizadas1']; ?></span>
+          Número de vacas en el  Control 1 no en el 2 
+        </li>
+        <li class="list-group-item">
+          <span class="badge"><?php echo $comparacion['noanalizadas2']; ?></span>
+          Número de vacas en el  Control 2 y no en el 1 
+        </li>
+        <!--(Total de vacas crónicas + Total de nuevas infecciones) / Total de vacas analizadas -->
+        <li class="list-group-item">
+          <?php 
+            $prevalencia = 0;
+            if($count_analizadas != 0)
+              $prevalencia = ($comparacion['cronicas'] + $comparacion['nuevas_inf']) / $count_analizadas;
+          ?>
+          <span class="badge"><?php echo round($prevalencia, 2); ?></span>
+          Prevalencia de MSC
+        </li>
+        <!-- Total de nuevas infecciones / (Total de nuevas infecciones + Total de sanas) -->
+        <li class="list-group-item">
+          <?php 
+            $incidencia = $comparacion['nuevas_inf'] + $comparacion['sanas'];
+            if($incidencia > 0)
+              $incidencia = $comparacion['nuevas_inf'] / $incidencia;
+          ?>
+          <span class="badge"><?php echo round($incidencia, 2); ?></span>
+          Incidencia de MSC
+        </li>
+        <!-- Total de vacas crónicas / Total de vacas analizadas -->
+        <li class="list-group-item">
+          <?php 
+            $proporcion = 0;
+            if($count_analizadas != 0)
+              $proporcion = $comparacion['cronicas'] / $count_analizadas;
+          ?>
+          <span class="badge"><?php echo round($proporcion, 2); ?></span>
+          Proporción de Vacas Crónicas
+        </li>
+      </ul>
+    </div>
+  </div>
 <!-- FIN MOSTRAR COMPARACIONES -->
 <!-- INICIO MOSTRAR CONTROLES POR VACA -->
 <hr>
@@ -98,8 +137,8 @@
 <thead>
   <tr>
     <th rowspan="2">Número</th>
-    <th colspan="4">Esquema de Control Nº 1</th>
-    <th colspan="4">Esquema de Control Nº 2</th>
+    <th colspan="4">Control Lechero Nº 1</th>
+    <th colspan="4">Control Lechero Nº 2</th>
     <th rowspan="2">Estado</th>
   </tr>
   <tr>
