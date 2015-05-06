@@ -183,11 +183,11 @@ class Schema extends Model{
       return $this->maquina_control_precio / $this->maquina_control_dias;
     }
 
-    /*Listado de dairy_control con mc = 0 ordenado de menor a mayor por perdida
+    /*Listado de dairy_control con mc = 1 ordenado de menor a mayor por perdida
       para ser usado en histograma de Distribucion de perdida de leche por MSC */
     function getDataDistrPerdidaMSC(){
       global $_SQL;
-      $query = sprintf("SELECT * FROM %s as dc WHERE schema_id = '%s' and mc = 0 order by perdida asc", DairyControl::$_table_name, $this->id);
+      $query = sprintf("SELECT * FROM %s as dc WHERE schema_id = '%s' and mc = 1 order by dml asc", DairyControl::$_table_name, $this->id);
       $res = $_SQL->get_results($query);
       if ($_SQL->last_error != null) {
         throw new Exception($_SQL->last_error, 1);

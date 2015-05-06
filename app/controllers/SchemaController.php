@@ -215,8 +215,7 @@ class SchemaController Extends BaseController {
                 }
                 if (!$dc->save()){
                     $this->flash->addErrors($dc->validation->getErrors()); 
-                    $commit = false;
-                    break;
+                    return false;
                 }
             }
             else
