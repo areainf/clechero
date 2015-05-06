@@ -132,7 +132,14 @@
 <!-- INICIO MOSTRAR CONTROLES POR VACA -->
 <hr>
 <h2><small>Listado de Vacas</small></h2>
-
+<div class="pull-right">
+  <form class="form-horizontal" role="form" method="post"  action="downloadCronicas" name="form">
+     <input type="hidden" name="schema_1_id" value="<?php echo $schema1->id;?>">
+     <input type="hidden" name="schema_2_id" value="<?php echo $schema2->id;?>">
+     <input type="hidden" name="umbral" value="<?php echo $umbral;?>">
+     <input type="submit" class="btn btn-success" value="Descargar listado de Crónicas">
+  </form>
+</div>
 <table id="table-dairycontrol" class="table table-bordered">
 <thead>
   <tr>
