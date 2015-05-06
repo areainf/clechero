@@ -32,4 +32,4 @@ foreach ($files as $key) {
     <!-- GRAPH -->
     <script type="text/javascript" charset="utf8" src="<?php echo $public_url .'js/graph/flot/jquery.flot.js"'; ?>"></script>
     <script type="text/javascript" charset="utf8" src="<?php echo $public_url .'js/graph/highcharts/highcharts.js"'; ?>"></script>
-    
+    <script type="text/javascript" charset="utf8" src="<?php echo $public_url .'js/graph/highcharts/highcharts-more.js"'; ?>"></script>

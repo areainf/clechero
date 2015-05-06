@@ -33,21 +33,22 @@
         }
       ?>
       <?php if(!empty($yield_sub_header)): ?>
+        <!-- INICIO CONTAINER SUB_HEADER -->
         <div class="container">
           <div class="sub_header">
             <?php include $yield_sub_header; ?>
           </div>
         </div>
+        <!-- FIN CONTAINER SUB_HEADER -->
       <?php endif; ?>
+    <!-- INICIO CONTAINER PRINCIPAL -->
     <div class="container">
       <div id="_flash">
         <?php  include "includes/_flash.php"; ?>
       </div>  
       <?php include $yield; ?>
     </div>
-   
-   
-
+    <!-- FIN CONTAINER PRINCIPAL -->
   </body>
 </html>
     
