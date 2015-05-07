@@ -6,10 +6,12 @@ class ReportCronicas{
   private $objPHPExcel;
   private $schema1;
   private $schema2;
+  private $umbral;
   private $map;
-  function __construct($schema1, $schema2, $par_dairycontrol){
+  function __construct($schema1, $schema2, $umbral, $par_dairycontrol){
     $this->schema1 = $schema1;
     $this->schema2 = $schema2;
+    $this->umbral = $umbral;
     $this->map = $par_dairycontrol;
     // Create new PHPExcel object
     $this->objPHPExcel = new PHPExcel();
@@ -34,19 +36,22 @@ class ReportCronicas{
     $sheet = $this->objPHPExcel->setActiveSheetIndex(0);
     $sheet->setTitle("Crónicas"); //establecer titulo de hoja
     
-    $sheet->mergeCells('A1:I1');
+    $sheet->mergeCells('A1:K1');
     $sheet->mergeCells('A4:A5');
-    $sheet->mergeCells('B4:D4');
-    $sheet->mergeCells('E4:G4');
+    $sheet->mergeCells('B4:F4');
+    $sheet->mergeCells('G4:K4');
 
     //write titulo
     $sheet->setCellValue('A1', 'LISTADO DE CRÓNICA')
         ->setCellValue('A2', 'Tambo')
         ->setCellValue('B2', 'Control Nº 1')
         ->setCellValue('C2', 'Control Nº 2')
+        ->setCellValue('D2', 'Umbral')
         ->setCellValue('A3',$this->schema1->dairy()->name)
         ->setCellValue('B3', DateHelper::db_to_ar($this->schema1->date))
-        ->setCellValue('C3', DateHelper::db_to_ar($this->schema2->date));
+        ->setCellValue('C3', DateHelper::db_to_ar($this->schema2->date))
+        ->setCellValue('D3',$this->umbral);
+        ;
   }
 
   private function _setComparationData(){
@@ -57,9 +62,13 @@ class ReportCronicas{
       ->setCellValue('B5','RCS (cél/mL x1000)')
       ->setCellValue('C5','Lts. Leche')
       ->setCellValue('D5','Pérdida Diaria')
-      ->setCellValue('E5','RCS (cél/mL x1000)')
-      ->setCellValue('F5','Lts. Leche')
-      ->setCellValue('G5','Pérdida Diaria');
+      ->setCellValue('E5','NOP')
+      ->setCellValue('F5','Fecha Lactancia')
+      ->setCellValue('G5','RCS (cél/mL x1000)')
+      ->setCellValue('H5','Lts. Leche')
+      ->setCellValue('I5','Pérdida Diaria')
+      ->setCellValue('J5','NOP')
+      ->setCellValue('K5','Fecha Lactancia');
       
     $index = 6;
     foreach ($this->map  as $dcs) {
@@ -69,9 +78,13 @@ class ReportCronicas{
       ->setCellValue('B'.$index, $dc1->rcs)
       ->setCellValue('C'.$index, $dc1->liters_milk)
       ->setCellValue('D'.$index, $dc1->dml)
-      ->setCellValue('E'.$index, $dc2->rcs)
-      ->setCellValue('F'.$index, $dc2->liters_milk)
-      ->setCellValue('G'.$index, $dc2->dml);
+      ->setCellValue('E'.$index, $dc1->nop)
+      ->setCellValue('F'.$index, DateHelper::db_to_ar($dc1->date_dl))      
+      ->setCellValue('G'.$index, $dc2->rcs)
+      ->setCellValue('H'.$index, $dc2->liters_milk)
+      ->setCellValue('I'.$index, $dc2->dml)
+      ->setCellValue('J'.$index, $dc2->nop)
+      ->setCellValue('K'.$index, DateHelper::db_to_ar($dc2->date_dl));
       $index++;
     }
 
@@ -95,7 +108,7 @@ class ReportCronicas{
     $sheet->setSharedStyle($titulo, "A1");
     $sheet->getRowDimension(1)->setRowHeight(30);
     //ancho automatico de las columnas
-    foreach(range('A','G') as $columnID) {
+    foreach(range('A','K') as $columnID) {
         $sheet->getColumnDimension($columnID)->setAutoSize(true);
     }
 
@@ -117,7 +130,7 @@ class ReportCronicas{
         )
     ));
     
-    $sheet->setSharedStyle($subtitulo, "A4:G5");
+    $sheet->setSharedStyle($subtitulo, "A4:K5");
     //text bold
     $sheet->getStyle("A2:D2")->getFont()->setBold(true);
   }

@@ -362,7 +362,7 @@ class SchemaController Extends BaseController {
         }
       }
     }
-    $an = new ReportCronicas($schema1, $schema2, $map);
+    $an = new ReportCronicas($schema1, $schema2, $umbral, $map);
     $name = "cronicas_".$schema1->id."_".$schema2->id.".xlsx";
     $folderpath = $schema1->folder_path().$name;
     $an->save($folderpath);
