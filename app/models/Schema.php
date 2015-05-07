@@ -213,7 +213,7 @@ class Schema extends Model{
       $desinf_pos_o = Calculos::costo_sellador($this->desinf_post_o_precio, $this->desinf_post_o_dias);
       $count_cow_mc = $this->countCowMC();
       $costo_tratamiento_mc = $this->costo_tratamiento_mc() * $count_cow_mc;
-      $costo_tratamiento_secado = $this->costo_tratamiento_secado() * $count_cow_mc;    
+      $costo_tratamiento_secado = $this->costo_tratamiento_secado() ;//* $count_cow_mc;    
       $costo_mantenimiento_maquina = $this->costo_mantenimiento_maquina();
       $total_erogacion = $desinf_pre_o + $desinf_pos_o + $costo_tratamiento_mc + $costo_tratamiento_secado + $costo_mantenimiento_maquina;
 
