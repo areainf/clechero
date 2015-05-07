@@ -208,7 +208,6 @@ class Schema extends Model{
       $perdida_mc = $this->calculoPerdidaPorMC();
       $perdida_lts = $perdida_msc + $perdida_mc;
       $costo_total_perdida = $perdida_lts * $this->milk_price;
-
       $desinf_pre_o = Calculos::costo_sellador($this->desinf_pre_o_precio, $this->desinf_pre_o_dias);
       $desinf_pos_o = Calculos::costo_sellador($this->desinf_post_o_precio, $this->desinf_post_o_dias);
       $count_cow_mc = $this->countCowMC();
@@ -218,19 +217,20 @@ class Schema extends Model{
       $total_erogacion = $desinf_pre_o + $desinf_pos_o + $costo_tratamiento_mc + $costo_tratamiento_secado + $costo_mantenimiento_maquina;
 
       $data = array ('schema_id'=>$this->id,
-                     'perdida_msc'=>$perdida_msc,
-                     'perdida_mc'=>$perdida_mc,
-                     'perdida_lts'=>$perdida_lts,
-                     'perdida_costo'=>$costo_total_perdida,
-                     'costo_desinf_pre_o'=>$desinf_pre_o,
-                     'costo_desinf_pos_o'=>$desinf_pos_o,
-                     'costo_tratamiento_mc'=>$costo_tratamiento_mc,
-                     'costo_tratamiento_secado'=>$costo_tratamiento_secado,
-                     'costo_mantenimiento_maquina'=>$costo_mantenimiento_maquina,
-                     'costo_total'=>$total_erogacion
+                     'perdida_msc'=>round($perdida_msc, 2),
+                     'perdida_mc'=>round($perdida_mc, 2),
+                     'perdida_lts'=>round($perdida_lts, 2),
+                     'perdida_costo'=>round($costo_total_perdida, 2),
+                     'costo_desinf_pre_o'=>round($desinf_pre_o, 2),
+                     'costo_desinf_pos_o'=>round($desinf_pos_o, 2),
+                     'costo_tratamiento_mc'=>round($costo_tratamiento_mc, 2),
+                     'costo_tratamiento_secado'=>round($costo_tratamiento_secado, 2),
+                     'costo_mantenimiento_maquina'=>round($costo_mantenimiento_maquina, 2),
+                     'costo_total'=>round($total_erogacion, 2)
                      );
       $as = new AnalisisSchema($data);
-      return $as->save();
+      $result = $as->save();
+      return $result;
     }
 
   }
