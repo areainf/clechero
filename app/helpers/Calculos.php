@@ -41,7 +41,9 @@ class Calculos{
   }
 
   public static function dml($rcs, $perdida){
-    return (log($rcs) -2) * $perdida;
+    $result = (log($rcs) -2) * $perdida;
+    if ($result < 0) $result = 0;
+    return $result;
   }
 
   public static function costo_sellador($precio, $dias){

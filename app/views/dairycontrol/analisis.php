@@ -81,13 +81,17 @@
 
 <!-- LOS SIGUIENTES DATOS SE SACAN DE perdidas y erogaciones -->
 <?php
-  $graph_mc1 = empty($count_cow) ? 0 : ($analisis->perdida_mc/$count_cow) * $schema->milk_price;
-  $graph_msc1 = empty($count_cow) ? 0 : ($analisis->perdida_msc/$count_cow) * $schema->milk_price;
-  $graph_total1 = $graph_mc1 + $graph_msc1 + $total_erogacion1;
+  $graph_mc1 = $analisis->perdida_mc * $schema->milk_price;//empty($count_cow) ? 0 : ($analisis->perdida_mc/$count_cow) * $schema->milk_price;
+  $graph_msc1 = $analisis->perdida_msc * $schema->milk_price;//empty($count_cow) ? 0 : ($analisis->perdida_msc/$count_cow) * $schema->milk_price;
+  $graph_total1 = $graph_mc1 + $graph_msc1 + $total_erogacion;
 
-  $graph_mc_porc1 = $graph_mc1 == 0 ? 0 : round($graph_total1 / $graph_mc1, 2);
-  $graph_msc_porc1 = empty($graph_msc1) ? 0 : round($graph_total1 / $graph_msc1);
+  $graph_mc_porc1 = empty($graph_total1) ? 0 : round(($graph_mc1 / $graph_total1) * 100, 2);
+  $graph_msc_porc1 = empty($graph_total1) ? 0 : round(($graph_msc1 / $graph_total1) * 100 );
   $graph_erogacion_porc1 = round(100 - $graph_mc_porc1 - $graph_msc_porc1, 2);
+  echo "<br>";
+  var_dump($graph_mc_porc1);
+  var_dump($graph_msc_porc1);
+  var_dump($graph_erogacion_porc1);
 ?>
 <div class="row">
   <div class="col-md-12">

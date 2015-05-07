@@ -57,18 +57,18 @@ class ReportCronicas{
   private function _setComparationData(){
     $sheet = $this->objPHPExcel->setActiveSheetIndex(0); //seleccionar hora
     $sheet->setCellValue('B4','Control Lechero Nº 1')
-      ->setCellValue('E4','Control Lechero Nº 2')
+      ->setCellValue('F4','Control Lechero Nº 2')
       ->setCellValue('A4','Número')
       ->setCellValue('B5','RCS (cél/mL x1000)')
       ->setCellValue('C5','Lts. Leche')
       ->setCellValue('D5','Pérdida Diaria')
       ->setCellValue('E5','NOP')
-      ->setCellValue('F5','Fecha Lactancia')
+      ->setCellValue('F5','Fecha Parto')
       ->setCellValue('G5','RCS (cél/mL x1000)')
       ->setCellValue('H5','Lts. Leche')
       ->setCellValue('I5','Pérdida Diaria')
       ->setCellValue('J5','NOP')
-      ->setCellValue('K5','Fecha Lactancia');
+      ->setCellValue('K5','Fecha Parto');
       
     $index = 6;
     foreach ($this->map  as $dcs) {
