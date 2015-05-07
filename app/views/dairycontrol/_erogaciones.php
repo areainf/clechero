@@ -7,11 +7,12 @@
     $desinf_pos_o1  = $desinf_pos_o / $count_cow;
 
     $count_cow_mc = $schema->countCowMC();
+
     $costo_tratamiento_mc = $analisis->costo_tratamiento_mc;
-    $costo_tratamiento_mc1 = $count_cow_mc == 0 ? 0 : $costo_tratamiento_mc / $count_cow_mc;
+    $costo_tratamiento_mc1 = $count_cow_mc == 0 ? 0 : $costo_tratamiento_mc / $count_cow;//_mc;
     
     $costo_tratamiento_secado = $analisis->costo_tratamiento_secado;    
-    $costo_tratamiento_secado1 = $count_cow_mc == 0 ? 0 : $costo_tratamiento_secado / $count_cow_mc;    
+    $costo_tratamiento_secado1 = $count_cow_mc == 0 ? 0 : $costo_tratamiento_secado / $count_cow;//_mc;    
 
     $costo_mantenimiento_maquina = $analisis->costo_mantenimiento_maquina;
     $costo_mantenimiento_maquina1 = $costo_mantenimiento_maquina / $count_cow;
