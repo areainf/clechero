@@ -89,6 +89,8 @@ class SchemaController Extends BaseController {
       }
   }
   public function update(){
+    if ($this->isGet())return $this->index();
+
       $params = $this->getData()['schema'];
       $schema = Schema::find($params['id']);
       $schema_edit = new Schema($params);
@@ -372,12 +374,107 @@ class SchemaController Extends BaseController {
     readfile($folderpath);  
   }
   
+  /*Params: schema_id1 y schema_id2*/
+  /*SI Boton="compare_costo" :Grafica la evolucion de MC, MSC y EROGACIONES*/
+  /*SI Boton="compare_indicadores" :Grafica la evolucion de los INDICADORES*/
+  public function evolucionEnfermedad(){
+    if ($this->isGet())return $this->compare();
+    $action = $this->getData('compare_costos') ? 1 : 2;
+    $schema1 = Schema::find($this->getData('schema_id1'));
+    $schema2 = Schema::find($this->getData('schema_id2'));
+    $dairy = $schema1->dairy();
+
+    global $_SQL;
+    $query = sprintf("SELECT * FROM %s as dc WHERE dairy_id = %s AND (date BETWEEN '%s' AND '%s') order by date asc", Schema::$_table_name, $dairy->id,$schema1->date, $schema2->date);
+    $result = $_SQL->get_results($query);
+    if ($_SQL->last_error != null) {
+      $this->flash->addError($_SQL->last_error);
+      return $this->render('compare'); 
+    }
+    else{
+      $schemas = array();
+      //convierto result a Model Schema
+      if($result){
+        foreach ($result as $value) {
+          $schemas[] = new Schema($value);
+        }
+      }
+      if ($action == 1){
+        //evolucion de costos
+        $this->registry->dairy = $dairy;
+        $this->registry->schemas = $schemas;
+        return $this->render('result_evolucion_costos');
+      }
+      else{
+        //evolucion de la enfermedad
+        return $this->prepareEvolucionEnfermedad($dairy, $schemas);
+      }
+    }
+  }
+
+  private function prepareEvolucionEnfermedad($dairy, $schemas){
+    $this->registry->dairy = $dairy;
+    // $this->registry->schemas = $schemas;
+    $cant = count($schemas);
+    $matrix = Array();
+    for($i = 0; $i < $cant-1; $i++){
+      $schema1=$schemas[$i];
+      $schema2=$schemas[$i+1];
+      $matrix[$schema1->date] = $this->compareIndicadoresEnfermedad($schema1, $schema2, 200);
+    }
+    $this->registry->matrix = $matrix;
+
+    return $this->render('result_evolucion_indicadores');
+  }
 
   private function existAndValidFile(){
     $file = $_FILES['dairy_control'];
     if ($file['error']['file_data'] == UPLOAD_ERR_NO_FILE)
       return false;
     return ($file['error']['file_data'] == UPLOAD_ERR_OK);
+  }
+
+private function compareIndicadoresEnfermedad($schema1, $schema2, $umbral){
+    $dcs1 =  $schema1->dairy_controls();
+    $dcs2 =  $schema2->dairy_controls();
+    $sanas = 0;
+    $nuevas_inf = 0;
+    $cronicas = 0;
+    $count_analizadas = 0;
+
+    /*Por cada vaca controlada en esquema1*/
+    foreach ($dcs1 as $dc1) {
+      $dc2 = null;
+      /*Busca si esta la vaca en el esquema2*/
+      foreach ($dcs2 as $dc2 ) { 
+        if($dc1->cow_id == $dc2->cow_id){
+          //encontro la vaca en el segundo control
+          // si no tienen mc evaluarlas
+          if(!$dc1->hasMC() && !$dc2->hasMC()){
+            $count_analizadas++;
+            if($dc1->rcs > $umbral){//si enferma 1 control
+              if($dc2->rcs > $umbral)//si cronica
+                $cronicas++;
+            }
+            else{
+              if($dc2->rcs > $umbral)//si nueva inf
+                $nuevas_inf++;
+              else
+                $sanas++;
+            }
+          }
+          break;
+        }
+      }
+    }
+    $result = Array('prevalencia' => 0, 'incidencia' => 0, 'proporcion' =>0);
+    if($count_analizadas > 0){
+      $result['prevalencia'] = ($cronicas + $nuevas_inf) / $count_analizadas;
+      if (($nuevas_inf + $sanas) != 0 ) 
+        $result['incidencia'] = $nuevas_inf / ($nuevas_inf + $sanas);
+      $result['proporcion'] = $cronicas / $count_analizadas;
+    }
+    return $result;
   }
 
   public function canExecute($action, $user){

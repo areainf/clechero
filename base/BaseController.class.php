@@ -63,7 +63,9 @@ Abstract Class BaseController {
   public function addParameter($name, $value){
     $this->ctrl->addParameter($name, $value);
   }
-  
+  public function isGet(){
+    return $_SERVER['REQUEST_METHOD'] == 'GET';
+  }
   public function render($name, $layout='default') {
       $path = __SITE_PATH . '/app/views' . '/' ;
       if ($this->use_base_directory)

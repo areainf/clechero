@@ -17,6 +17,11 @@
           <h3>Comparar Controles Lecheros</h3>
         <?php
           }
+          else if($this->getAction()=='evolucionEnfermedad'){
+        ?>  
+          <h3>Evolución de la Emfermedad</h3>
+        <?php
+          }
           else{
         ?>  
           <h3>Listado</h3>
@@ -40,8 +45,19 @@
           <?php
               }
             }
+
+            elseif($this->getAction()=='evolucionEnfermedad'){
+          ?>
+            <li><a href="add" class="btn btn-info btn-xs">Nuevo</a></li>
+            <li><a href="index" class="btn btn-info btn-xs">Listado</a></li>
+            <li><a href="compare" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-transfer">Comparar</span></a></li>
+          <?php
+            }
             else{ 
           ?>  
+          <li><a href="add" class="btn btn-info btn-xs">Nuevo</a></li>
+            <li><a href="index" class="btn btn-info btn-xs">Listado</a></li>
+            <li><a href="compare" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-transfer">Comparar</span></a></li>
           <?php  } ?>  
         </ul>
     </div>
