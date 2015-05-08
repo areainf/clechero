@@ -51,8 +51,11 @@ class Schema extends Model{
     }
 
     public function analisis(){
-       return AnalisisSchema::first(array('conditions' => 
+      $analisis =  AnalisisSchema::first(array('conditions' => 
             array("schema_id = ?", $this->id)));
+      if(!$analisis)
+        $analisis = $this->createAnalisis();
+      return $analisis;
     }
 
     public function remove_analisis(){
@@ -229,8 +232,8 @@ class Schema extends Model{
                      'costo_total'=>round($total_erogacion, 2)
                      );
       $as = new AnalisisSchema($data);
-      $result = $as->save();
-      return $result;
+      $as->save();
+      return $as;
     }
 
   }
