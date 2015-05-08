@@ -100,10 +100,14 @@ class Ctrl {
 
     /*** Obtiene el url base del sitio ***/
   private function currentUrl(){
+    $port = "";
+    if ($_SERVER['SERVER_PORT'] != 80)
+      $port =  $_SERVER['SERVER_PORT'];
     return sprintf(
-      "%s://%s%s",
+      "%s://%s%s%s",
       isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
       $_SERVER['SERVER_NAME'],
+      $port,
       $_SERVER['REQUEST_URI']
     );
 
