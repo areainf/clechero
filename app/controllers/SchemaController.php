@@ -89,6 +89,8 @@ class SchemaController Extends BaseController {
       }
   }
   public function update(){
+    if ($this->isGet())return $this->index();
+
       $params = $this->getData()['schema'];
       $schema = Schema::find($params['id']);
       $schema_edit = new Schema($params);
@@ -376,6 +378,7 @@ class SchemaController Extends BaseController {
   /*SI Boton="compare_costo" :Grafica la evolucion de MC, MSC y EROGACIONES*/
   /*SI Boton="compare_indicadores" :Grafica la evolucion de los INDICADORES*/
   public function evolucionEnfermedad(){
+    if ($this->isGet())return $this->compare();
     $action = $this->getData('compare_costos') ? 1 : 2;
     $schema1 = Schema::find($this->getData('schema_id1'));
     $schema2 = Schema::find($this->getData('schema_id2'));
