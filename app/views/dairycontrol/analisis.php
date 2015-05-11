@@ -236,12 +236,15 @@
           },
           xAxis: {
               categories:categories,
-              crosshair: true
+              crosshair: true,
+              title: {
+                  text: 'Litros'
+              }
           },
           yAxis: {
               min: 0,
               title: {
-                  text: 'Frecuencia Relativa %'
+                  text: 'Número de Vacas'
               }
           },
           tooltip: {
@@ -256,9 +259,10 @@
               column: {
                   pointPadding: 0.2,
                   borderWidth: 0
-              }
+              },              
           },
           series: [{
+              name: 'Pérdida de litros debido a MSC',
               data: hist_data
               }]
       });
