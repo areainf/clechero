@@ -195,10 +195,10 @@ class SchemaController Extends BaseController {
           // $default_cow_liters = ($csv->count_cattles) ? ($schema->liters_milk / ($csv->count_cattles * 1.0)) : 0;
           $default_cow_liters = ($schema->in_ordenio) ? ($schema->liters_milk / ($schema->in_ordenio * 1.0 - $csv->count_mc)) : 0;
           
-          $litros_sin_mc = 0;
-          $vacas_sin_mc = 0;
-          $litros_con_mc = 0;
-          $vacas_con_mc = 0;
+          $litros_nop1 = 0;
+          $vacas_nop1 = 0;
+          $litros_nop2 = 0;
+          $vacas_nop2 = 0;
           $without_milk = [];
           foreach ($csv->dairy_controls as $dc) {
             //si tiene la leche especificada realiza calculos y lo guarda en la bd
@@ -207,14 +207,16 @@ class SchemaController Extends BaseController {
             if(!Valid::blank($dc->liters_milk)){
                 $total_milk += $dc->liters_milk;
                 $dc->calculateDL($schema->date);
-                if ($dc->hasMC()){
-                  $litros_con_mc += $dc->liters_milk;
-                  $vacas_con_mc++;
+                if (!$dc->hasMC()){
+                  $dc->calculatePerdDML();
+                }
+                if ($dc->nop == 1){
+                  $litros_nop1 += $dc->liters_milk;
+                  $vacas_nop1++;
                 }
                 else{
-                  $litros_sin_mc += $dc->liters_milk;
-                  $vacas_sin_mc++;
-                  $dc->calculatePerdDML();
+                  $litros_nop2 += $dc->liters_milk;
+                  $vacas_nop2++; 
                 }
                 if (!$dc->save()){
                     $this->flash->addErrors($dc->validation->getErrors()); 
@@ -223,20 +225,17 @@ class SchemaController Extends BaseController {
             }
             else
               $without_milk[] = $dc;
-            
           }
           if($total_milk == 0 && Valid::blank($schema->liters_milk)){
             $this->flash->addError("No se especifico la producción de leche"); 
             return false;
           }
-          $prom_sin_mc = ($vacas_sin_mc > 0 && $litros_sin_mc > 0)? $litros_sin_mc / ($vacas_sin_mc * 1.0) : $default_cow_liters;
-          $prom_con_mc = ($vacas_con_mc > 0 && $litros_con_mc > 0)? $litros_con_mc / ($vacas_con_mc * 1.0) : $default_cow_liters;
+          $prom_nop1 = ($vacas_nop1 > 0 && $litros_nop1 > 0)? $litros_nop1 / ($vacas_nop1 * 1.0) : $default_cow_liters;
+          $prom_nop2 = ($vacas_nop2 > 0 && $litros_nop2 > 0)? $litros_nop2 / ($vacas_nop2 * 1.0) : $default_cow_liters;
           foreach ($without_milk as $dc) {
             $dc->calculateDL($schema->date);
-            if($dc->hasMC())
-              $dc->liters_milk = $prom_con_mc;
-            else{
-              $dc->liters_milk = $prom_sin_mc;
+            $dc->liters_milk = $dc->nop == 1 ? $prom_nop1 : $prom_nop2;            
+            if(!$dc->hasMC()){
               $total_milk += $dc->liters_milk;
               $dc->calculatePerdDML();
             }

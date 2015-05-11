@@ -80,7 +80,7 @@
       </li>
       <li class="list-group-item">
         <span class="badge"><?php echo $comparacion['cronicas']; ?></span>
-        Número de Vacas que siguen continúan enfermas
+        Número de Vacas que continúan enfermas
       </li>
     </ul>
   </div>
