@@ -88,10 +88,6 @@
   $graph_mc_porc1 = empty($graph_total1) ? 0 : round(($graph_mc1 / $graph_total1) * 100, 2);
   $graph_msc_porc1 = empty($graph_total1) ? 0 : round(($graph_msc1 / $graph_total1) * 100 );
   $graph_erogacion_porc1 = round(100 - $graph_mc_porc1 - $graph_msc_porc1, 2);
-  echo "<br>";
-  var_dump($graph_mc_porc1);
-  var_dump($graph_msc_porc1);
-  var_dump($graph_erogacion_porc1);
 ?>
 <div class="row">
   <div class="col-md-12">
@@ -240,12 +236,15 @@
           },
           xAxis: {
               categories:categories,
-              crosshair: true
+              crosshair: true,
+              title: {
+                  text: 'Litros'
+              }
           },
           yAxis: {
               min: 0,
               title: {
-                  text: 'Frecuencia Relativa %'
+                  text: 'Número de Vacas'
               }
           },
           tooltip: {
@@ -260,9 +259,10 @@
               column: {
                   pointPadding: 0.2,
                   borderWidth: 0
-              }
+              },              
           },
           series: [{
+              name: 'Pérdida de litros debido a MSC',
               data: hist_data
               }]
       });
