@@ -29,6 +29,9 @@ class ExcelDairyControl{
   }
 
   public  function parseToArray(){
+    $this->data = array();
+    $this->errors = array();
+    $this->count_mc = 0;
     try {
         $inputFileType = PHPExcel_IOFactory::identify($this->file);
         $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -46,6 +49,8 @@ class ExcelDairyControl{
 
     /*CHECK ROW 0 para ver si estan las columnas necesarias*/
     $header = $rowData = $sheet->rangeToArray('A1:' . $sheet->getHighestDataColumn() . '1', NULL, TRUE, FALSE)[0];
+    for($i = 0 ; $i < count($header); $i++)
+      $header[$i] = strtolower($header[$i]);
     if(!$this->valid_and_buid_header($header)){
         $this->errors[] = "La cabecera del archivo no es valida. La misma tiene que tener los siguientes campos: " . implode(', ',$this->valid_fields);
         return FALSE;
@@ -55,17 +60,15 @@ class ExcelDairyControl{
     for ($i = 2; $i <= $highestRow; $i++) {
       $this->data[] = array_combine($header, $sheet->rangeToArray('A'. $i.':' . $sheet->getHighestDataColumn() . $i, NULL, TRUE, FALSE)[0]);
     }
+    $destination = $this->schema->folder_path().basename($this->file);
     $destination = $this->schema->path_file();
     $this->createDairyDirectory($this->schema->dairy_id, $this->schema->id);
     if (!move_uploaded_file($this->file, $destination)){
+    // if (!copy($this->file, $destination)){
         throw new RuntimeException('Failed to move uploaded file.');
     }
     return TRUE;
   }
-
-
-
-
 
   public function parseToDairyControl(){
     $this->dairy_controls = array();
@@ -121,7 +124,7 @@ class ExcelDairyControl{
         $cow = Cow::findOrCreate($row[$key], $this->schema->dairy_id);
         $new_row['cow_id'] = $cow->id;        
       }
-      elseif($key == 'fecha_dl'){
+      elseif($key == 'fecha_parto'){
         $new_row['date_dl'] = (array_key_exists($key, $row)) ? DateHelper::ar_to_db($row[$key]) : '';
       }
       elseif($key == 'litros'){

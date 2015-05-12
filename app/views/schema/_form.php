@@ -307,7 +307,7 @@
                 <label class="control-label col-sm-2" for="file_data">Importar</label>
                 <span class="help-block">Seleccione el archivo donde tiene toda la información provista por el Control Lechero</span>
                 <div class="col-sm-10">
-                    <input type="file" id="file_data" name="dairy_control[file_data]" value="">
+                    <input type="file" id="file_data" name="file_data" value="">
                 </div>
               </div>
             </div>

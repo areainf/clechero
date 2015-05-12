@@ -26,7 +26,9 @@ class Schema extends Model{
           'ts_pomo_precio',
           'maquina_control_precio',
           'maquina_control_dias',
-          'in_ordenio'
+          'in_ordenio',
+          'filename',
+          'filetype'
         );
     }
 
@@ -69,7 +71,8 @@ class Schema extends Model{
     }
 
     public function file_name(){
-      return $this->year . '_'. $this->month.'_'.$this->id.'.csv';
+      return $this->filename;
+      //return $this->year . '_'. $this->month.'_'.$this->id.'.csv';
     }
 
     public function path_file(){
@@ -81,7 +84,7 @@ class Schema extends Model{
     }
 
     public function hasFile(){
-        return file_exists($this->path_file());
+        return !Valid::blank($this->file_name()) && file_exists($this->path_file());
     }
 
     public function attr_to_json(){

@@ -1,6 +1,10 @@
 <?php
 class I18n{
-  private static $attr =['first_name' => "Nombre", 'last_name'=> "Apellido", 'date' => "Fecha", 'dairy_id' => "Tambo"];
+  private static $attr =['first_name' => "Nombre", 
+                         'last_name'=> "Apellido", 
+                         'date' => "Fecha", 
+                         'dairy_id' => "Tambo",
+                         'in_ordenio' => "Vacas en Ordeño"];
 
   /*
    * INPUT: String, claves separadas por coma

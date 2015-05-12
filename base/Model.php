@@ -105,6 +105,11 @@ class Model{
         $this->validation->add($_SQL->last_error);
         return NULL;            
       }
+      else{
+        foreach ($params as $key => $value) {
+          $this->$key = $value;
+        }
+      }
     }
     return true;
   }

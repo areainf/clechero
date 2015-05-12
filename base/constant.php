@@ -13,6 +13,7 @@ define ('LIB_DIR', __SITE_PATH.'/lib/');
 define ('DATATABLE_PATH',APP_PATH.'datatables/');
 define ('REPORT_PATH',APP_PATH.'reports/');
 define ('UPLOAD_PATH', __SITE_PATH.'/upload/');
+define ('TMP_PATH', __SITE_PATH.'/tmp/');
 define ('UPLOAD_SCHEMA_PATH', UPLOAD_PATH.'schema');
 
 ?>
