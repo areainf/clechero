@@ -222,23 +222,23 @@ class SchemaController Extends BaseController {
       // sino calcula primero cuanto se le va a asignar a cada vaca que no
       // tiene leche y lo guarda despues
       if(!Valid::blank($dc->liters_milk)){
-          $total_milk += $dc->liters_milk;
-          $dc->calculateDL($schema->date);
-          if (!$dc->hasMC()){
-            $dc->calculatePerdDML();
-          }
-          if ($dc->nop == 1){
-            $litros_nop1 += $dc->liters_milk;
-            $vacas_nop1++;
-          }
-          else{
-            $litros_nop2 += $dc->liters_milk;
-            $vacas_nop2++; 
-          }
-          if (!$dc->save()){
-              $this->flash->addErrors($dc->validation->getErrors()); 
-              return false;
-          }
+        $total_milk += $dc->liters_milk;
+        $dc->calculateDL($schema->date);
+        if (!$dc->hasMC()){
+          $dc->calculatePerdDML();
+        }
+        if ($dc->nop == 1){
+          $litros_nop1 += $dc->liters_milk;
+          $vacas_nop1++;
+        }
+        else{
+          $litros_nop2 += $dc->liters_milk;
+          $vacas_nop2++; 
+        }
+        if (!$dc->save()){
+            $this->flash->addErrors($dc->validation->getErrors()); 
+            return false;
+        }
       }
       else
         $without_milk[] = $dc;
