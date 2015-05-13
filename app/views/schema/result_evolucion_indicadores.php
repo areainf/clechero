@@ -5,7 +5,7 @@
   $graph_inci = Array();
   $graph_prop = Array();
 ?>
-<h2>Monitoreo de Indicadores de Enfermedad</h2>
+<h2>Monitoreo de Indicadores de Mastitis SubClinica</h2>
 <h3><small>Tambo: </small><?php echo $dairy->name; ?></h3>
 
   <table class="table  table-bordered">
@@ -70,7 +70,7 @@ $(function () {
     });
     $('#graph_container').highcharts({
         title: {
-            text: 'Indicadores de Enfermedad',
+            text: 'Comparación de Prevalencia e Incidencia de mastitis subclínica y Proporción de vacas crónicas entre controles lecheros',
             x: -20 //center
         },
         plotOptions: {
@@ -83,7 +83,7 @@ $(function () {
         },
         yAxis: {
             title: {
-                text: '%'
+                text: 'Proporción'
             },
             plotLines: [{
                 value: 0,
@@ -91,11 +91,11 @@ $(function () {
                 color: '#808080'
             }],
              labels: {
-                format: '{value} %'
+                format: '{value}'
             }
         },
         tooltip: {
-            valueSuffix: ' % '
+            valueSuffix: ' '
         },
         legend: {
             layout: 'vertical',

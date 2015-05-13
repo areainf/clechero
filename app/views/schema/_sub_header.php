@@ -41,7 +41,7 @@
             <?php 
               if($_SERVER['REQUEST_METHOD'] == 'POST'){
             ?>
-              <li><a href="compare" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-transfer">Comparar</span></a></li>
+              <li><a href="compare" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-transfer">Volver</span></a></li>
           <?php
               }
             }
@@ -50,7 +50,7 @@
           ?>
             <li><a href="add" class="btn btn-info btn-xs">Nuevo</a></li>
             <li><a href="index" class="btn btn-info btn-xs">Listado</a></li>
-            <li><a href="compare" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-transfer">Comparar</span></a></li>
+            <li><a href="compare" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-transfer">Volver</span></a></li>
           <?php
             }
             else{ 

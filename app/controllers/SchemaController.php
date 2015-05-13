@@ -416,7 +416,7 @@ class SchemaController Extends BaseController {
     for($i = 0; $i < $cant-1; $i++){
       $schema1=$schemas[$i];
       $schema2=$schemas[$i+1];
-      $matrix[$schema1->date] = $this->compareIndicadoresEnfermedad($schema1, $schema2, 200);
+      $matrix[$schema2->date] = $this->compareIndicadoresEnfermedad($schema1, $schema2, 200);
     }
     $this->registry->matrix = $matrix;
 

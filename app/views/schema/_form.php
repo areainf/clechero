@@ -284,7 +284,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                    <p class="help-block">Archivo CSV separado por coma. Debe contener como mínimo las siguientes columnas</p>
+                    <p class="help-block">Archivo de Excel o CSV separado por coma. Debe contener como mínimo las siguientes columnas</p>
                     <table class="table">
                       <tr>
                         <th>numero</th>
@@ -299,7 +299,7 @@
                         <td>0 si tiene Mastitis Clínia sino 1</td>
                       </tr>
                     </table>
-                    <p class="help-block">Opcionales. <strong>dl o fecha_dl</strong> días de lactancia o fecha última lactancia, <strong>litros</strong></p>
+                    <p class="help-block">Opcionales. <strong>del o fecha_parto</strong> días de lactancia o fecha última lactancia, <strong>litros</strong></p>
               </div>
             </div>
             <div class="col-md-5 col-md-offset-1">

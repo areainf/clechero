@@ -222,8 +222,14 @@
     });
     var categories = <?php echo json_encode($interv_maxs) ?>;
     var hist_data = <?php echo json_encode($count_by_interval) ?>;
+    var count_data = <?php echo $count_data;?>;
     /*HISTOGRAMA*/
     $(function () {
+      
+      var interval_value = <?php echo $intervals; ?>;
+      var q1 = <?php echo $liters_q1; ?>;
+      var q2 = <?php echo $liters_q2; ?>;
+      var q3 = <?php echo $liters_q3; ?>;
       $('#graficaHistogram').highcharts({
           chart: {
               type: 'column'
@@ -239,7 +245,33 @@
               crosshair: true,
               title: {
                   text: 'Litros'
-              }
+              },
+              // plotLines: [{
+              //   color: 'red', // Color value
+              //   dashStyle: 'solid', // Style of the plot line. Default to solid
+              //   value: q1*interval_value, // Value of where the line will appear
+              //   width: 2, // Width of the line    
+              //   label: {
+              //         text: 'Q1',
+              //         align: 'center',
+              //         style: {
+              //             color: 'black'
+              //         }
+              //     }
+              // },
+              // {
+              //   color: 'blue', // Color value
+              //   dashStyle: 'solid', // Style of the plot line. Default to solid
+              //   value: q2*interval_value, // Value of where the line will appear
+              //   width: 2, // Width of the line    
+              //   label: {
+              //         text: 'Q2',
+              //         align: 'center',
+              //         style: {
+              //             color: 'black'
+              //         }
+              //     }
+              // }]
           },
           yAxis: {
               min: 0,
@@ -248,10 +280,27 @@
               }
           },
           tooltip: {
-              headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-              pointFormat: '<tr><td style="color:{series.color};padding:0">Cantidad</td>' +
-                  '<td style="padding:0"><b>{point.y} vacas</b></td></tr>',
-              footerFormat: '</table>',
+              /*headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+              pointFormat: '<tr><td style="color:{series.color};padding:0">Cantidad&nbsp;&nbsp;</td>' +
+                  '<td style="padding:0"> <b>{point.y} vacas</b></td></tr>',
+              footerFormat: '</table>',*/
+              formatter: function () {
+                var html ="";
+                $.each(this.points, function () {
+                  var porc= ((this.y * 100.0)/count_data).toFixed(2);
+                  html += '<span style="font-size:10px">'+this.key+'</span><table>'+
+                '<tr><td padding:0">Cantidad&nbsp;&nbsp;</td>' +
+                  '<td style="padding:0"> <b>'+this.y+' vacas</b> <span style="color: #dd0000;">'+porc+'%</span></td></tr>';
+                });
+                // var s = '<b>' + this.x + this.y'</b>';
+
+                // $.each(this.points, function () {
+                //     s += '<br/>' + this.series.name + ': ' +
+                //         this.y + 'm';
+                // });
+
+                return html;
+            },
               shared: true,
               useHTML: true
           },

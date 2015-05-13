@@ -5,7 +5,7 @@ else{
 ?>
 <div class ="row">
     <div class="col-md-6">
-        <h2>Evolución Vaca por Vaca</h2>
+        <h3>Análisis de pérdidad e indicadores de mastitis entre controles lecheros</h3>
 <?php
   foreach ($dairies as $tambo) {
 ?>
@@ -23,9 +23,7 @@ else{
         <table class="table table-borderer">
             <thead>
                 <tr>
-                    <th>Selección</th>
-                    <th>Control Lechero 1</th>
-                    <th>Control Lechero 2</th>
+                    <th colspan="3">Seleccionar fechas de controles a comparar</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,9 +59,9 @@ else{
     ?>
     </div><!-- fin panel body -->
     <div class="panel-footer">
+            <label for="umbral">Punto de Corte de RCS para definir MSC</label>
         <div class="form-group">
-            <label for="umbral">Punto de Corte</label>
-            <input type="number"class="form-control" name="umbral" value="<?php echo $umbral; ?>">
+            <input type="number"class="form-control input-sm" name="umbral" value="<?php echo $umbral; ?>">
             <input type="submit" class="btn btn-default" value="Aceptar">
         </div>
     </div><!-- fin panel-footer -->
@@ -75,7 +73,7 @@ else{
 ?>
     </div><!-- col-md-6 -->
     <div class="col-md-6">
-      <h2>Evolución de la Enfermedad</h2>
+      <h3>Gráficos de pérdidas e indicadores de mastitis entre controles lecheros</h3>
       <?php
         foreach ($dairies as $tambo) {
       ?>
@@ -95,7 +93,7 @@ else{
                             <tr>
                                 <th>Desde el Control</th>
                                 <th>Hasta el Control</th>
-                                <th>Evolución</th>
+                                <th>Análisis</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,8 +122,8 @@ else{
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="submit" class="btn btn-default" name="compare_costos" value="Costos">
-                                        <input type="submit" class="btn btn-default" name="compare_indicadores" value="Indicadores">
+                                        <input type="submit" class="btn btn-default" name="compare_costos" value="Pérdidas">
+                                        <input type="submit" class="btn btn-default" name="compare_indicadores" value="Ind. de Mastitis" title="Indicadores de Mastitis">
                                     </div>
                                 </td>
                             </tr>
