@@ -6,7 +6,7 @@
   $graph_msc = Array();
   $graph_erogaciones = Array();
 ?>
-<h2>Análisis Evaluación de Costos</h2>
+<h2>Comparación de las pérdidas por mastitis clínica, subclínica y erogaciones por aplicación de prácticas de control y prevención según los controles lecheros</h2>
 <h3><small>Tambo: </small><?php echo $dairy->name; ?></h3>
 
   <table class="table  table-bordered">
@@ -72,7 +72,7 @@ $(function () {
     });
     $('#graph_container').highcharts({
         title: {
-            text: 'Análisis de Pérdidas',
+            text: 'Análisis de Pérdidas entre distintos controles lecheros',
             x: -20 //center
         },
         plotOptions: {
