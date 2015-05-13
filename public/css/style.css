@@ -95,3 +95,82 @@ tr.tr-report th{
   margin: 0px;
   padding: 0px;
 }
+
+/*ESTILO PARA LOS BOX DE LA PAGINA PRINCIPAL*/
+.box-owner{
+  -webkit-box-shadow: 2px 5px 20px 1px #ccc;
+  box-shadow: 2px 5px 20px 1px #ccc;
+  background-color: rgba(120, 150, 23, 0.1);
+  color: rgba(120, 150, 23, 0.1);
+  min-height: 250px;
+  -webkit-border-radius: 10px 10px 20px 20px;
+  border-radius: 10px 10px 20px 20px;
+}
+.box-owner h3{
+  text-align: center;
+  padding-top: 10px;
+  background-color: #020;
+  padding-bottom: 10px;
+  color: #eee;
+}
+
+.box-schema{
+  -webkit-box-shadow: 2px 5px 20px 1px #ccc;
+  box-shadow: 2px 5px 20px 1px #ccc;
+  background-color: #ccc;
+  min-height: 250px;
+  -webkit-border-radius: 10px 10px 20px 20px;
+  border-radius: 10px 10px 20px 20px;
+}
+.box-schema h3{
+  text-align: center;
+  padding-top: 10px;
+  background-color: #020;
+  padding-bottom: 10px;
+  color: #eee;
+}
+
+.box-btn1, .box-btn{
+  padding: 25px 5px 25px 5px;
+  display: block;
+  vertical-align: middle;
+  text-decoration: none;
+  -webkit-border-radius: 11px 11px 11px 11px;
+  border-radius: 11px 11px 11px 11px;
+  margin: 0 10px 0 10px;
+  text-align: center;
+}
+.box-btn{
+  border: 2px solid #a90329; /* Old browsers */
+  background: #a90329; /* Old browsers */
+background: -moz-linear-gradient(top,  #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+  color: #fff;
+}
+.box-btn1{
+background: #ffc578; /* Old browsers */
+background: -moz-linear-gradient(left,  #ffc578 0%, #fb9d23 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffc578), color-stop(100%,#fb9d23)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  #ffc578 0%,#fb9d23 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  #ffc578 0%,#fb9d23 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  #ffc578 0%,#fb9d23 100%); /* IE10+ */
+background: linear-gradient(to right,  #ffc578 0%,#fb9d23 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffc578', endColorstr='#fb9d23',GradientType=1 ); /* IE6-9 */
+}
+.box-btn-sm{
+  font-size: 22px;
+}
+.box-btn-md{
+  font-size: 32px;
+}
+
+.box-btn:hover, .box-btn1:hover{
+ border: 2px solid #fff;
+  color: #000;
+  text-decoration: none;
+};
