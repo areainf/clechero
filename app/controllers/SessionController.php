@@ -49,7 +49,7 @@ Class SessionController Extends BaseController {
   public function logout(){
     if(Security::is_logged()){
       Security::logout();
-      $this->flash->addMessage("Salio correctamente del sistema");
+      // $this->flash->addMessage("Salio correctamente del sistema");
     } 
     return $this->render('login');
   }

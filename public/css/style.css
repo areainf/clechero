@@ -36,7 +36,9 @@ ul.list-nav li{
   margin-top: 40px;
   background-color: #C2D6DD;
   padding: 20px;
-
+  background: rgb(0, 0, 0);
+background: rgba(0, 0, 0, 0.6);
+color: #fff;
 }
 
 /*Para dejar espacio*/
@@ -70,4 +72,26 @@ h2.seccion{
 /*Estilo para las tablas de perdidad y erogaciones */
 tr.tr-report th{
   background-color: #D9D9D9;
+}
+/*LOGIN PAGE*/
+.loginpage{
+  height:90vh;
+  background-image: url('../images/bg-home.png');
+   background-position: center center;  
+  background-repeat: no-repeat;
+}
+.loginpage h1{
+  text-align: center;
+  font-size: 60pt;
+  font-family: "Ubuntu", Helvetica, Arial, sans-serif!important;
+  text-shadow: 1px 5px 2px #330;
+  color: #666;
+}
+.loginpage .slogan{
+ text-align: center;
+  font-size: 16pt;
+  font-family: "Ubuntu", Helvetica, Arial, sans-serif!important;
+  color: #666; 
+  margin: 0px;
+  padding: 0px;
 }
