@@ -28,7 +28,7 @@
       <?php 
         if(Security::is_admin())
           include "includes/_menu_top.php"; 
-        elseif (Security::is_dairy()) {
+        elseif (Security::is_dairy() || Security::is_veterinary()) {
           include "includes/_menu_top_dairy.php"; 
         }
       ?>

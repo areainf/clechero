@@ -14,9 +14,13 @@
           $hidden = "";
           $action = 'create';
         }
+        
       ?>
         <form class="form-horizontal" role="form" method="post"  action="<?php echo $action; ?>" name="form">
-          <?php echo $hidden; ?>
+          <?php 
+            echo $hidden; 
+            echo FormHelper::hidden_tag("owner[created_by]", Security::current_user()->id);
+          ?>
           <div class="form-group">
             <label class="control-label col-sm-2" for="first_name">Nombre:</label>
             <div class="col-sm-10">

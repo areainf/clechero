@@ -22,6 +22,11 @@ class User extends Model{
         return Veterinary::where(array("conditions"=>array('created_by = ?',$this->person_id)));
     }
 
+    public function owners(){
+        if ($this->person_id == null) return null;
+        return Owner::where(array("conditions"=>array('created_by = ?',$this->id)));
+    }
+
     public function dairies(){
         if ($this->person_id == null) return [];
         return Dairy::where(array("conditions"=>array('owner_id = ?',$this->person_id)));
@@ -30,5 +35,10 @@ class User extends Model{
     public function isOwn($dairy){
         return $dairy->owner_id == $this->person_id;
     }
+
+    public function it_create_people($person){
+        return $person != NULL && $this->id == $person->created_by;
+    }
+       
 }
 ?>

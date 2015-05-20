@@ -18,6 +18,7 @@
         }
         $owner = ($dairy->Owner == null) ? '' : "[{id:'".$dairy->Owner->id."', fullname:'" .$dairy->Owner->fullname()."'}]";
         $veterinary_id = ($dairy->Veterinary == null) ? '' : $dairy->Veterinary->id;
+        $owner_id = ($dairy->owner() == null) ? '' : $dairy->owner()->id;
       ?>
         <form class="form-horizontal" role="form" method="post"  action="<?php echo $action; ?>" name="form">
           <?php echo $hidden; ?>
@@ -46,16 +47,34 @@
               <input type="text" class="form-control" id="industry" name="dairy[industry]" value="<?php echo $dairy->industry;?>">
             </div>
           </div>
-          <div class="form-group">
-            <label class="control-label col-sm-6" for="veterinary">Veterinario</label>
-            <div class="col-sm-6"> 
-              <select class="form-control" id="veterinary_id" name="dairy[veterinary_id]">
-                <?php 
-                  echo FormHelper::options_for_collection($veterinarians,"id",'fullname',$veterinary_id);
-                ?>
-              </select>
+          <?php if(Security::is_dairy()){?>
+            <div class="form-group">
+              <label class="control-label col-sm-6" for="veterinary">Veterinario</label>
+              <div class="col-sm-6"> 
+                <select class="form-control" id="veterinary_id" name="dairy[veterinary_id]">
+                  <?php 
+                    echo FormHelper::options_for_collection($veterinarians,"id",'fullname',$veterinary_id);
+                  ?>
+                </select>
+              </div>
             </div>
-          </div>
+          <?php 
+            }
+            else{
+          ?>
+            <div class="form-group">
+              <label class="control-label col-sm-6" for="owner">Dueño</label>
+              <div class="col-sm-6"> 
+                <select class="form-control" id="owner_id" name="dairy[owner_id]">
+                  <?php 
+                    echo FormHelper::options_for_collection($owners,"id",'fullname',$owner_id);
+                  ?>
+                </select>
+              </div>
+            </div>
+          <?php    
+            }
+          ?>
           <div class="form-group">
             <label class="control-label col-sm-6" for="email">Email:</label>
             <div class="col-sm-6">

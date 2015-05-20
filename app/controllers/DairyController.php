@@ -9,7 +9,7 @@ class DairyController Extends BaseController {
   }
 
   public function index() {
-    if (Security::is_dairy())
+    if (Security::is_dairy() || Security::is_veterinary())
       $this->render('index_own'); 
     else
       $this->render('index_admin'); 
@@ -18,14 +18,15 @@ class DairyController Extends BaseController {
 
   public function index_json() {
     $params = $this->getParameters();
-    if (Security::is_dairy()){
+    if (Security::is_admin()){
+      $dt = new DairiesDatatable($params);
+    }
+    else{
       $user = Security::current_user();
       $person = $user->person();
       $params['people_id'] = $person->id;
       $dt = new DairyDatatable($params);
     }
-    else
-      $dt = new DairiesDatatable($params);
     echo $dt->getJsonData();
   }
 
@@ -34,9 +35,10 @@ class DairyController Extends BaseController {
       $this->registry->dairy = new Dairy();
     else
       $this->registry->dairy = $dairy;
-    if (Security::is_dairy()){
+    if (Security::is_dairy() || Security::is_veterinary()){
       $user = Security::current_user();      
       $this->registry->veterinarians = $user->veterinarians();
+      $this->registry->owners = $user->owners();
       $this->render('_form_own');
     }
     else
@@ -48,8 +50,12 @@ class DairyController Extends BaseController {
       $params = $this->getData()['dairy'];
       if (Security::is_dairy()){
         $user = Security::current_user();
-        $owner = $user->person();
+        $owner = $user->person();//esta mal revisar deberia ser solo user id
         $params['owner_id'] = $owner->id;
+      }
+      elseif (Security::is_veterinary()){
+        $user = Security::current_user();
+        $params['veterinary_id'] = $user->id;
       }
       $dairy = new Dairy($params);
       if ($dairy->is_valid() && $dairy->save()){
@@ -72,6 +78,10 @@ class DairyController Extends BaseController {
         $user = Security::current_user();
         if($user->isOwn($dairy)){
           $this->registry->veterinarians = $user->veterinarians();
+          $this->render('_form_own');
+        }
+        elseif($dairy->veterinary_id == $user->id){
+          $this->registry->owners = $user->owners();
           $this->render('_form_own');
         }
         elseif(Security::is_admin())

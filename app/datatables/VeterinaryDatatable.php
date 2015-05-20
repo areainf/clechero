@@ -87,10 +87,21 @@ class VeterinaryDatatable Extends Datatable{
     $img_del = '<span class="glyphicon glyphicon-remove-sign"></span>';
     $url_edit = Ctrl::getUrl(array('control'=>'veterinary', 'action'=>'edit', 'params'=>array('id'=>$veterinary->id)));
     $url_del = Ctrl::getUrl(array('control'=>'veterinary', 'action'=>'delete', 'params'=>array('id'=>$veterinary->id)));
+    $vet_obj = new Veterinary($veterinary);    
+    $user = $vet_obj->user();
+    if($user != null){
+      $url_user = Ctrl::getUrl(array('control'=>'user', 'action'=>'edit', 'params'=>array('id'=>$user->id)));
+      $img_user = '<span class="glyphicon glyphicon-eye-open"></span>';
+    }
+    else{
+      $url_user = Ctrl::getUrl(array('control'=>'user', 'action'=>'add', 'params'=>array('user[person_id]'=>$veterinary->id)));
+      $img_user = '<span class="glyphicon glyphicon-user"></span>';
+    }
     $a_edit = FormHelper::link_to($url_edit,$img_edit);
     $a_del = FormHelper::link_to($url_del,$img_del, array('confirm' => 'Confirma que desea eliminar el veterinario'));
+    $a_user = FormHelper::link_to($url_user,$img_user);
     $div = '<div class="dt-action">';
-    return $div.$a_edit.'</div>'.$div.$a_del.'</div>';
+    return $div.$a_edit.'</div>'.$div.$a_user.'</div>'.$div.$a_del.'</div>';
   }
 }
 ?>
