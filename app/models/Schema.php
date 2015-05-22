@@ -98,6 +98,10 @@ class Schema extends Model{
         return DairyControl::where(["conditions" =>["schema_id = ? ", $this->id]]);
     }
 
+    public function erogaciones(){
+        return Erogacion::where(["conditions" =>["schema_id = ? ", $this->id]]);
+    }
+
     /*Cantidad de animales analizados*/
     public function countCow($force=false){
       if(empty($this->_cant_cow) || $force)
