@@ -101,7 +101,7 @@ class OwnerController Extends BaseController {
       return $this->index();
   }
   public function canExecute($action, $user){
-    return $user != NULL;
+    return $user != NULL && $user->role == Role::ROL_ADMIN;
   }
   private function forTokenInput($owner){
     return array('id' => $owner->id, 'fullname' => $owner->fullname());
