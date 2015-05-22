@@ -7,6 +7,7 @@
 <p>Esta página es la inicial para cualquier usuario logueado. Aca podria ir cualquier tipo de información.
 	Tambien se podria evitar esta pagina y redirigir a alguna accion por defecto
 </p>
+<?php if(Security::is_dairy()) { ?>;
 <div class="row">
   <div class="col-md-6">
     <div class="block-landpage">
@@ -38,7 +39,7 @@
     </div>
   </div>
 </div>
-
+<?php }//is veterinary ?>
 
 
 <!-- 
