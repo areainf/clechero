@@ -190,5 +190,23 @@ $( document ).ready(function() {
             // $("#id-form-schema #dairy_id").trigger("change");
             Esquema.init();
         }
+
+        var Erogaciones = {
+            table: "#table-erogaciones",
+            btn_add: "#erogaciones_add",
+            field: {name: "#erogaciones_name", description: "#erogaciones_description",
+                    price: "erogaciones_price", amount: "#erogaciones_amount"},
+            _add: function(){},
+            _del: function(){},
+            _draw: function(){},
+            init: function(){
+                var el = this;
+                $(el.btn_add).on("click", function(){
+                    
+                    return false;
+                });
+            },
+
+        };
     }
 });
