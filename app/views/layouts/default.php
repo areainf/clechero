@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $this->getPageTitle();?></title>
-    <base href="<?php echo $url_base; ?>">
+    <base href="<?php echo $url_base; ?>/">
     <!-- Bootstrap -->
     <link href="<?php echo $public_url;?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $public_url;?>css/style.css" rel="stylesheet">
@@ -27,7 +27,7 @@
       <?php 
         if(Security::is_admin())
           include "includes/_menu_top.php"; 
-        elseif (Security::is_dairy()) {
+        elseif (Security::is_dairy() || Security::is_veterinary()) {
           include "includes/_menu_top_dairy.php"; 
         }
       ?>

@@ -33,6 +33,9 @@ class Dairy extends Model{
     public function veterinary(){
         return Veterinary::find($this->veterinary_id);
     }
+    public function owner(){
+        return Owner::find($this->owner_id);
+    }
     public function schemas(){
         return Schema::where(['conditions' => ['dairy_id =?',$this->id]]);
     }

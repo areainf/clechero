@@ -53,7 +53,7 @@ class VeterinaryController Extends BaseController {
       $people_id = null;
       if($person != null )
         $people_id = $person->id;
-      $params['created_by'] = $people_id;
+      $params['created_by'] = $user->id;
       $veterinary = new Veterinary($params);
       if ($veterinary->is_valid() && $veterinary->save()){
         $this->flash->addMessage("Se agrego correctamente el Veterinario");
@@ -105,9 +105,14 @@ class VeterinaryController Extends BaseController {
       $id = $this->getParameters('id');
       $veterinary = Veterinary::find($id);
       if ($veterinary){
+        if ($this->user_cant_delete($veterinary)){
           $veterinary->delete();
           $this->flash->addErrors($veterinary->validation->getErrors()); 
           $this->registry->veterinary = $veterinary;
+        }
+        else{
+          $this->flash->addError("No puede eliminar el Veterinario. Permiso denegado"); 
+        }
       }
       else{
         $this->flash->addError("Veterinario No encontrado"); 
@@ -122,6 +127,11 @@ class VeterinaryController Extends BaseController {
 
   public function canExecute($action, $user){
     return $user != NULL;
+  }
+
+  private user_cant_delete($veterinary){
+    $user = Security::current_user();
+    return $veterinary->created_by == $user->id;
   }
 }
 ?>

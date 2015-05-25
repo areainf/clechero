@@ -13,7 +13,18 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+          <?php 
+            if (Security::is_dairy()) {
+          ?>
           <li><a href="<?php echo $this->getUrlFor('veterinary') ?>">Veterinarios</a></li>
+          <?php 
+            }
+            else{
+          ?>
+          <li><a href="<?php echo $this->getUrlFor('owner') ?>">Dueño</a></li>
+          <?php 
+            }
+          ?>
           <li><a href="<?php echo $this->getUrlFor('dairy') ?>">Tambos</a></li>
           <li><a href="<?php echo $this->getUrlFor('schema') ?>">Datos</a></li>
         </ul>
