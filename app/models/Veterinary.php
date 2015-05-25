@@ -1,5 +1,5 @@
 <?php 
-class Veterinary extends Model{
+class Veterinary extends Person{
     public static $_table_name = 'people';
     public $_type = 'veterinary';
 

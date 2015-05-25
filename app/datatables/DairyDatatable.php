@@ -3,17 +3,22 @@ require_once HELPERS_PATH.'FormHelper.php';
 require_once HELPERS_PATH.'AppHelper.php';
 require_once 'Datatable.php';
 class DairyDatatable Extends Datatable{
-
+  private $user;
   public function __construct($parameters){
     parent::__construct($parameters);
     $this->dtColumns = array('Dairy.id', 'Dairy.location', 'Dairy.industry', 'Dairy.name', array('Owner.last_name', 'Owner.first_name'), array('Veterinary.last_name', 'Veterinary.first_name'), 'email', 'phone');
+    $this->user = Security::current_user();
   }
 
   protected function _findData(){
     /*Realiza la busqueda de los datos en la BD*/
     global $_SQL;
-    $qWhere = sprintf(" WHERE (owner_id = '%s') ", $this->parameters['people_id']);
-
+    if(Security::is_veterinary())
+      $qWhere = sprintf(" WHERE (veterinary_id = '%s') ", $this->user->id);
+    elseif(Security::is_dairy())
+      $qWhere = sprintf(" WHERE (owner_id = '%s') ", $this->parameters['people_id']);
+    else
+      die("Accion no permitida");
     if(!Valid::blank($this->dtSearch['value'])){
       $s = $_SQL->escape($this->dtSearch['value']);
       $qWhere .= sprintf(" and (Dairy.location LIKE '%%%s%%' or Dairy.industry LIKE '%%%s%%' or Dairy.name LIKE '%%%s%%' 
@@ -94,15 +99,16 @@ class DairyDatatable Extends Datatable{
   private function buildLinks($dairy){
     $img_edit = '<span class="glyphicon glyphicon-edit"></span>';
     $img_del = '<span class="glyphicon glyphicon-remove-sign"></span>';
-    $img_cow = '<span class="glyphicon glyphicon-tag"></span>';
+    // $img_cow = '<span class="glyphicon glyphicon-tag"></span>';
     $url_edit = Ctrl::getUrl(array('control'=>'dairy', 'action'=>'edit', 'params'=>array('id'=>$dairy->id)));
     $url_del = Ctrl::getUrl(array('control'=>'dairy', 'action'=>'delete', 'params'=>array('id'=>$dairy->id)));
     $url_cow = Ctrl::getUrl(array('control'=>'cow', 'action'=>'index', 'params'=>array('dairy_id'=>$dairy->id)));
     $a_edit = FormHelper::link_to($url_edit,$img_edit);
     $a_del = FormHelper::link_to($url_del,$img_del, array('confirm' => 'Confirma que desea eliminar el Tambo'));
-    $a_cow = FormHelper::link_to($url_cow,$img_cow);
+    // $a_cow = FormHelper::link_to($url_cow,$img_cow);
     $div = '<div class="dt-action">';
-    return $div.$a_edit.'</div>'.$div.$a_cow.'</div>'.$div.$a_del.'</div>';
+    return $div.$a_edit.'</div>'.$div.$a_del.'</div>';
+    // return $div.$a_edit.'</div>'.$div.$a_cow.'</div>'.$div.$a_del.'</div>';
   }
 }
 ?>

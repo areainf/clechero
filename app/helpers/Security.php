@@ -25,6 +25,11 @@ class Security {
         $user = static::current_user();
       return $user != NULL && $user->role == Role::ROL_DAIRY;
     }
+    public static function is_veterinary($user=null){
+      if(!$user)
+        $user = static::current_user();
+      return $user != NULL && $user->role == Role::ROL_VETERINARY;
+    }
     public static function user_id(){
       $user = static::current_user();
       return $user != NULL ? $user->id : NULL;

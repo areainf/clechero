@@ -4,10 +4,7 @@
 
 ?>
 <h1>Bienvenido</h1>
-<p>Esta página es la inicial para cualquier usuario logueado. Aca podria ir cualquier tipo de información.
-	Tambien se podria evitar esta pagina y redirigir a alguna accion por defecto
-</p>
-<?php if(Security::is_dairy()) { ?>;
+<?php if(Security::is_dairy() || Security::is_veterinary()) { ?>
 <div class="row">
   <div class="col-md-6">
     <div class="block-landpage">
@@ -30,10 +27,26 @@
       <div class="block-landpage-body">
         <ul>
           <li>
-            <a href="<?php echo $url_add_schema;;?>">Nuevo Control Lechero</a>
+            <a href="<?php echo $url_add_schema;?>">Nuevo Control Lechero</a>
           </li>
           <li class="dairies">
             <a href="<?php echo $this->getUrlFor('schema'); ?>">Listado de Controles</a>
+          </li>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <div class="block-landpage">
+      <h1>ANÁLISIS INTRATAMBO</h1>
+      <div class="block-landpage-body">
+        <ul>
+          <li>
+            <a href="schema/compare">Comparar</a>
+            <p class="help">Análisis de pérdidad e indicadores de mastitis entre controles lecheros y<br>
+            Gráficos de pérdidas e indicadores de mastitis entre controles lecheros</a>
           </li>
       </div>
     </div>
