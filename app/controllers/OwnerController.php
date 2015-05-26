@@ -36,7 +36,6 @@ class OwnerController Extends BaseController {
     $this->render('_form');
   }
 
-
   public function create(){
       $params = $this->getData()['owner'];
       $owner = new Owner($params);
@@ -90,9 +89,13 @@ class OwnerController Extends BaseController {
       $id = $this->getParameters('id');
       $owner = Owner::find($id);
       if ($owner){
+        if($this->user_cant_delete($owner)){
           $owner->delete();
           $this->flash->addErrors($owner->validation->getErrors()); 
           $this->registry->owner = $owner;
+        }
+        else
+         $this->flash->addError("No tiene permisos para eliminar el veterinario"); 
       }
       else{
         $this->flash->addError("Persona No encontrada"); 
@@ -120,6 +123,11 @@ class OwnerController Extends BaseController {
 
   private function getOwner(){
     return Owner::find($this->getParameters('id'));
+  }
+
+  private function user_cant_delete($owner){
+    $user = Security::current_user();
+    return $owner->created_by == $user->id;
   }
 }
 ?>

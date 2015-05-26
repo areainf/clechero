@@ -39,6 +39,15 @@ class User extends Model{
     public function it_create_people($person){
         return $person != NULL && $this->id == $person->created_by;
     }
-       
+    
+    public function is_dairy(){
+        return Security::is_dairy($this);
+    }   
+    public function is_veterinary(){
+        return Security::is_veterinary($this);
+    }
+    public function is_admin(){
+        return Security::is_admin($this);
+    }   
 }
 ?>

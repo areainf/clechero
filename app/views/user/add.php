@@ -7,7 +7,7 @@
 <div class="separator-15"></div>
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <form class="form-horizontal" role="form" method="post"  action="create" name="form">
+        <form class="form-horizontal" role="form" method="post"  action="user/create" name="form">
           <?php 
             if($person != null){
               echo FormHelper::hidden_tag("user[person_id]", $person->id, array('id'=>'person_id'));
@@ -22,12 +22,12 @@
           <?php    
             }
           ?>
-          <div class="form-group">
+    <!--       <div class="form-group">
             <label class="control-label col-sm-2" for="username">Usuario:</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="username" name="user[username]" placeholder="Usuario" value="<?php echo $user->username; ?>">
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
             <label class="control-label col-sm-2" for="email">Email:</label>
             <div class="col-sm-10">
@@ -50,7 +50,7 @@
             <label class="control-label col-sm-2" for="role">Tipo de usuario</label>
             <div class="col-sm-10"> 
                 <select class="form-control" id="role" name="user[role]">
-                    <?php echo FormHelper::options_for(Role::$roles); ?>
+                    <?php echo FormHelper::options_for(Role::createRoles(Security::current_user())); ?>
                 </select>
             </div>
           </div>

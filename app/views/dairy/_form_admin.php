@@ -6,13 +6,14 @@
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <?php 
+        $action = 'dairy/';
         if ($dairy->isPersistent()){
           $hidden = FormHelper::hidden_tag("dairy[id]", $dairy->id, array('id'=>'dairy_id'));
-          $action = 'update';
+          $action .= 'update';
         }
         else{
           $hidden = "";
-          $action = 'create';
+          $action .= 'create';
         }
         $owner = ($dairy->Owner == null) ? '' : "[{id:'".$dairy->Owner->id."', fullname:'" .$dairy->Owner->fullname()."'}]";
         $veterinary = ($dairy->Veterinary == null) ? '' : "[{id:'".$dairy->Veterinary->id."', fullname:'" .$dairy->Veterinary->fullname()."'}]";

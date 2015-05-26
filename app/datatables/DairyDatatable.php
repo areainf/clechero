@@ -6,17 +6,19 @@ class DairyDatatable Extends Datatable{
   private $user;
   public function __construct($parameters){
     parent::__construct($parameters);
-    $this->dtColumns = array('Dairy.id', 'Dairy.location', 'Dairy.industry', 'Dairy.name', array('Owner.last_name', 'Owner.first_name'), array('Veterinary.last_name', 'Veterinary.first_name'), 'email', 'phone');
+    $this->dtColumns = array('Dairy.id', 'Dairy.name', 'Dairy.location', 'Dairy.industry', array('Owner.last_name', 'Owner.first_name'), array('Veterinary.last_name', 'Veterinary.first_name'));
     $this->user = Security::current_user();
+
   }
 
   protected function _findData(){
     /*Realiza la busqueda de los datos en la BD*/
+    $people_id = $this->user->person()->id;
     global $_SQL;
     if(Security::is_veterinary())
-      $qWhere = sprintf(" WHERE (veterinary_id = '%s') ", $this->user->id);
+      $qWhere = sprintf(" WHERE (veterinary_id = '%s') ", $people_id);
     elseif(Security::is_dairy())
-      $qWhere = sprintf(" WHERE (owner_id = '%s') ", $this->parameters['people_id']);
+      $qWhere = sprintf(" WHERE (owner_id = '%s') ", $people_id);
     else
       die("Accion no permitida");
     if(!Valid::blank($this->dtSearch['value'])){
@@ -73,9 +75,9 @@ class DairyDatatable Extends Datatable{
                   'name' => $value->name,
                   'location' => AppHelper::truncate($value->location,40),
                   'industry' => $value->industry,
+                  'owner' => $owner_name,
+                  'veterinary' => $vet_name,
                   'cattle' => $obj->countCattle(),
-                  'column2' => "valor2",
-                  'column3' => "valor3",
                   'actions' => $this->buildLinks($value),
                  ];
         }

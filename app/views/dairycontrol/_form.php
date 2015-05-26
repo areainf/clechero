@@ -7,13 +7,14 @@
     <div class="col-md-6 col-md-offset-3">
       <?php 
         $mc = $dairycontrol->mc;
+        $action = 'dairycontrol/';
         if ($dairycontrol->isPersistent()){
           $hidden = FormHelper::hidden_tag("dairycontrol[id]", $dairycontrol->id, array('id'=>'dairycontrol_id'));
-          $action = 'update';
+          $action .= 'update';
         }
         else{
           $hidden = "";
-          $action = 'create';
+          $action .= 'create';
         }
         $cow = $dairycontrol->cow();
         $select_cow = ($cow == null) ? '' : "[{id:'".$cow->id."', caravana:'" .$cow->caravana."'}]";

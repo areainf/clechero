@@ -7,13 +7,14 @@
 <div class="row">
     <div class="col-md-12">
       <?php 
+        $action = 'schema/';
         if ($schema->isPersistent()){
           $hidden = FormHelper::hidden_tag("schema[id]", $schema->id, array('id'=>'schema_id'));
-          $action = 'update';
+          $action .= 'update';
         }
         else{
           $hidden = "";
-          $action = 'create';
+          $action .= 'create';
         }
       ?>
         <form class="form-horizontal" role="form" method="post"  action="<?php echo $action; ?>" name="form" enctype="multipart/form-data">

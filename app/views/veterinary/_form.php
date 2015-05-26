@@ -5,14 +5,15 @@
 <div class="separator-15"></div>
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <?php 
+      <?php
+        $action = "veterinary/";
         if ($veterinary->isPersistent()){
           $hidden = FormHelper::hidden_tag("veterinary[id]", $veterinary->id, array('id'=>'veterinary_id'));
-          $action = 'update';
+          $action .= 'update';
         }
         else{
           $hidden = "";
-          $action = 'create';
+          $action .= 'create';
         }
       ?>
         <form class="form-horizontal" role="form" method="post"  action="<?php echo $action; ?>" name="form">

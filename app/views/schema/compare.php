@@ -11,7 +11,7 @@ else{
 ?>
   <div class="panel panel-success">
     <div class="panel-heading"><?php echo $tambo->name; ?></div>
-    <form action="compare" method="post" class="form-inline">
+    <form action="schema/compare" method="post" class="form-inline">
     <div class="panel-body">
     <?php
         $schemas = $tambo->schemasOrder("date asc");
@@ -79,7 +79,7 @@ else{
       ?>
           <div class="panel panel-warning">
             <div class="panel-heading"><?php echo $tambo->name; ?></div>
-            <form action="evolucionEnfermedad" method="post" class="form-inline">
+            <form action="schema/evolucionEnfermedad" method="post" class="form-inline">
               <div class="panel-body">
                 <?php
                   $schemas = $tambo->schemasOrder("date asc");
