@@ -29,7 +29,7 @@ class User extends Model{
 
     public function dairies(){
         if ($this->person_id == null) return [];
-        return Dairy::where(array("conditions"=>array('owner_id = ?',$this->person_id)));
+        return Dairy::where(array("conditions"=>array('owner_id = ? or veterinary_id',$this->person_id,$this->person_id)));
     }
 
     public function isOwn($dairy){

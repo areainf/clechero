@@ -475,7 +475,7 @@ private function compareIndicadoresEnfermedad($schema1, $schema2, $umbral){
   }
 
   public function canExecute($action, $user){
-    return Security::is_dairy($user);
+    return Security::is_dairy($user) || $user->is_veterinary();
   }
 }
 ?>

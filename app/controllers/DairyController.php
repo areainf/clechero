@@ -48,20 +48,21 @@ class DairyController Extends BaseController {
 
   public function create(){
       $params = $this->getData()['dairy'];
+      $user = Security::current_user();
+      $person = $user->person();
       if (Security::is_dairy()){
-        $user = Security::current_user();
-        $owner = $user->person();//esta mal revisar deberia ser solo user id
-        $params['owner_id'] = $owner->id;
+        $params['owner_id'] = $person->id;
       }
       elseif (Security::is_veterinary()){
-        $user = Security::current_user();
-        $params['veterinary_id'] = $user->id;
+        $params['veterinary_id'] = $person->id;
       }
       $dairy = new Dairy($params);
       if ($dairy->is_valid() && $dairy->save()){
         $this->flash->addMessage("Se agrego correctamente el Tambo");
-        $this->renameAction('index');
-        return $this->index();
+        $controller = new SchemaController($this->ctrl);
+        $schema = new Schema();
+        $schema->dairy_id = $dairy->id;
+        return $controller->add($schema);
       }
       else{
         $this->flash->addErrors($dairy->validation->getErrors()); 

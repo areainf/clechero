@@ -2,6 +2,7 @@
 <?php 
     require_once HELPERS_PATH.'Role.php'; 
     require_once HELPERS_PATH.'FormHelper.php';
+    require_once MODELS_PATH.'Person.php';
     $person = $user->person();
 ?>
 <div class="separator-15"></div>
@@ -20,6 +21,18 @@
           </div>
 
           <?php    
+            }
+            else{
+          ?>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="person_id">Asociar a</label>
+            <div class="col-sm-10"> 
+                <select class="form-control" id="person_id" name="user[person_id]">
+                    <?php echo FormHelper::options_for_collection(Person::all_without_user(), 'id', 'fullname'); ?>
+                </select>
+            </div>
+          </div>
+          <?php
             }
           ?>
     <!--       <div class="form-group">

@@ -19,7 +19,7 @@ class Dairy extends Model{
         }
         else{
             $this->validation->present($this, 'name');
-            $this->validation->present($this, 'owner_id');
+            $this->validation->present_at_least($this, array('owner_id','veterinary_id'));
             return $this->validation->is_valid;
         }
     }
