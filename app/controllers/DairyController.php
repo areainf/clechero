@@ -134,6 +134,18 @@ class DairyController Extends BaseController {
       $this->renameAction('index');
       return $this->index();
   }
+
+  public function select(){
+    $id = $this->getParameters('id');
+    if($id){
+      $dairy = Dairy::find($id);
+      Security::set_dairy($dairy);
+    }
+    else{
+      Security::destroy_dairy();
+    }
+  }
+
   public function canExecute($action, $user){
     return $user != NULL;
   }
