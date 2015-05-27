@@ -102,14 +102,22 @@ class DairyDatatable Extends Datatable{
     $img_edit = '<span class="glyphicon glyphicon-edit"></span>';
     $img_del = '<span class="glyphicon glyphicon-remove-sign"></span>';
     // $img_cow = '<span class="glyphicon glyphicon-tag"></span>';
+    $img_analisis = '<span class="glyphicon glyphicon-stats"></span>';
+    $img_compare = '<span class="glyphicon glyphicon-transfer"></span>';
+
     $url_edit = Ctrl::getUrl(array('control'=>'dairy', 'action'=>'edit', 'params'=>array('id'=>$dairy->id)));
     $url_del = Ctrl::getUrl(array('control'=>'dairy', 'action'=>'delete', 'params'=>array('id'=>$dairy->id)));
-    $url_cow = Ctrl::getUrl(array('control'=>'cow', 'action'=>'index', 'params'=>array('dairy_id'=>$dairy->id)));
+    // $url_cow = Ctrl::getUrl(array('control'=>'cow', 'action'=>'index', 'params'=>array('dairy_id'=>$dairy->id)));
+    $url_analisis = Ctrl::getUrl(array('control'=>'dairycontrol', 'action'=>'analisis', 'params'=>array('dairy_id'=>$dairy->id)));
+    $url_compare = Ctrl::getUrl(array('control'=>'schema', 'action'=>'compare', 'params'=>array('dairy_id'=>$dairy->id)));
+
     $a_edit = FormHelper::link_to($url_edit,$img_edit);
     $a_del = FormHelper::link_to($url_del,$img_del, array('confirm' => 'Confirma que desea eliminar el Tambo'));
+    $a_analisis = FormHelper::link_to($url_analisis,$img_analisis);
+    $a_compare = FormHelper::link_to($url_compare,$img_compare);
     // $a_cow = FormHelper::link_to($url_cow,$img_cow);
     $div = '<div class="dt-action">';
-    return $div.$a_edit.'</div>'.$div.$a_del.'</div>';
+    return $div.$a_analisis.'</div>'.$div.$a_compare.'</div>'.$div.$a_edit.'</div>'.$div.$a_del.'</div>';
     // return $div.$a_edit.'</div>'.$div.$a_cow.'</div>'.$div.$a_del.'</div>';
   }
 }

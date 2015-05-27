@@ -40,11 +40,14 @@ $( document ).ready(function() {
         prePopulate: popul_cow,
     });
   }
-  if ($("#id-dairycontrol-analisis").length > 0){
-    //inicializa tooltips para analisis
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
+
+  //cambio rapido de esquema
+  if($("#dairycontrol_schemas #select_schema").length > 0){
+    //Cambio de esquema en analisis
+    $("#dairycontrol-analisis #dairycontrol_schemas #select_schema").on('change', function(){
+      var id = $("#dairycontrol_schemas #select_schema").val();
+      window.location = "dairycontrol/analisis?schema_id="+id;
+    });
   }
 
 

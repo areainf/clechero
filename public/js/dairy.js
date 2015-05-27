@@ -17,7 +17,7 @@ $( document ).ready(function() {
             { "data": "veterinary" },
             { "data": "email" },
             { "data": "phone" },
-            { "data": "actions", "bSortable" : false, 'width': '10px' },
+            { "data": "actions", "bSortable" : false},
         ],
         "fnInitComplete": function() {bind_action_link();},
         "language": {

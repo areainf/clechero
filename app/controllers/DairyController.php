@@ -144,6 +144,7 @@ class DairyController Extends BaseController {
     else{
       Security::destroy_dairy();
     }
+    echo json_encode([]);
   }
 
   public function canExecute($action, $user){

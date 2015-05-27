@@ -36,6 +36,7 @@ class Security {
     }
 
     public static function set_dairy($dairy){
+        static::destroy_dairy();
         $_SESSION['dairy'] = serialize($dairy);
         return $dairy;
     }

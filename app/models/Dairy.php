@@ -39,6 +39,9 @@ class Dairy extends Model{
     public function schemas(){
         return Schema::where(['conditions' => ['dairy_id =?',$this->id]]);
     }
+    public function last_schema(){
+        return Schema::first(['conditions' => ['dairy_id =?',$this->id], 'order' => 'date desc']);
+    }
     public function schemasOrder($str_order){
         return Schema::where(['conditions' => ['dairy_id =?',$this->id], 'order' => $str_order ]);
     }

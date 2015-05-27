@@ -3,10 +3,21 @@
   $url_report = Ctrl::getUrl(array('control'=>'dairycontrol', 'action'=>'analisis_report', 'params'=>array('schema_id'=>$schema->id)));
   $analisis = $schema->analisis();
 ?>
-<div>
-  <span class="pull-right">
-    <a href="<?php echo $url_report; ?>"><span class="btn btn-warning">Descargar Reporte</span></a>  
-  </span>
+<div id="dairycontrol-analisis">
+<input type="hidden" id="url_if_change_dairy" value="dairycontrol/analisis">
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-6">
+        <?php include "_select_schemas.php" ?>
+      </div>
+      <div class="col-md-6">
+        <span class="pull-right">
+          <a href="<?php echo $url_report; ?>"><span class="btn btn-warning">Descargar Reporte</span></a>  
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- INICIO DATOS GENERALES -->
 <h2><small>Datos Generales</small></h2>
@@ -367,3 +378,4 @@
     /*FIN CUARTILES*/
   });     
 </script>
+</div> <!-- id="dairycontrol-analisis" -->

@@ -38,8 +38,13 @@ class SchemaController Extends BaseController {
       }
     }
     else
-      $this->registry->umbral = 200;  
-    $this->registry->dairies = Security::current_user()->dairies();
+      $this->registry->umbral = 200;
+    if($this->ctrl->getValue('dairy_id')){
+      $this->registry->dairy = Dairy::find($this->ctrl->getValue('dairy_id'));
+      Security::set_dairy($this->registry->dairy);
+    }
+    else
+      $this->registry->dairies = Security::current_user()->dairies();
     $this->render('compare'); 
   }
 
@@ -431,7 +436,7 @@ class SchemaController Extends BaseController {
     return ($file['error'] == UPLOAD_ERR_OK);
   }
 
-private function compareIndicadoresEnfermedad($schema1, $schema2, $umbral){
+  private function compareIndicadoresEnfermedad($schema1, $schema2, $umbral){
     $dcs1 =  $schema1->dairy_controls();
     $dcs2 =  $schema2->dairy_controls();
     $sanas = 0;
