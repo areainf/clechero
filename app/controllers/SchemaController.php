@@ -480,7 +480,7 @@ class SchemaController Extends BaseController {
   }
 
   public function canExecute($action, $user){
-    return Security::is_dairy($user) || $user->is_veterinary();
+    return $user != null && (Security::is_dairy($user) || $user->is_veterinary());
   }
 }
 ?>

@@ -1,8 +1,3 @@
-<?php
-if(empty($dairies))
-  echo "<h2>Primero debe crear el tambo y los controles lecheros</h3>";
-else{
-?>
 <div class ="row">
     <div class="col-md-6">
         <h3>Análisis de pérdidad e indicadores de mastitis entre controles lecheros</h3>
@@ -135,12 +130,9 @@ else{
                 ?>
               </div>
             </form>
-           </div>
+          </div>
         <?php
             }//fin foreach
         ?>
     </div><!-- col-md-6 -->
 </div><!-- row -->
-<?php
-}//fin else
-?>

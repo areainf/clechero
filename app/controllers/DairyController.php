@@ -1,4 +1,5 @@
 <?php
+require_once HELPERS_PATH.'DateHelper.php';
 require_once MODELS_PATH.'Dairy.php';
 require_once DATATABLE_PATH.'DairyDatatable.php';
 require_once DATATABLE_PATH.'DairiesDatatable.php';
@@ -147,8 +148,27 @@ class DairyController Extends BaseController {
     echo json_encode([]);
   }
 
+  public function getSchemasJson(){
+    $id = $this->getParameters('id');
+    $dairy = Dairy::find($id);
+    echo json_encode($this->json_dairty_schema($dairy));
+  }
+
+  private function json_dairty_schema($dairy){
+    $schemas = $dairy->schemas();
+    if( !$schemas || count($schemas) == 0 )
+      return [];
+    $result = array();
+    foreach ($schemas as $schema) {
+      $result[] = $schema->attr_to_json();
+    }
+    return $result;
+  }
+
   public function canExecute($action, $user){
     return $user != NULL;
   }
+
+
 }
 ?>

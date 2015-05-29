@@ -36,10 +36,13 @@
                         }
                         ?>
                       </select>
+                      <select id="copy_from_schema" class="form-control">
+                      </select>
+
                     </div>
                   </div>
                   <div class="col-md-12">
-                    <p class="help-block">Seleccione el tambo al cual se le aplicará el Control Lechero</p>
+                    <p class="help-block">Seleccione el tambo y el esquema de control al cual se le aplicará el Control Lechero</p>
                   </div>
                 </div>
                 
@@ -88,6 +91,8 @@
                 <input type="date" class="form-control" id="date" name="schema[date]" value="<?php echo $schema->date;?>">
               </fieldset>
             </div>
+          </div>
+          <div class="alert alert-success" role="alert">
           </div>
           <div class="row">
             <div class="col-md-12">
