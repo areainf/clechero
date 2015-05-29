@@ -92,8 +92,6 @@
               </fieldset>
             </div>
           </div>
-          <div class="alert alert-success" role="alert">
-          </div>
           <div class="row">
             <div class="col-md-12">
               <h2 class="seccion" style="margin-left: -40px;">Esquema de control</h2>
