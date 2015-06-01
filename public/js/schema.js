@@ -10,7 +10,7 @@ $( document ).ready(function() {
                 "order": [ 1, "desc" ],
                 "columns": [
                     { "data": "id", "visible": false},
-                    { "data": "dairy", "bSortable" : false  },
+                    { "data": "dairy", "bSortable" : true  },
                     { "data": "date", "bSortable" : false  },
                     { "data": "liters_milk", "bSortable" : false  },
                     { "data": "milk_price", "bSortable" : false  },

@@ -1,5 +1,6 @@
 GlobalDairy = {
   jqid:     "#navbar_select_dairies",
+  jqdisable:     "#navbar_disable_select_dairies",
   jqupdate: "#url_if_change_dairy",
   bindChange: function(){
     var el = this;
@@ -28,8 +29,14 @@ GlobalDairy = {
     $(el.jqid).val(dairy_id);
     $(el.jqid).trigger('change');
   },
+  _disable: function(){
+    $(this.jqid).prop('disabled', 
+      $(this.jqdisable).length > 0
+    );
+  },
   init: function(){
     this.bindChange();
+    this._disable();
   }
 }
 $( document ).ready(function() {

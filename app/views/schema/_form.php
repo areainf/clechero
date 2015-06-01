@@ -1,4 +1,4 @@
-
+<input type="hidden" id="navbar_disable_select_dairies" value="Deshabilita el select de navbar">
 <?php 
     require_once HELPERS_PATH.'FormHelper.php';
 ?>
