@@ -30,7 +30,11 @@ class SchemaDatatable Extends Datatable{
     }
     /*Realiza la busqueda de los datos en la BD*/
     global $_SQL;
-    $qWhere = 'WHERE( dairy_id in (' . $this->dairies_ids . '))';
+    $current_dairy = Security::current_dairy();
+    if ($current_dairy != null)
+      $qWhere = 'WHERE( dairy_id = ' . $current_dairy->id . ')';
+    else
+      $qWhere = 'WHERE( dairy_id in (' . $this->dairies_ids . '))';
 
     if(!empty($this->dtSearch['value']) && !Valid::blank($this->dtSearch['value'])){
       $s = $_SQL->escape($this->dtSearch['value']);

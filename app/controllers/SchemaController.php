@@ -39,10 +39,13 @@ class SchemaController Extends BaseController {
     }
     else
       $this->registry->umbral = 200;
+    $navbar_dairy = Security::current_dairy();
     if($this->ctrl->getValue('dairy_id')){
       $this->registry->dairy = Dairy::find($this->ctrl->getValue('dairy_id'));
       Security::set_dairy($this->registry->dairy);
     }
+    elseif ($navbar_dairy != null)
+      $this->registry->dairy = $navbar_dairy;
     else
       $this->registry->dairies = Security::current_user()->dairies();
     $this->render('compare'); 
