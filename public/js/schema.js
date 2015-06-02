@@ -109,26 +109,26 @@ $( document ).ready(function() {
                       for (var k in el.schemaJson.fn) {
                         $("#"+k).val("");
                       };
+                      Erogaciones.clear();
                     }
                     else{
                       var data = el.schemas[$(this).prop('selectedIndex')-1]; 
+                      Erogaciones.clear();                      
                       for (var k in data) {
                         if($("#"+k).length > 0)
                           $("#"+k).val(data[k]);
                       };
+                      for(var ero in data['erogaciones']){
+                        var er = new Erogacion(undefined, 
+                                     ero['name'],
+                                     ero['description'],
+                                     ero['price'],
+                                     ero['days']);
+                        Erogaciones.add(er);
+                      }
                     }
                 });
                 // if(data.length != ''){
-            //     //             for (var k in data) {
-            //     //                 if($("#"+k).length > 0)
-            //     //                     $("#"+k).val(data[k]);
-            //     //             };
-            //     //         }
-            //     //         else{
-            //     //             for (var k in schemaJson.fn) {
-            //     //                 $("#"+k).val("");
-            //     //             };
-            //     //         }
             },
             init: function(){
                 this.bind_change_dairy();
@@ -138,6 +138,87 @@ $( document ).ready(function() {
                 $(this.container.root + " " + this.f_sel_dairy).trigger("change");
             },
         };
+        Erogaciones = {
+          container: {root: '#table-erogaciones', row_new: '#tr-new-erogacion' },
+          button: {add: '#erogaciones_add'},
+          f:{id: '#erogaciones_id', name: '#erogaciones_name', description: '#erogaciones_description', 
+             price: '#erogaciones_price', days: '#erogaciones_days'},
+          list: [],
+          temp_id: -1,
+          prefix_row: 'tr-erogacion_',
+          init: function(){
+            this._bindAdd();
+          },
+          _bindAdd: function(){
+            var el = this;
+            $(this.button.add).on('click', function(evento){
+              evento.preventDefault();
+              var er = new Erogacion(el.temp_id--, 
+                                     $(el.f.name).val(),
+                                     $(el.f.description).val(),
+                                     $(el.f.price).val(),
+                                     $(el.f.days).val());
+              // el.list[er.id] = er;
+              // el._draw(er);
+              el.add(er);
+              el.clear_form();
+              return false;
+
+            });
+          },
+          add: function(er){
+            if (er.id == undefined)
+                er.id = this.temp_id--;
+            this.list[er.id] = er;
+            this._draw(er);
+          },
+          _draw: function(er){
+            var fname = "erogaciones["+er.id+"][";
+            var tr = '<tr id="'+this.prefix_row+er.id+'">';
+            tr +='<input type="hidden" name="'+fname+'name]" value="'+er.name+'">'+
+                  '<input type="hidden" name="'+fname+'description]" value="'+er.description+'">'+
+                  '<input type="hidden" name="'+fname+'price]" value="'+er.price+'">'+
+                  '<input type="hidden" name="'+fname+'days]" value="'+er.days+'">';
+            tr +='<td>'+er.name+'</td>';
+            tr +='<td>'+er.description+'</td>';
+            tr +='<td>$ '+er.price+'</td>';
+            tr +='<td>'+er.days+'</td>';    
+            tr +='<td><a href="" class="btn btn-danger" onClick="return Erogaciones.delete('+er.id+',event);"><span class="glyphicon glyphicon-remove-circle"></span></a></td>';
+            tr +='</tr>';
+            $(tr).insertBefore($(this.container.row_new));
+          },
+          clear_form: function(){
+            $(this.f.name).val("");
+            $(this.f.description).val("");
+            $(this.f.price).val("");
+            $(this.f.days).val("");
+            $(this.f.name).focus();
+          },
+          clear: function(){
+            var el = this;
+            this.clear_form();
+            $(this.container.root+' tbody tr').each(function(i, tr){
+                console.log(tr);
+                if("#"+tr.id != el.container.row_new)
+                    tr.remove();
+            });
+          },
+          delete: function(id, evento){
+            var evento = evento || windows.event;
+            evento.preventDefault();
+            delete this.list[id];
+            $("#"+this.prefix_row+id).remove();
+            return false;
+          },
+        };
+
+        var Erogacion = function(id, name, description, price, days){
+          this.id = id;
+          this.name = name;
+          this.description = description;
+          this.price = price;
+          this.days = days;
+        }
         //si es new
         if($("#schema_id").length == 0){
             // $("#id-form-schema #dairy_id").on("change", function(event){
@@ -189,24 +270,8 @@ $( document ).ready(function() {
             // de esquemas con el tambo seleccionado
             // $("#id-form-schema #dairy_id").trigger("change");
             Esquema.init();
+            Erogaciones.init();
         }
 
-        var Erogaciones = {
-            table: "#table-erogaciones",
-            btn_add: "#erogaciones_add",
-            field: {name: "#erogaciones_name", description: "#erogaciones_description",
-                    price: "erogaciones_price", amount: "#erogaciones_amount"},
-            _add: function(){},
-            _del: function(){},
-            _draw: function(){},
-            init: function(){
-                var el = this;
-                $(el.btn_add).on("click", function(){
-                    
-                    return false;
-                });
-            },
-
-        };
     }
 });

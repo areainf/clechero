@@ -1,5 +1,5 @@
 <?php 
-class User extends Model{
+class Erogacion extends Model{
     #EROGACION VALORES POR TAMBO
     public static $_table_name = 'erogaciones';
 

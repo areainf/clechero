@@ -11,18 +11,22 @@ class SchemaController Extends BaseController {
   }
 
   public function index() {
-    $this->render('index'); 
+    $this->render('index');
   }
   public function index_json() {
       $params = $this->getParameters();
       $dt = new SchemaDatatable($params);
       echo $dt->getJsonData();
   }
-  public function add($schema = null){
+  public function add($schema = null, $erogaciones = null){
     if(empty($schema))
       $this->registry->schema = new Schema();
     else
       $this->registry->schema = $schema;
+    if(empty($erogaciones))
+      $this->registry->erogaciones = array();
+    else
+      $this->registry->erogaciones = $erogaciones;
     $this->render('_form');
   }
 
@@ -48,19 +52,29 @@ class SchemaController Extends BaseController {
       $this->registry->dairy = $navbar_dairy;
     else
       $this->registry->dairies = Security::current_user()->dairies();
-    $this->render('compare'); 
+    $this->render('compare');
   }
 
   public function create(){
-      $params = $this->getData()['schema'];
+    $data = $this->getData();
+      $params = $data['schema'];
+      $erogaciones = Array();
+      if (array_key_exists('erogaciones', $data)){
+        foreach ($data['erogaciones'] as $key => $ero) {
+           $erogacion = new Erogacion($ero);
+           array_push($erogaciones, $erogacion);
+        }
+      }
       if($this->existAndValidFile()){
         $params['filename'] = $_FILES['file_data']['name'];
         $params['filetype'] = $_FILES['file_data']['type'];
         $schema = new Schema($params);
+
+
         if ($schema->is_valid()){
           global $_SQL;
           $_SQL->query("START TRANSACTION");
-          if ($schema->save() && $this->loadFile($schema) && $schema->createAnalisis()){
+          if ($schema->save() && $this->loadFile($schema) && $this->saveErogaciones($schema, $erogaciones) && $schema->createAnalisis()){
             $_SQL->query("COMMIT");
 
             //////$this->calculatePerdDML($schema);
@@ -70,18 +84,21 @@ class SchemaController Extends BaseController {
           }
           else{
             $_SQL->query("ROLLBACK");
-            return $this->add($schema);
+            return $this->add($schema, $erogaciones);
           }
         }
         else{
-          $this->flash->addErrors($schema->validation->getErrors()); 
-          return $this->add($schema);
+          $this->flash->addErrors($schema->validation->getErrors());
+          return $this->add($schema, $erogaciones);
         }
       }
       else{
-        $this->flash->addError("Debe seleccionar el archivo del Control Lechero"); 
-        $this->registry->schema = new Schema($params);
-        $this->render('_form');
+        $this->flash->addError("Debe seleccionar el archivo del Control Lechero");
+        // $this->registry->schema = new Schema($params);
+        // $this->render('_form');
+        $schema = new Schema($params);
+        return $this->add($schema, $erogaciones);
+
       }
   }
 
@@ -94,7 +111,7 @@ class SchemaController Extends BaseController {
         $this->render('_form');
       }
       else{
-        $this->flash->addError("Esquema de Control No encontrado"); 
+        $this->flash->addError("Esquema de Control No encontrado");
         $this->renameAction('index');
         return $this->index();
       }
@@ -123,26 +140,26 @@ class SchemaController Extends BaseController {
             else{
               //$schema->delete();?????????
               $_SQL->query("ROLLBACK");
-              $this->flash->addError("Ocurrio un error al subir el archivo"); 
+              $this->flash->addError("Ocurrio un error al subir el archivo");
               // $this->registry->schema = $schema;
                $this->registry->schema = $schema_edit;
-              $this->render('_form');  
+              $this->render('_form');
             }
           }
           else{
-            $this->flash->addErrors($schema->validation->getErrors()); 
+            $this->flash->addErrors($schema->validation->getErrors());
             $this->registry->schema = $schema_edit;
             $this->render('_form');
           }
         }
         else{
-          $this->flash->addError("Debe seleccionar el archivo del Control Lechero"); 
+          $this->flash->addError("Debe seleccionar el archivo del Control Lechero");
           $this->registry->schema = $schema;
           $this->render('_form');
         }
       }
       else{
-        $this->flash->addError("Esquema de Control No encontrado"); 
+        $this->flash->addError("Esquema de Control No encontrado");
         $this->renameAction('index');
         return $this->index();
       }
@@ -152,11 +169,11 @@ class SchemaController Extends BaseController {
       $schema = Schema::find($id);
       if ($schema){
           $schema->delete();
-          $this->flash->addErrors($schema->validation->getErrors()); 
+          $this->flash->addErrors($schema->validation->getErrors());
           $this->registry->schema = $schema;
       }
       else{
-        $this->flash->addError("Esquema de Control No encontrado"); 
+        $this->flash->addError("Esquema de Control No encontrado");
       }
       $this->renameAction('index');
       return $this->index();
@@ -182,13 +199,13 @@ class SchemaController Extends BaseController {
       echo json_encode("");
     }
   }
-  
+
   private function loadFile($schema){
     $file = $_FILES['file_data'];
     // $ext = end((explode(".", $file['name'])));
     // $temp = TMP_PATH . $schema->id. '.'.$ext;
     // if (!move_uploaded_file($file['tmp_name'], $temp)){
-    //   $this->flash->addError("Ocurrio un error al Intentar subir el Archivo"); 
+    //   $this->flash->addError("Ocurrio un error al Intentar subir el Archivo");
     //   return false;
     // }
     if($file['type'] == 'text/csv'){
@@ -207,11 +224,11 @@ class SchemaController Extends BaseController {
     }
     $fileDC->parseToDairyControl();
     if ($fileDC->count_records_errors > 0){
-      $this->flash->addError("Ocurrio " . $fileDC->count_records_errors." error/es"); 
+      $this->flash->addError("Ocurrio " . $fileDC->count_records_errors." error/es");
       $nro_record = 1;
       foreach ($fileDC->dairy_controls as $dc) {
         if(!$dc->validation->is_valid){
-          $this->flash->addErrors(array_merge(["Registro N°: " . $nro_record], $dc->validation->getErrors())); 
+          $this->flash->addErrors(array_merge(["Registro N°: " . $nro_record], $dc->validation->getErrors()));
         }
         $nro_record++;
       }
@@ -241,10 +258,10 @@ class SchemaController Extends BaseController {
         }
         else{
           $litros_nop2 += $dc->liters_milk;
-          $vacas_nop2++; 
+          $vacas_nop2++;
         }
         if (!$dc->save()){
-            $this->flash->addErrors($dc->validation->getErrors()); 
+            $this->flash->addErrors($dc->validation->getErrors());
             return false;
         }
       }
@@ -252,21 +269,21 @@ class SchemaController Extends BaseController {
         $without_milk[] = $dc;
     }
     if($total_milk == 0 && Valid::blank($schema->liters_milk)){
-      $this->flash->addError("No se especifico la producción de leche"); 
+      $this->flash->addError("No se especifico la producción de leche");
       return false;
     }
     $prom_nop1 = ($vacas_nop1 > 0 && $litros_nop1 > 0)? $litros_nop1 / ($vacas_nop1 * 1.0) : $default_cow_liters;
     $prom_nop2 = ($vacas_nop2 > 0 && $litros_nop2 > 0)? $litros_nop2 / ($vacas_nop2 * 1.0) : $default_cow_liters;
     foreach ($without_milk as $dc) {
       $dc->calculateDL($schema->date);
-      $dc->liters_milk = $dc->nop == 1 ? $prom_nop1 : $prom_nop2;            
+      $dc->liters_milk = $dc->nop == 1 ? $prom_nop1 : $prom_nop2;
       if(!$dc->hasMC()){
         $total_milk += $dc->liters_milk;
         $dc->calculatePerdDML();
       }
       if (!$dc->save()){
-          $this->flash->addErrors($dc->validation->getErrors()); 
-          $this->flash->addError(DairyControl::$_last_query); 
+          $this->flash->addErrors($dc->validation->getErrors());
+          $this->flash->addError(DairyControl::$_last_query);
           return false;
       }
     }
@@ -276,7 +293,7 @@ class SchemaController Extends BaseController {
   }
 
   private function compare_schemas($str_ids,$umbral){
-    $ids = explode(',' , $str_ids);    
+    $ids = explode(',' , $str_ids);
     $schema1 = Schema::find($ids[0]);
     $schema2 = Schema::find($ids[1]);
     $this->registry->schema1 = $schema1;
@@ -285,7 +302,7 @@ class SchemaController Extends BaseController {
     //realiza la comparacion
     $dcs1 =  $schema1->dairy_controls();
     $dcs2 =  $schema2->dairy_controls();
-    $result = array('sanas' => 0, 'cronicas' => 0, 'nuevas_inf' => 0, 'curadas' => 0, 
+    $result = array('sanas' => 0, 'cronicas' => 0, 'nuevas_inf' => 0, 'curadas' => 0,
                     'noanalizadas1' => 0 , 'noanalizadas2' => 0);
     $map = array();
     $noanalizadas1 = array();
@@ -294,7 +311,7 @@ class SchemaController Extends BaseController {
     foreach ($dcs1 as $dc1) {
       $dc2 = null;
       /*Busca si esta la vaca en el esquema2*/
-      foreach ($dcs2 as $k => $v ) { 
+      foreach ($dcs2 as $k => $v ) {
         if($dc1->cow_id == $v->cow_id){
           //encontro la vaca en el segundo control
           // si no tienen mc incluirlas
@@ -324,7 +341,7 @@ class SchemaController Extends BaseController {
           }
         }
         else{
-          /*aca habria que ver si se indica que esta vaca tenia mc*/ 
+          /*aca habria que ver si se indica que esta vaca tenia mc*/
         }
 
       }
@@ -356,7 +373,7 @@ class SchemaController Extends BaseController {
     foreach ($dcs1 as $dc1) {
       $dc2 = null;
       /*Busca si esta la vaca en el esquema2*/
-      foreach ($dcs2 as $dc2) { 
+      foreach ($dcs2 as $dc2) {
         if($dc1->cow_id == $dc2->cow_id){
           //encontro la vaca en el segundo control
           // si no tienen mc evaluarla
@@ -376,9 +393,9 @@ class SchemaController Extends BaseController {
     header('Content-Type: application/csv');
     header('Content-Disposition: attachment; filename=' . $name);
     header('Pragma: no-cache');
-    readfile($folderpath);  
+    readfile($folderpath);
   }
-  
+
   /*Params: schema_id1 y schema_id2*/
   /*SI Boton="compare_costo" :Grafica la evolucion de MC, MSC y EROGACIONES*/
   /*SI Boton="compare_indicadores" :Grafica la evolucion de los INDICADORES*/
@@ -394,7 +411,7 @@ class SchemaController Extends BaseController {
     $result = $_SQL->get_results($query);
     if ($_SQL->last_error != null) {
       $this->flash->addError($_SQL->last_error);
-      return $this->render('compare'); 
+      return $this->render('compare');
     }
     else{
       $schemas = array();
@@ -415,6 +432,15 @@ class SchemaController Extends BaseController {
         return $this->prepareEvolucionEnfermedad($dairy, $schemas);
       }
     }
+  }
+
+  private function saveErogaciones($schema, $erogaciones){
+    $result = true;
+    foreach ($erogaciones as $value) {
+      $value->schema_id = $schema->id;
+      $result = $result && $value->save();
+    }
+    return $result;
   }
 
   private function prepareEvolucionEnfermedad($dairy, $schemas){
@@ -451,7 +477,7 @@ class SchemaController Extends BaseController {
     foreach ($dcs1 as $dc1) {
       $dc2 = null;
       /*Busca si esta la vaca en el esquema2*/
-      foreach ($dcs2 as $dc2 ) { 
+      foreach ($dcs2 as $dc2 ) {
         if($dc1->cow_id == $dc2->cow_id){
           //encontro la vaca en el segundo control
           // si no tienen mc evaluarlas
@@ -475,7 +501,7 @@ class SchemaController Extends BaseController {
     $result = Array('prevalencia' => 0, 'incidencia' => 0, 'proporcion' =>0);
     if($count_analizadas > 0){
       $result['prevalencia'] = ($cronicas + $nuevas_inf) / $count_analizadas;
-      if (($nuevas_inf + $sanas) != 0 ) 
+      if (($nuevas_inf + $sanas) != 0 )
         $result['incidencia'] = $nuevas_inf / ($nuevas_inf + $sanas);
       $result['proporcion'] = $cronicas / $count_analizadas;
     }

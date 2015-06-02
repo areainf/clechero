@@ -151,16 +151,22 @@ class DairyController Extends BaseController {
   public function getSchemasJson(){
     $id = $this->getParameters('id');
     $dairy = Dairy::find($id);
-    echo json_encode($this->json_dairty_schema($dairy));
+    echo json_encode($this->json_dairy_schema($dairy));
   }
 
-  private function json_dairty_schema($dairy){
+  private function json_dairy_schema($dairy){
     $schemas = $dairy->schemas();
     if( !$schemas || count($schemas) == 0 )
       return [];
     $result = array();
     foreach ($schemas as $schema) {
-      $result[] = $schema->attr_to_json();
+      $sch_attr = $schema->attr_to_json();
+      $erogaciones = array();
+      foreach ($schema->erogaciones() as $ero) {
+        $erogaciones[] = $ero->attr_to_json();
+      }
+      $sch_attr['erogaciones'] = $erogaciones;
+      $result[] = $sch_attr;
     }
     return $result;
   }

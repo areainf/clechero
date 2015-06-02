@@ -87,9 +87,6 @@ class Schema extends Model{
         return !Valid::blank($this->file_name()) && file_exists($this->path_file());
     }
 
-    public function attr_to_json(){
-        return $this->attrs;
-    }
     public static function last($dairy_id){
         return  self::first(array('conditions' => array('dairy_id =? ',  $dairy_id), 'order' => 'date desc'));
     }
