@@ -15,7 +15,10 @@ Class AppController Extends BaseController {
   }
   public function unauthorized() {
     $this->flash->add('No tiene los permisos suficientes para realizar esta acción');
-    $this->render('login');
+    if(Security::current_user())
+      $this->render('index');
+    else
+      $this->render('login');
   }
 
   public function canExecute($action, $user){

@@ -19,10 +19,9 @@ class VeterinaryController Extends BaseController {
     $q = $this->getParameters('q');
     if($q == null){
       $params = $this->getParameters();
-      if (Security::is_dairy()){
-        $user = Security::current_user();
-        $person = $user->person();
-        $params['people_id'] = $person->id;
+      $user = Security::current_user();
+      if ($user->is_dairy() || $user->is_veterinary()){
+        $params['created_id'] = $user->id;
       }
       $dt = new VeterinaryDatatable($params);
       echo $dt->getJsonData();
@@ -49,10 +48,6 @@ class VeterinaryController Extends BaseController {
   public function create(){
       $params = $this->getData()['veterinary'];
       $user = Security::current_user();
-      $person = $user->person();
-      $people_id = null;
-      if($person != null )
-        $people_id = $person->id;
       $params['created_by'] = $user->id;
       $veterinary = new Veterinary($params);
       if ($veterinary->is_valid() && $veterinary->save()){
@@ -129,7 +124,7 @@ class VeterinaryController Extends BaseController {
     return $user != NULL;
   }
 
-  private user_cant_delete($veterinary){
+  private function user_cant_delete($veterinary){
     $user = Security::current_user();
     return $veterinary->created_by == $user->id;
   }

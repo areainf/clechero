@@ -8,13 +8,14 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-1">
       <?php 
+        $action = 'dairy/';
         if ($dairy->isPersistent()){
           $hidden = FormHelper::hidden_tag("dairy[id]", $dairy->id, array('id'=>'dairy_id'));
-          $action = 'update';
+          $action .= 'update';
         }
         else{
           $hidden = "";
-          $action = 'create';
+          $action .= 'create';
         }
         $owner = ($dairy->Owner == null) ? '' : "[{id:'".$dairy->Owner->id."', fullname:'" .$dairy->Owner->fullname()."'}]";
         $veterinary_id = ($dairy->Veterinary == null) ? '' : $dairy->Veterinary->id;

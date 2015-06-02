@@ -19,7 +19,7 @@ class Dairy extends Model{
         }
         else{
             $this->validation->present($this, 'name');
-            $this->validation->present($this, 'owner_id');
+            $this->validation->present_at_least($this, array('owner_id','veterinary_id'));
             return $this->validation->is_valid;
         }
     }
@@ -38,6 +38,9 @@ class Dairy extends Model{
     }
     public function schemas(){
         return Schema::where(['conditions' => ['dairy_id =?',$this->id]]);
+    }
+    public function last_schema(){
+        return Schema::first(['conditions' => ['dairy_id =?',$this->id], 'order' => 'date desc']);
     }
     public function schemasOrder($str_order){
         return Schema::where(['conditions' => ['dairy_id =?',$this->id], 'order' => $str_order ]);

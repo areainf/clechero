@@ -6,13 +6,14 @@
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
       <?php 
+        $action = "cow/";
         if ($cow->isPersistent()){
           $hidden = FormHelper::hidden_tag("cow[id]", $cow->id, array('id'=>'caravana'));
-          $action = 'update';
+          $action .= 'update';
         }
         else{
           $hidden = "";
-          $action = 'create';
+          $action .= 'create';
         }
         $dairy = $cow->dairy();
       ?>

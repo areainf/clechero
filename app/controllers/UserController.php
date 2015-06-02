@@ -29,6 +29,7 @@ class UserController Extends BaseController {
 
   public function create(){
       $params = $this->getData()['user'];
+      $params['username'] = $params['email'];
       $user = new User($params);
       if(Valid::blank($params['password'])){
         $this->flash->addError("La contraseña no puede estar vacía"); 
@@ -39,7 +40,11 @@ class UserController Extends BaseController {
           if ($user->is_valid() && $user->save()){
             $this->flash->addMessage("Se agrego correctamente el usuario");
             $this->renameAction('index');
-            return $this->index();
+            if(Security::current_user()->is_admin())
+              return $this->index();
+            else
+              $controller = new AppController($this->ctrl);
+              $controller->index();
           }
           else{
             $this->flash->addErrors($user->validation->getErrors()); 
@@ -68,6 +73,7 @@ class UserController Extends BaseController {
   }
   public function update(){
       $params = $this->getData()['user'];
+      $params['username'] = $params['email'];
       $user = User::find($params['id']);
       if($user){
         if($params['password'] == $params['repassword']){//validar params
@@ -120,7 +126,17 @@ class UserController Extends BaseController {
   }
 
   public function canExecute($action, $user){
-    return $user != NULL && $user->role == Role::ROL_ADMIN;
+    if ($user != NULL){
+      if ($user->role == Role::ROL_ADMIN) return true;
+      if (in_array($action, ['add','create'])) return true;
+      $user_ref = User::find($this->ctrl->getValue('id'));
+      if($user_ref != NULL ){
+        $person = $user_ref->person();
+        return $person != NULL && $person->created_by == $user->id;
+      }
+
+    }
+    return false;
   }
 }
 ?>

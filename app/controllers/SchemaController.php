@@ -38,8 +38,16 @@ class SchemaController Extends BaseController {
       }
     }
     else
-      $this->registry->umbral = 200;  
-    $this->registry->dairies = Security::current_user()->dairies();
+      $this->registry->umbral = 200;
+    $navbar_dairy = Security::current_dairy();
+    if($this->ctrl->getValue('dairy_id')){
+      $this->registry->dairy = Dairy::find($this->ctrl->getValue('dairy_id'));
+      Security::set_dairy($this->registry->dairy);
+    }
+    elseif ($navbar_dairy != null)
+      $this->registry->dairy = $navbar_dairy;
+    else
+      $this->registry->dairies = Security::current_user()->dairies();
     $this->render('compare'); 
   }
 
@@ -362,6 +370,7 @@ class SchemaController Extends BaseController {
     }
     $an = new ReportCronicas($schema1, $schema2, $umbral, $map);
     $name = "cronicas_".$schema1->id."_".$schema2->id.".xlsx";
+    $schema1->createDirectory();
     $folderpath = $schema1->folder_path().$name;
     $an->save($folderpath);
     header('Content-Type: application/csv');
@@ -430,7 +439,7 @@ class SchemaController Extends BaseController {
     return ($file['error'] == UPLOAD_ERR_OK);
   }
 
-private function compareIndicadoresEnfermedad($schema1, $schema2, $umbral){
+  private function compareIndicadoresEnfermedad($schema1, $schema2, $umbral){
     $dcs1 =  $schema1->dairy_controls();
     $dcs2 =  $schema2->dairy_controls();
     $sanas = 0;
@@ -474,7 +483,7 @@ private function compareIndicadoresEnfermedad($schema1, $schema2, $umbral){
   }
 
   public function canExecute($action, $user){
-    return Security::is_dairy($user);
+    return $user != null && (Security::is_dairy($user) || $user->is_veterinary());
   }
 }
 ?>

@@ -1,4 +1,4 @@
-
+<input type="hidden" id="navbar_disable_select_dairies" value="Deshabilita el select de navbar">
 <?php 
     require_once HELPERS_PATH.'FormHelper.php';
 ?>
@@ -7,13 +7,14 @@
 <div class="row">
     <div class="col-md-12">
       <?php 
+        $action = 'schema/';
         if ($schema->isPersistent()){
           $hidden = FormHelper::hidden_tag("schema[id]", $schema->id, array('id'=>'schema_id'));
-          $action = 'update';
+          $action .= 'update';
         }
         else{
           $hidden = "";
-          $action = 'create';
+          $action .= 'create';
         }
       ?>
         <form class="form-horizontal" role="form" method="post"  action="<?php echo $action; ?>" name="form" enctype="multipart/form-data">
@@ -35,10 +36,13 @@
                         }
                         ?>
                       </select>
+                      <select id="copy_from_schema" class="form-control">
+                      </select>
+
                     </div>
                   </div>
                   <div class="col-md-12">
-                    <p class="help-block">Seleccione el tambo al cual se le aplicará el Control Lechero</p>
+                    <p class="help-block">Seleccione el tambo y el esquema de control al cual se le aplicará el Control Lechero</p>
                   </div>
                 </div>
                 

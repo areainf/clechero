@@ -59,6 +59,12 @@ class Ctrl {
     return $this->parameters;
   }
 
+  public function getValue($name){
+    if($_SERVER['REQUEST_METHOD'] == 'POST')
+      return $this->getData($name);
+    return $this->getParameters($name);
+  }
+
   public function addParameter($name, $value){
     $this->parameters[$name] =  $value;
   }

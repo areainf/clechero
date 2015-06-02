@@ -1,7 +1,7 @@
 <?php 
 require_once "Role.php";
 class Security {
-	public static function current_user(){
+	  public static function current_user(){
         $user = isset($_SESSION['user']) ? unserialize($_SESSION['user']) : NULL;
         return $user;
     }
@@ -33,6 +33,19 @@ class Security {
     public static function user_id(){
       $user = static::current_user();
       return $user != NULL ? $user->id : NULL;
+    }
+
+    public static function set_dairy($dairy){
+        static::destroy_dairy();
+        $_SESSION['dairy'] = serialize($dairy);
+        return $dairy;
+    }
+    public static function destroy_dairy(){
+        unset($_SESSION['dairy']);
+    }
+    public static function current_dairy(){
+        $dairy = isset($_SESSION['dairy']) ? unserialize($_SESSION['dairy']) : NULL;
+        return $dairy;
     }
 }
 

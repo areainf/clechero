@@ -30,11 +30,15 @@ class SchemaDatatable Extends Datatable{
     }
     /*Realiza la busqueda de los datos en la BD*/
     global $_SQL;
-    $qWhere = 'WHERE( dairy_id in (' . $this->dairies_ids . '))';
+    $current_dairy = Security::current_dairy();
+    if ($current_dairy != null)
+      $qWhere = 'WHERE( dairy_id = ' . $current_dairy->id . ')';
+    else
+      $qWhere = 'WHERE( dairy_id in (' . $this->dairies_ids . '))';
 
     if(!empty($this->dtSearch['value']) && !Valid::blank($this->dtSearch['value'])){
       $s = $_SQL->escape($this->dtSearch['value']);
-      $qWhere .= " and (date like  '%$s%')";
+      $qWhere .= " and (date like  '%$s%' or dairy.name  like  '%$s%') ";
     }
     $qLimit = "";
     if(!Valid::blank($this->dtLength)){
@@ -43,8 +47,8 @@ class SchemaDatatable Extends Datatable{
     if(!Valid::blank($this->dtStart)){
       $qLimit .= " OFFSET ".$this->dtStart;
     }
-    $qSql = "SELECT * FROM ".Schema::$_table_name.' ';
-    $qSqlCount = "SELECT count(id) as cant FROM ".Schema::$_table_name.' ';
+    $qSql = "SELECT schema_controls.* FROM ".Schema::$_table_name. ' as schema_controls LEFT JOIN '.Dairy::$_table_name. ' as dairy on schema_controls.dairy_id = dairy.id ';
+    $qSqlCount = "SELECT count(schema_controls.id) as cant FROM ".Schema::$_table_name.' as schema_controls LEFT JOIN '.Dairy::$_table_name. ' as dairy on schema_controls.dairy_id = dairy.id ';
     $qSql .= $qWhere.$this->_getSqlOrder().$qLimit; 
     $qSqlCount .= $qWhere;
     /*Cantidad de items encontrados*/

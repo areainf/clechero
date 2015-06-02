@@ -6,13 +6,14 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <?php 
+        $action = 'owner/';
         if ($owner->isPersistent()){
           $hidden = FormHelper::hidden_tag("owner[id]", $owner->id, array('id'=>'uowner_id'));
-          $action = 'update';
+          $action .= 'update';
         }
         else{
           $hidden = "";
-          $action = 'create';
+          $action .= 'create';
         }
         
       ?>

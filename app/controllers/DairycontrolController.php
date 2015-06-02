@@ -22,9 +22,29 @@ class DairycontrolController Extends BaseController {
   }
 
   public function analisis() {
-    if (!$this->registry->schema->analisis())
-      $this->registry->schema->createAnalisis();
-    $this->render('analisis'); 
+    if($this->registry->schema == null){
+      if($this->ctrl->getValue('dairy_id')){
+        $dairy = Dairy::find($this->ctrl->getValue('dairy_id'));
+        $this->registry->schema = $dairy->last_schema();
+        $valor = $this->registry->schema;
+      }
+      else{
+        if (Security::current_dairy())
+          $this->registry->schema = Security::current_dairy()->last_schema();   
+      }
+    }
+    if($this->registry->schema != null){
+      //set current dairy
+      Security::set_dairy($this->registry->schema->dairy());
+      if (!$this->registry->schema->analisis())
+        $this->registry->schema->createAnalisis();
+      $this->render('analisis'); 
+    }
+    else{
+      $controller = new AppController($this->ctrl);
+      $controller->flash->addError("No hay control lechero para el tambo seleccionado"); 
+      $controller->index();
+    }
   }
   
   public function analisis_report() {
@@ -121,13 +141,17 @@ class DairycontrolController Extends BaseController {
     $schema_id = $this->getData('dairycontrol')['schema_id'];
     if ($schema_id == null)
       $schema_id = $this->getParameters('schema_id');
-    $schema = Schema::find($schema_id);
-    $this->registry->schema = $schema;
+    if ($schema_id != null){
+      $schema = Schema::find($schema_id);
+      $this->registry->schema = $schema;
+    }
+    else
+      $this->registry->schema = NULL;
   }
 
   public function canExecute($action, $user){
     //validar usuario = sechema own
-    return Security::is_dairy($user);
+    return Security::is_dairy($user) || $user->is_veterinary();
   }
 }
 ?>

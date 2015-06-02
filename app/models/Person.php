@@ -35,5 +35,9 @@ class Person extends Model{
         if ($this->id == null) return null;
         return User::first(array('conditions'=>array('person_id = ?',$this->id)));
     }
+
+    public static function all_without_user(){
+        return Person::where(array('conditions'=>array('id not in (SELECT person_id from '.User::$_table_name.' where person_id is not null)')));
+    }
 }
 ?>

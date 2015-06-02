@@ -12,9 +12,9 @@ class VeterinaryDatatable Extends Datatable{
     /*Realiza la busqueda de los datos en la BD*/
     global $_SQL;
     $qWhere = 'type="veterinary"';
-    $people_id = empty($this->parameters['people_id']) ? null : $this->parameters['people_id'];
-    if ($people_id != null )
-      $qWhere .= ' and created_by = ' . $people_id;
+    $created_id = empty($this->parameters['created_id']) ? null : $this->parameters['created_id'];
+    if ($created_id != null )
+      $qWhere .= ' and created_by = ' . $created_id;
     $qWhere = ' WHERE (' . $qWhere .') ';
 
     if(!Valid::blank($this->dtSearch['value'])){

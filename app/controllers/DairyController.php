@@ -1,4 +1,5 @@
 <?php
+require_once HELPERS_PATH.'DateHelper.php';
 require_once MODELS_PATH.'Dairy.php';
 require_once DATATABLE_PATH.'DairyDatatable.php';
 require_once DATATABLE_PATH.'DairiesDatatable.php';
@@ -48,20 +49,21 @@ class DairyController Extends BaseController {
 
   public function create(){
       $params = $this->getData()['dairy'];
+      $user = Security::current_user();
+      $person = $user->person();
       if (Security::is_dairy()){
-        $user = Security::current_user();
-        $owner = $user->person();//esta mal revisar deberia ser solo user id
-        $params['owner_id'] = $owner->id;
+        $params['owner_id'] = $person->id;
       }
       elseif (Security::is_veterinary()){
-        $user = Security::current_user();
-        $params['veterinary_id'] = $user->id;
+        $params['veterinary_id'] = $person->id;
       }
       $dairy = new Dairy($params);
       if ($dairy->is_valid() && $dairy->save()){
         $this->flash->addMessage("Se agrego correctamente el Tambo");
-        $this->renameAction('index');
-        return $this->index();
+        $controller = new SchemaController($this->ctrl);
+        $schema = new Schema();
+        $schema->dairy_id = $dairy->id;
+        return $controller->add($schema);
       }
       else{
         $this->flash->addErrors($dairy->validation->getErrors()); 
@@ -133,8 +135,40 @@ class DairyController Extends BaseController {
       $this->renameAction('index');
       return $this->index();
   }
+
+  public function select(){
+    $id = $this->getParameters('id');
+    if($id){
+      $dairy = Dairy::find($id);
+      Security::set_dairy($dairy);
+    }
+    else{
+      Security::destroy_dairy();
+    }
+    echo json_encode([]);
+  }
+
+  public function getSchemasJson(){
+    $id = $this->getParameters('id');
+    $dairy = Dairy::find($id);
+    echo json_encode($this->json_dairty_schema($dairy));
+  }
+
+  private function json_dairty_schema($dairy){
+    $schemas = $dairy->schemas();
+    if( !$schemas || count($schemas) == 0 )
+      return [];
+    $result = array();
+    foreach ($schemas as $schema) {
+      $result[] = $schema->attr_to_json();
+    }
+    return $result;
+  }
+
   public function canExecute($action, $user){
     return $user != NULL;
   }
+
+
 }
 ?>

@@ -1,3 +1,4 @@
+<input type="hidden" id="url_if_change_dairy" value="schema">
 <div id="id-schema-list">
   <table id="table-schema" class="display" data-source="<?php echo $this->getUrlFor(['schema', 'index_json']);?>">
     <thead>      

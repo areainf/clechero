@@ -6,9 +6,9 @@
         <th>Nombre</th>
         <th>Ubicación</th>
         <th>Industria</th>
+        <th>Dueño</th>
+        <th>Veterinario</th>
         <th>Vacas</th>
-        <th>Columna 2</th>
-        <th>Columna 3</th>
         <th>Acciones</th>
       </tr>
     </thead>

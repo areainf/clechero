@@ -239,5 +239,13 @@ class Schema extends Model{
       return $as;
     }
 
+    public function createDirectory (){
+      $d = UPLOAD_SCHEMA_PATH . DIRECTORY_SEPARATOR . $this->dairy_id;
+      $s = $d . DIRECTORY_SEPARATOR . $this->id;
+      if(!file_exists($d))
+         mkdir($d, 0777, true);
+      if(!file_exists($s))
+         mkdir($s, 0777, true);
+    }
   }
 ?>
