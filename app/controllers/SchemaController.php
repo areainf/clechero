@@ -128,10 +128,10 @@ class SchemaController Extends BaseController {
           $params['filetype'] = $_FILES['file_data']['type'];
           // $schema->filename = $_FILES['file_data']['name'];
           // $schema->filetype = $_FILES['file_data']['type'];
-          if ($schema->is_valid($params)){
+          if ($schema_edit->is_valid($params)){
             global $_SQL;
             $_SQL->query("START TRANSACTION");
-            if ( $schema->update_attributes($params) && $this->loadFile($schema) && $schema->createAnalisis()){
+            if ($schema->update_attributes($params) && $this->loadFile($schema) && $this->saveErogaciones($schema, $erogaciones) && $schema->createAnalisis()){
               $_SQL->query("COMMIT");
               $this->flash->addMessage("Se modifico correctamente el Esquema de Control");
               $this->renameAction('index');
@@ -435,6 +435,7 @@ class SchemaController Extends BaseController {
   }
 
   private function saveErogaciones($schema, $erogaciones){
+    $schema->remove_erogaciones();
     $result = true;
     foreach ($erogaciones as $value) {
       $value->schema_id = $schema->id;

@@ -33,3 +33,8 @@ foreach ($files as $key) {
     <script type="text/javascript" charset="utf8" src="<?php echo $public_url .'js/graph/flot/jquery.flot.js"'; ?>"></script>
     <script type="text/javascript" charset="utf8" src="<?php echo $public_url .'js/graph/highcharts/highcharts.js"'; ?>"></script>
     <script type="text/javascript" charset="utf8" src="<?php echo $public_url .'js/graph/highcharts/highcharts-more.js"'; ?>"></script>
+    <script type="text/javascript" charset="utf8" src="<?php echo $public_url .'parsley/parsley.js"'; ?>"></script>
+    <script type="text/javascript" charset="utf8" src="<?php echo $public_url .'parsley/es.js"'; ?>"></script>
+    <script type="text/javascript">
+      window.ParsleyValidator.setLocale('es');
+    </script>

@@ -1,6 +1,6 @@
 $( document ).ready(function() {
   /*
-   *  if view datatable user action index 
+   *  if view datatable user action index
    */
     if ($("#id-schema-list").length > 0){
         $('#table-schema').dataTable( {
@@ -29,6 +29,7 @@ $( document ).ready(function() {
         });
     }
     if($("#id-form-schema")){
+      $('form').off('submit.Parsley');
         // var schemaJson = {
         //     fn: {date: 'date',
         //         desinf_pre_o_producto: 'desinf_pre_o_producto',
@@ -112,18 +113,20 @@ $( document ).ready(function() {
                       Erogaciones.clear();
                     }
                     else{
-                      var data = el.schemas[$(this).prop('selectedIndex')-1]; 
-                      Erogaciones.clear();                      
+                      var data = el.schemas[$(this).prop('selectedIndex')-1];
+                      Erogaciones.clear();
                       for (var k in data) {
                         if($("#"+k).length > 0)
                           $("#"+k).val(data[k]);
                       };
-                      for(var ero in data['erogaciones']){
-                        var er = new Erogacion(undefined, 
+                      for(var key in data['erogaciones']){
+                        var ero = data['erogaciones'][key]
+                        var er = new Erogacion(undefined,
                                      ero['name'],
                                      ero['description'],
                                      ero['price'],
-                                     ero['days']);
+                                     ero['days'],
+                                     ero['apply_to']);
                         Erogaciones.add(er);
                       }
                     }
@@ -133,7 +136,7 @@ $( document ).ready(function() {
             init: function(){
                 this.bind_change_dairy();
                 this.bind_change_schema();
-                //cuando se carga la pagina llena el select 
+                //cuando se carga la pagina llena el select
                 // de esquemas con el tambo seleccionado
                 $(this.container.root + " " + this.f_sel_dairy).trigger("change");
             },
@@ -141,8 +144,8 @@ $( document ).ready(function() {
         Erogaciones = {
           container: {root: '#table-erogaciones', row_new: '#tr-new-erogacion' },
           button: {add: '#erogaciones_add'},
-          f:{id: '#erogaciones_id', name: '#erogaciones_name', description: '#erogaciones_description', 
-             price: '#erogaciones_price', days: '#erogaciones_days'},
+          f:{id: '#erogaciones_id', name: '#erogaciones_name', description: '#erogaciones_description',
+             price: '#erogaciones_price', days: '#erogaciones_days', apply_to: '#erogaciones_apply_to'},
           list: [],
           temp_id: -1,
           prefix_row: 'tr-erogacion_',
@@ -153,15 +156,18 @@ $( document ).ready(function() {
             var el = this;
             $(this.button.add).on('click', function(evento){
               evento.preventDefault();
-              var er = new Erogacion(el.temp_id--, 
-                                     $(el.f.name).val(),
-                                     $(el.f.description).val(),
-                                     $(el.f.price).val(),
-                                     $(el.f.days).val());
-              // el.list[er.id] = er;
-              // el._draw(er);
-              el.add(er);
-              el.clear_form();
+              if($(form).parsley().validate('block_erogacion')){
+                var er = new Erogacion(el.temp_id--,
+                                       $(el.f.name).val(),
+                                       $(el.f.description).val(),
+                                       $(el.f.price).val(),
+                                       $(el.f.days).val(),
+                                       $(el.f.apply_to).val());
+                // el.list[er.id] = er;
+                // el._draw(er);
+                el.add(er);
+                el.clear_form();
+              }
               return false;
 
             });
@@ -178,11 +184,14 @@ $( document ).ready(function() {
             tr +='<input type="hidden" name="'+fname+'name]" value="'+er.name+'">'+
                   '<input type="hidden" name="'+fname+'description]" value="'+er.description+'">'+
                   '<input type="hidden" name="'+fname+'price]" value="'+er.price+'">'+
-                  '<input type="hidden" name="'+fname+'days]" value="'+er.days+'">';
+                  '<input type="hidden" name="'+fname+'days]" value="'+er.days+'">'+
+                  '<input type="hidden" name="'+fname+'apply_to]" value="'+er.apply_to+'">';
+
             tr +='<td>'+er.name+'</td>';
             tr +='<td>'+er.description+'</td>';
             tr +='<td>$ '+er.price+'</td>';
-            tr +='<td>'+er.days+'</td>';    
+            tr +='<td>'+er.days+'</td>';
+            tr +='<td>'+$(this.f.apply_to + ' option[value="' + er.apply_to + '"]').html()+'</td>';
             tr +='<td><a href="" class="btn btn-danger" onClick="return Erogaciones.delete('+er.id+',event);"><span class="glyphicon glyphicon-remove-circle"></span></a></td>';
             tr +='</tr>';
             $(tr).insertBefore($(this.container.row_new));
@@ -198,7 +207,6 @@ $( document ).ready(function() {
             var el = this;
             this.clear_form();
             $(this.container.root+' tbody tr').each(function(i, tr){
-                console.log(tr);
                 if("#"+tr.id != el.container.row_new)
                     tr.remove();
             });
@@ -212,12 +220,15 @@ $( document ).ready(function() {
           },
         };
 
-        var Erogacion = function(id, name, description, price, days){
+        var Erogacion = function(id, name, description, price, days, apply_to){
           this.id = id;
           this.name = name;
           this.description = description;
           this.price = price;
           this.days = days;
+          if(apply_to == undefined)
+            apply_to = 0;
+          this.apply_to = apply_to;
         }
         //si es new
         if($("#schema_id").length == 0){
@@ -229,8 +240,8 @@ $( document ).ready(function() {
             //     //     data: {dairy_id: id},
             //     //     dataType:"json"
             //     //     , error: function(obj, textStatus, errorThrown){
-            //     //     } 
-            //     //     , success: function(data){ 
+            //     //     }
+            //     //     , success: function(data){
             //     //         if(data.length != ''){
             //     //             for (var k in data) {
             //     //                 if($("#"+k).length > 0)
@@ -250,7 +261,7 @@ $( document ).ready(function() {
             //         data: {id: id},
             //         dataType:"json"
             //         , error: function(obj, textStatus, errorThrown){
-            //         } 
+            //         }
             //         , success: function(data){
             //             schemas = data;
             //             $("#copy_from_schema").find('option').remove();
@@ -266,7 +277,7 @@ $( document ).ready(function() {
             //     });
             //     GlobalDairy.fire_change(id);
             // });
-            //cuando se carga la pagina llena el select 
+            //cuando se carga la pagina llena el select
             // de esquemas con el tambo seleccionado
             // $("#id-form-schema #dairy_id").trigger("change");
             Esquema.init();

@@ -55,6 +55,11 @@ class Calculos{
     return $val1 * $val2;
   }
 
+  public static function divide($val1, $val2){
+    if (empty($val2) || $val2 == 0) return 0;
+    return $val1 / $val2;
+  }
+
   public static function histrogramCantInterval($count_dairy){
     if($count_dairy < 50)
       return 7;
