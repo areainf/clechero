@@ -4,23 +4,30 @@
     $veterinary_name ="";
     if (!empty($vet))
       $veterinary_name = $vet->fullname();
+    $own = $dairy->owner();
+    $own_name ="";
+    if (!empty($own))
+      $own_name = $own->fullname();
 ?>
+<input type="hidden" id="url_if_change_dairy" value="cow/index?dairy_id">
 <h2><small>Tambo</small></h2>
  <table class="table table-bordered">
     <thead>      
       <tr>
         <th>Nombre</th>
+        <th>Dueño</th>
+        <th>Veterinario</th>
         <th>Ubicación</th>
         <th>Industría</th>
-        <th>Veterinario</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       <td><?php echo $dairy->name; ?></td>
+      <td><?php echo $own_name; ?></td>
+      <td><?php echo $veterinary_name; ?></td>
       <td><?php echo $dairy->location; ?></td>
       <td><?php echo $dairy->industry; ?></td>
-      <td><?php echo $veterinary_name; ?></td>
       <td>
         <?php 
           $img_edit = '<span class="glyphicon glyphicon-edit"></span>';
@@ -43,6 +50,11 @@
       <tr>
         <th>ID</th>
         <th>Número</th>
+        <th id="title_control_1">Control 1</th>
+        <th id="title_control_2">Control 2</th>
+        <th id="title_control_3">Control 3</th>
+        <th id="title_control_4">Control 4</th>
+        <th id="title_control_5">Control 5</th>
         <th>Acciones</th>
       </tr>
     </thead>

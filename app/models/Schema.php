@@ -103,7 +103,7 @@ class Schema extends Model{
     public function erogaciones(){
         return Erogacion::where(["conditions" =>["schema_id = ? ", $this->id]]);
     }
-
+    
     /*Cantidad de animales analizados*/
     public function countCow($force=false){
       if(empty($this->_cant_cow) || $force)
@@ -268,24 +268,6 @@ class Schema extends Model{
                      'costo_extra_tambo' => round($costo_extra_tambo,2),
                      'costo_extra_vaca' => round($costo_extra_vaca,2)
                      );
-    
-
-      echo "<p>Costo desinf_pre_o $desinf_pre_o</p>";
-      echo "<p>Costo desinf_pos_o $desinf_pos_o</p>";
-      echo "<p>Costo costo_tratamiento_mc $costo_tratamiento_mc</p>";
-      echo "<p>Costo costo_tratamiento_secado $costo_tratamiento_secado</p>";
-      echo "<p>Costo costo_mantenimiento_maquina $costo_mantenimiento_maquina</p>";
-      echo "<p>Costo MC "+($costo_extra_mc * $count_cow_mc)+"</p>";
-      echo "<p>Costo MSC"+($costo_extra_msc * $count_cow_msc)+"</p>";
-      echo "<p>Costo SMC"+($costo_extra_sin_mc * $count_cow_smc)+"</p>";
-      echo "<p>Costo costo_extra_tambo $costo_extra_tambo</p>";
-      echo "<p>Costo VACA"+($costo_extra_vaca * $this->in_ordenio)+"</p>";
-      var_dump($data);
-    
-
-
-
-
       $as = new AnalisisSchema($data);
       $as->save();
       return $as;
@@ -354,6 +336,38 @@ class Schema extends Model{
 
       }
       return 0;
+    }
+
+    public function delete(){
+      $table_name = static::getTableName();
+      global $_SQL;
+      $_SQL->query("START TRANSACTION");
+      $_SQL->query("DELETE FROM ".DairyControl::$_table_name." WHERE schema_id = ".$this->id);
+      if ($_SQL->last_error != null) {
+        $this->validation->add($_SQL->last_error);
+        $_SQL->query("ROLLBACK");
+        return NULL;            
+      }
+      $_SQL->query("DELETE FROM ".AnalisisSchema::$_table_name." WHERE schema_id = ".$this->id);
+      if ($_SQL->last_error != null) {
+        $this->validation->add($_SQL->last_error);
+        $_SQL->query("ROLLBACK");
+        return NULL;            
+      }
+      $_SQL->query("DELETE FROM ".DairyControl::$_table_name." WHERE schema_id = ".$this->id);
+      if ($_SQL->last_error != null) {
+        $this->validation->add($_SQL->last_error);
+        $_SQL->query("ROLLBACK");
+        return NULL;            
+      }
+      $res = $_SQL->query("DELETE FROM ".static::$_table_name." WHERE id = ".$this->id);
+      if ($_SQL->last_error != null) {
+        $this->validation->add($_SQL->last_error);
+        $_SQL->query("ROLLBACK");
+        return NULL;            
+      }
+      $_SQL->query("COMMIT");
+      return $res;
     }
   }
 ?>

@@ -10,7 +10,7 @@ class CsvDairyControl{
   public $count_records_errors;
   public $count_mc;
   public static $delimiter = ',';
-  private $valid_fields = ['numero', 'rcs', 'nop', 'dl', 'mc', 'litros','fecha_dl'];
+  private $valid_fields = ['numero', 'rcs', 'nop', 'dl', 'mc', 'litros','fecha_dl', 'baja','fecha_baja'];
   private $strict_fields = ['numero', 'rcs', 'nop', 'mc'];
 
   function __construct($schema, $file) {
@@ -96,6 +96,12 @@ class CsvDairyControl{
       }
       elseif($key == 'litros'){
         $new_row['liters_milk'] = (array_key_exists($key, $row)) ? $this->replaceComaPunto($row[$key]) : '';
+      }
+      elseif($key == 'fecha_baja'){
+        $new_row['fecha_baja'] = (array_key_exists($key, $row)) ? DateHelper::ar_to_db($row[$key]) : '';
+      }
+      elseif($key == 'baja'){
+        $new_row['baja'] = (array_key_exists($key, $row)) ? $row[$key] : '';
       }
       else
         if( array_key_exists($key, $row))

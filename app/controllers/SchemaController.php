@@ -118,10 +118,17 @@ class SchemaController Extends BaseController {
   }
   public function update(){
     if ($this->isGet())return $this->index();
-
-      $params = $this->getData()['schema'];
+      $data = $this->getData();
+      $params = $data['schema'];
       $schema = Schema::find($params['id']);
       $schema_edit = new Schema($params);
+      $erogaciones = Array();
+      if (array_key_exists('erogaciones', $data)){
+        foreach ($data['erogaciones'] as $key => $ero) {
+           $erogacion = new Erogacion($ero);
+           array_push($erogaciones, $erogacion);
+        }
+      }
       if($schema){
         if($this->existAndValidFile()){
           $params['filename'] = $_FILES['file_data']['name'];

@@ -11,7 +11,14 @@ class CowController Extends BaseController {
   }
 
   public function index() {
-     // $this->render('index'); 
+    $navbar_dairy = Security::current_dairy();
+    if($this->ctrl->getValue('dairy_id')){
+      $this->registry->dairy = Dairy::find($this->ctrl->getValue('dairy_id'));
+      Security::set_dairy($this->registry->dairy);
+    }
+    elseif ($navbar_dairy != null)
+      $this->registry->dairy = $navbar_dairy;
+    $this->render('index'); 
   }
 
   public function index_json() {
@@ -197,7 +204,7 @@ class CowController Extends BaseController {
   }
 
   public function canExecute($action, $user){
-    return $user != NULL;
+    return $user != null && (Security::is_dairy($user) || $user->is_veterinary());
   }
 }
 ?>

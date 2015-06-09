@@ -130,6 +130,7 @@ $( document ).ready(function() {
                         Erogaciones.add(er);
                       }
                     }
+                    $("#date").focus();
                 });
                 // if(data.length != ''){
             },
@@ -232,54 +233,6 @@ $( document ).ready(function() {
         }
         //si es new
         if($("#schema_id").length == 0){
-            // $("#id-form-schema #dairy_id").on("change", function(event){
-            //     var id = $(this).val();
-            //     // $.ajax({
-            //     //     type: "GET",
-            //     //     url: 'last_json',
-            //     //     data: {dairy_id: id},
-            //     //     dataType:"json"
-            //     //     , error: function(obj, textStatus, errorThrown){
-            //     //     }
-            //     //     , success: function(data){
-            //     //         if(data.length != ''){
-            //     //             for (var k in data) {
-            //     //                 if($("#"+k).length > 0)
-            //     //                     $("#"+k).val(data[k]);
-            //     //             };
-            //     //         }
-            //     //         else{
-            //     //             for (var k in schemaJson.fn) {
-            //     //                 $("#"+k).val("");
-            //     //             };
-            //     //         }
-            //     //     }
-            //     // });
-            //     $.ajax({
-            //         type: "GET",
-            //         url: 'dairy/getSchemasJson',
-            //         data: {id: id},
-            //         dataType:"json"
-            //         , error: function(obj, textStatus, errorThrown){
-            //         }
-            //         , success: function(data){
-            //             schemas = data;
-            //             $("#copy_from_schema").find('option').remove();
-            //             var obj = $("#copy_from_schema");
-            //             obj.append('<option value="">Crear uno nuevo</option>');
-            //             if(data.length > 0){
-            //                 for (var i = 0; i < data.length; i++) {
-            //                     var s = data[i];
-            //                     obj.append('<option value="'+s['id']+'">'+ s['date'] +'</option>');
-            //                 }
-            //             }
-            //         }
-            //     });
-            //     GlobalDairy.fire_change(id);
-            // });
-            //cuando se carga la pagina llena el select
-            // de esquemas con el tambo seleccionado
-            // $("#id-form-schema #dairy_id").trigger("change");
             Esquema.init();
             Erogaciones.init();
         }

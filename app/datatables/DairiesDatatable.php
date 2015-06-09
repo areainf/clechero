@@ -55,7 +55,6 @@ class DairiesDatatable Extends Datatable{
   protected function _serializeResult(){
     $res = array();
     if(!empty($this->data)){
-      var_dump($this->data);
         foreach ($this->data as $value) {
           $obj = new Dairy($value);
           $own = $obj->Owner;

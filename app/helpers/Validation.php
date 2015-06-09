@@ -79,6 +79,18 @@ class Validation{
     return false;
   }
 
+  function presentIn($obj, $field, $container, $message=null){
+    if(in_array($obj->$field, $container)){
+      $this->is_valid &= true;
+      return true;
+    }
+    else{
+      $this->errors[$field] = Valid::blank($message) ? "No es uno de los valores permitidos" : $message; 
+      $this->is_valid = false;
+      return false;      
+    }
+  }
+
   function date($obj, $field, $message=null){
     if (Valid::blank($obj->$field)){
       $this->is_valid &= true;
