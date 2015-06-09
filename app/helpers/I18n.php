@@ -4,7 +4,12 @@ class I18n{
                          'last_name'=> "Apellido", 
                          'date' => "Fecha", 
                          'dairy_id' => "Tambo",
-                         'in_ordenio' => "Vacas en Ordeño"];
+                         'in_ordenio' => "Vacas en Ordeño",
+                         'tambo' => "Tambo",
+                         'vacas' => "Vacas",
+                         'vacas_mc' => "Vacas con MC",
+                         'vacas_msc' => "Vacas con MSC",
+                         'vacas_sin_mc' => "Vacas sin MC"];
 
   /*
    * INPUT: String, claves separadas por coma

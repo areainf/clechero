@@ -7,7 +7,7 @@ class Schema extends Model{
     private $_cant_cow = null;
     private $_cant_cow_mc = null;
     private $_cant_cow_smc = null;
-
+    private $_cant_cow_msc = null;
     function __construct($args=null){
         parent::__construct($args);
         $this->valid_cols = array ('date', 'liters_milk', 'dairy_id', 'milk_price',
@@ -70,6 +70,11 @@ class Schema extends Model{
             array("schema_id = ?", $this->id)));
     }
 
+    public function remove_erogaciones(){
+        Erogacion::remove(array('conditions' => 
+            array("schema_id = ?", $this->id)));
+    }
+
     public function file_name(){
       return $this->filename;
       //return $this->year . '_'. $this->month.'_'.$this->id.'.csv';
@@ -87,15 +92,16 @@ class Schema extends Model{
         return !Valid::blank($this->file_name()) && file_exists($this->path_file());
     }
 
-    public function attr_to_json(){
-        return $this->attrs;
-    }
     public static function last($dairy_id){
         return  self::first(array('conditions' => array('dairy_id =? ',  $dairy_id), 'order' => 'date desc'));
     }
 
     public function dairy_controls(){
         return DairyControl::where(["conditions" =>["schema_id = ? ", $this->id]]);
+    }
+
+    public function erogaciones(){
+        return Erogacion::where(["conditions" =>["schema_id = ? ", $this->id]]);
     }
 
     /*Cantidad de animales analizados*/
@@ -119,6 +125,12 @@ class Schema extends Model{
       return $this->_cant_cow_smc;
     }
 
+    /*Cantidad de animales analizados con MC*/
+    public function countCowMSC($umbral, $force=false){
+      if(empty($this->_cant_cow_msc) || $force)
+        $this->_cant_cow_msc = DairyControl::count(['conditions' => ['schema_id = ? and rcs > ?',$this->id, $umbral]]);
+      return $this->_cant_cow_msc;
+    }
     
     /*Total de perdidas diarias por RCS*/
   /*  public function calculoPerdidaDiariaRCS(){
@@ -207,7 +219,7 @@ class Schema extends Model{
       return $arr;
     }
 
-    /*Realiza el calculo de Perdidas y Erogacines y actualiza o crea el modelo de analisis*/
+    /*Realiza el calculo de Perdidas y Erogaciones y actualiza o crea el modelo de analisis*/
     public function createAnalisis(){
       $this->remove_analisis();
       $perdida_msc = $this->calculoPerdidaPorMSC();
@@ -217,10 +229,27 @@ class Schema extends Model{
       $desinf_pre_o = Calculos::costo_sellador($this->desinf_pre_o_precio, $this->desinf_pre_o_dias);
       $desinf_pos_o = Calculos::costo_sellador($this->desinf_post_o_precio, $this->desinf_post_o_dias);
       $count_cow_mc = $this->countCowMC();
+      $count_cow_smc = $this->countCowSMC();
+      $count_cow_msc = $this->countCowMSC(200);
       $costo_tratamiento_mc = $this->costo_tratamiento_mc() * $count_cow_mc;
       $costo_tratamiento_secado = $this->costo_tratamiento_secado() ;//* $count_cow_mc;    
       $costo_mantenimiento_maquina = $this->costo_mantenimiento_maquina();
-      $total_erogacion = $desinf_pre_o + $desinf_pos_o + $costo_tratamiento_mc + $costo_tratamiento_secado + $costo_mantenimiento_maquina;
+
+      $costo_extra_mc = $this->calculoExtraPorMC();
+      $costo_extra_msc = $this->calculoExtraPorMSC();
+      $costo_extra_sin_mc = $this->calculoExtraPorNoMC();
+      $costo_extra_tambo = $this->calculoExtraPorTambo();
+      $costo_extra_vaca = $this->calculoExtraPorVaca();
+
+      $total_erogacion = $desinf_pre_o + $desinf_pos_o + 
+                         $costo_tratamiento_mc +
+                         $costo_tratamiento_secado +
+                         $costo_mantenimiento_maquina +
+                         ($costo_extra_mc * $count_cow_mc) +
+                         ($costo_extra_msc * $count_cow_msc) +
+                         ($costo_extra_sin_mc * $count_cow_smc) +
+                         $costo_extra_tambo +
+                         ($costo_extra_vaca * $this->in_ordenio);
 
       $data = array ('schema_id'=>$this->id,
                      'perdida_msc'=>round($perdida_msc, 2),
@@ -232,8 +261,31 @@ class Schema extends Model{
                      'costo_tratamiento_mc'=>round($costo_tratamiento_mc, 2),
                      'costo_tratamiento_secado'=>round($costo_tratamiento_secado, 2),
                      'costo_mantenimiento_maquina'=>round($costo_mantenimiento_maquina, 2),
-                     'costo_total'=>round($total_erogacion, 2)
+                     'costo_total'=>round($total_erogacion, 2),
+                     'costo_extra_mc' => round($costo_extra_mc,2),
+                     'costo_extra_msc' => round($costo_extra_msc,2),
+                     'costo_extra_sin_mc' => round($costo_extra_sin_mc,2),
+                     'costo_extra_tambo' => round($costo_extra_tambo,2),
+                     'costo_extra_vaca' => round($costo_extra_vaca,2)
                      );
+    
+
+      echo "<p>Costo desinf_pre_o $desinf_pre_o</p>";
+      echo "<p>Costo desinf_pos_o $desinf_pos_o</p>";
+      echo "<p>Costo costo_tratamiento_mc $costo_tratamiento_mc</p>";
+      echo "<p>Costo costo_tratamiento_secado $costo_tratamiento_secado</p>";
+      echo "<p>Costo costo_mantenimiento_maquina $costo_mantenimiento_maquina</p>";
+      echo "<p>Costo MC "+($costo_extra_mc * $count_cow_mc)+"</p>";
+      echo "<p>Costo MSC"+($costo_extra_msc * $count_cow_msc)+"</p>";
+      echo "<p>Costo SMC"+($costo_extra_sin_mc * $count_cow_smc)+"</p>";
+      echo "<p>Costo costo_extra_tambo $costo_extra_tambo</p>";
+      echo "<p>Costo VACA"+($costo_extra_vaca * $this->in_ordenio)+"</p>";
+      var_dump($data);
+    
+
+
+
+
       $as = new AnalisisSchema($data);
       $as->save();
       return $as;
@@ -246,6 +298,62 @@ class Schema extends Model{
          mkdir($d, 0777, true);
       if(!file_exists($s))
          mkdir($s, 0777, true);
+    }
+
+    private function calculoExtraPorMC(){
+      $data = Erogacion::getApplyTo_VacasMC($this->id);
+      $suma=0;
+      if($data && count($data) > 0){
+        foreach ($data as $erogacion) {
+          $days = $erogacion->days;
+          if(!$days) $days = 1;
+          $suma += $erogacion->price/$days;
+        }
+      }
+      return $suma;
+    }
+    private function calculoExtraPorMSC(){
+      $data = Erogacion::getApplyTo_VacasMSC($this->id);
+      $suma=0;
+      if($data && count($data) > 0){
+        foreach ($data as $erogacion) {
+          $days = $erogacion->days;
+          if(!$days) $days = 1;
+          $suma += $erogacion->price/$days;
+        }
+      }
+      return $suma;
+    }
+    private function calculoExtraPorNoMC(){
+      $data = Erogacion::getApplyTo_VacasSinMC($this->id);
+      $suma=0;
+      if($data && count($data) > 0){
+        foreach ($data as $erogacion) {
+          $days = $erogacion->days;
+          if(!$days) $days = 1;
+          $suma += $erogacion->price/$days;
+        }
+      }
+      return $suma;
+    }
+    private function calculoExtraPorTambo(){
+      $data = Erogacion::getApplyTo_Tambo($this->id);
+      $suma=0;
+      if($data && count($data) > 0){
+        foreach ($data as $erogacion) {
+          $days = $erogacion->days;
+          if(!$days) $days = 1;
+          $suma += $erogacion->price/$days;
+        }
+      }
+      return $suma;
+    }
+    private function calculoExtraPorVaca(){
+      $data = Erogacion::getApplyTo_Vacas($this->id);
+      if($data && count($data) > 0){
+
+      }
+      return 0;
     }
   }
 ?>

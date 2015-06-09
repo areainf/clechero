@@ -51,6 +51,10 @@ class Model{
         $this->validation = $value;
   }
 
+  public function attr_to_json(){
+      return $this->attrs;
+  }
+  
   function save(){
     // if ($this->isPersistent())
     //   return $this->_update_attributes();

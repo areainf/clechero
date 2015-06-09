@@ -17,7 +17,7 @@
     <div class="col-md-4">        
        <ul class="list-nav list-nav-right">
           <?php if($this->getAction()=='index'){ ?>  
-            <li><a href="edit" class="btn btn-info btn-xs">Editar</a></li>
+            <li><a href="profile/edit" class="btn btn-info btn-xs">Editar</a></li>
           <?php
             }
           ?>  

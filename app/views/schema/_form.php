@@ -281,6 +281,11 @@
               </fieldset>
             </div>
             <!-- FIN MANTENIMIENTO -->
+            <!-- INICIO OTRAS EROGACIONES -->
+            <div class="col-md-12">
+              <?php include "_form_erogaciones.php"; ?>
+            </div>
+            <!-- FIN OTRAS EROGACIONES -->
           </div>
           <div class="row">
             <div class="col-md-12">
