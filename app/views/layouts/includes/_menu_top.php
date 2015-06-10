@@ -35,7 +35,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="<?php echo $this->getUrlFor('user') ?>">Usuarios</a></li>
-          <li class="active"><a href="<?php echo $this->getUrlFor(['session', 'logout']) ?>">Salir <span class="sr-only">(current)</span> <?php echo Security::current_user()->username; ?></a></li>
+          <li class="active"><a href="<?php echo $this->getUrlFor(array('session', 'logout')) ?>">Salir <span class="sr-only">(current)</span> <?php echo Security::current_user()->username; ?></a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->

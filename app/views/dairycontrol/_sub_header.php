@@ -20,10 +20,10 @@
     <div class="col-md-4">        
        <ul class="list-nav list-nav-right">
           <?php 
-            $url_add = Ctrl::getUrl(['control' => 'dairycontrol', 'action' => 'add', 'params'=>['schema_id'=>$schema->id]]);
-            $url_view_cow = Ctrl::getUrl(['control' => 'dairycontrol', 'action' => 'index', 'params'=>['schema_id'=>$schema->id]]);
-            $url_index = Ctrl::getUrl(['control' => 'schema', 'action' => 'index']);
-            $url_compare = Ctrl::getUrl(['control' => 'schema', 'action' => 'compare']);
+            $url_add = Ctrl::getUrl(array('control' => 'dairycontrol', 'action' => 'add', 'params'=>array('schema_id'=>$schema->id));
+            $url_view_cow = Ctrl::getUrl(array('control' => 'dairycontrol', 'action' => 'index', 'params'=>array('schema_id'=>$schema->id)));
+            $url_index = Ctrl::getUrl(array('control' => 'schema', 'action' => 'index'));
+            $url_compare = Ctrl::getUrl(array('control' => 'schema', 'action' => 'compare'));
           if($this->getAction()=='index'){ 
           ?>  
           <!-- <li><a href="<?php echo $url_add; ?>" class="btn btn-info btn-xs">Nuevo</a></li> -->

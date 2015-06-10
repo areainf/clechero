@@ -1,5 +1,5 @@
 <div id="id-users-list">
-  <table id="table-users" class="display" data-source="<?php echo $this->getUrlFor(['user', 'index_json']);?>">
+  <table id="table-users" class="display" data-source="<?php echo $this->getUrlFor(array('user', 'index_json'));?>">
     <thead>
       <tr>
         <th>ID</th>

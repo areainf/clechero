@@ -95,7 +95,8 @@ Abstract Class BaseController {
   public function getPageTitle(){
     if(empty($this->page_title)){
       $config = $this->ctrl->config;
-      return $config->getValue('application')['page_title'];
+      $app = $config->getValue('application');
+      return $app['page_title'];
     }
     else
       return $this->page_title;

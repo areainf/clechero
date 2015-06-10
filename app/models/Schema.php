@@ -97,38 +97,38 @@ class Schema extends Model{
     }
 
     public function dairy_controls(){
-        return DairyControl::where(["conditions" =>["schema_id = ? ", $this->id]]);
+        return DairyControl::where(array("conditions" =>array("schema_id = ? ", $this->id)));
     }
 
     public function erogaciones(){
-        return Erogacion::where(["conditions" =>["schema_id = ? ", $this->id]]);
+        return Erogacion::where(array("conditions" =>array("schema_id = ? ", $this->id));
     }
     
     /*Cantidad de animales analizados*/
     public function countCow($force=false){
       if(empty($this->_cant_cow) || $force)
-        $this->_cant_cow =  DairyControl::count(['conditions' => ['schema_id =?',$this->id]]);
+        $this->_cant_cow =  DairyControl::count(array('conditions' => array('schema_id =?',$this->id)));
       return $this->_cant_cow;
     }
 
     /*Cantidad de animales analizados con MC*/
     public function countCowMC($force=false){
       if(empty($this->_cant_cow_mc) || $force)
-        $this->_cant_cow_mc = DairyControl::count(['conditions' => ['schema_id = ? and mc = 0',$this->id]]);
+        $this->_cant_cow_mc = DairyControl::count(array('conditions' => array('schema_id = ? and mc = 0',$this->id)));
       return $this->_cant_cow_mc;
     }
 
     /*Cantidad de animales analizados sin MC*/
     public function countCowSMC($force=false){
       if(empty($this->_cant_cow_smc) || $force)
-        $this->_cant_cow_smc = DairyControl::count(['conditions' => ['schema_id = ? and mc = 1',$this->id]]);
+        $this->_cant_cow_smc = DairyControl::count(array('conditions' => array('schema_id = ? and mc = 1',$this->id)));
       return $this->_cant_cow_smc;
     }
 
     /*Cantidad de animales analizados con MC*/
     public function countCowMSC($umbral, $force=false){
       if(empty($this->_cant_cow_msc) || $force)
-        $this->_cant_cow_msc = DairyControl::count(['conditions' => ['schema_id = ? and rcs > ?',$this->id, $umbral]]);
+        $this->_cant_cow_msc = DairyControl::count(array('conditions' => array('schema_id = ? and rcs > ?',$this->id, $umbral)));
       return $this->_cant_cow_msc;
     }
     
@@ -251,7 +251,7 @@ class Schema extends Model{
                          $costo_extra_tambo +
                          ($costo_extra_vaca * $this->in_ordenio);
 
-      $data = array ('schema_id'=>$this->id,
+      $data = array('schema_id'=>$this->id,
                      'perdida_msc'=>round($perdida_msc, 2),
                      'perdida_mc'=>round($perdida_mc, 2),
                      'perdida_lts'=>round($perdida_lts, 2),

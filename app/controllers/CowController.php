@@ -180,8 +180,8 @@ class CowController Extends BaseController {
     $caravana = $this->getParameters('q');
     $schema = Schema::find($this->getParameters('schema_id'));
     $dairy_id = $schema->dairy_id;
-    $result = Cow::where(["conditions" => ["dairy_id = ? and caravana like '%". $caravana."%' and 
-      id not in (SELECT cow_id from ".Dairycontrol::$_table_name." WHERE schema_id = ?)", $dairy_id, $schema->id]]);
+    $result = Cow::where(array("conditions" => array("dairy_id = ? and caravana like '%". $caravana."%' and 
+      id not in (SELECT cow_id from ".Dairycontrol::$_table_name." WHERE schema_id = ?)", $dairy_id, $schema->id)));
     $obj_data = array();
     foreach ($result as $key => $value) {
       $obj_data[]=$this->forTokenInput($value);

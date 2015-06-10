@@ -7,7 +7,7 @@ class DairyControl  extends Model{
     function __construct($args=null){
         parent::__construct($args);
         if($this->nop !='1') $this->nop = '2'; //default value for nop
-        $this->valid_cols = array ('nop', 'dl',  'rcs', 'mc', 'liters_milk', 'cow_id','schema_id', 'date_dl', 'perdida', 'dml', 'baja', 'fecha_baja');
+        $this->valid_cols = array('nop', 'dl',  'rcs', 'mc', 'liters_milk', 'cow_id','schema_id', 'date_dl', 'perdida', 'dml', 'baja', 'fecha_baja');
     }
 
     public  function is_valid(){

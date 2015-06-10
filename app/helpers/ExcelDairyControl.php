@@ -12,8 +12,8 @@ class ExcelDairyControl{
   public $count_records_errors;
   public $count_mc;
   private $objPHPExcel;
-  private $valid_fields = ['numero', 'rcs', 'nop', 'del', 'mc', 'litros','fecha_parto'];
-  private $strict_fields = ['numero', 'rcs', 'nop', 'mc'];
+  private $valid_fields = array('numero', 'rcs', 'nop', 'del', 'mc', 'litros','fecha_parto');
+  private $strict_fields = array('numero', 'rcs', 'nop', 'mc');
   private $headerKeyColumn = Array();
   
 

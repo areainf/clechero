@@ -35,13 +35,13 @@
           <div class="form-group">
             <label class="control-label col-sm-2" for="owner">Dueño</label>
             <div class="col-sm-10"> 
-              <input type="text" class="form-control" id="owner_id" name="dairy[owner_id]" placeholder="Nombre" data-populate="<?php echo $owner; ?>" data-source="<?php echo $this->getUrlFor(['owner', 'index_json']);?>">
+              <input type="text" class="form-control" id="owner_id" name="dairy[owner_id]" placeholder="Nombre" data-populate="<?php echo $owner; ?>" data-source="<?php echo $this->getUrlFor(array('owner', 'index_json'));?>">
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="veterinary">Veterinario</label>
             <div class="col-sm-10"> 
-              <input type="text" class="form-control" id="veterinary_id" name="dairy[veterinary_id]" placeholder="Nombre" data-populate="<?php echo $veterinary; ?>" data-source="<?php echo $this->getUrlFor(['veterinary', 'index_json']);?>">
+              <input type="text" class="form-control" id="veterinary_id" name="dairy[veterinary_id]" placeholder="Nombre" data-populate="<?php echo $veterinary; ?>" data-source="<?php echo $this->getUrlFor(array('veterinary', 'index_json'));?>">
             </div>
           </div>
           <div class="form-group">

@@ -53,16 +53,16 @@ class VeterinaryDatatable Extends Datatable{
     $res = array();
     if(!empty($this->data)){
         foreach ($this->data as $value) {
-          $res[]=['id' => $value->id,
+          $res[]= array('id' => $value->id,
                   'first_name' => $value->first_name,
                   'last_name' => $value->last_name,
                   'email' => $value->email,
                   'phone' => $value->phone,
                   'actions' => $this->buildLinks($value),
-                 ];
+                 );
         }
     }
-    return  json_encode(array_merge($this->infoDataTable,["data" => $res]));
+    return  json_encode(array_merge($this->infoDataTable, array("data" => $res)));
   }
 
   private function totalRecords(){

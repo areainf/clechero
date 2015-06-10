@@ -1,5 +1,5 @@
 <div id="id-dairies_own-list">
-  <table id="table-dairies_own" class="display" data-source="<?php echo $this->getUrlFor(['dairy', 'index_json']);?>">
+  <table id="table-dairies_own" class="display" data-source="<?php echo $this->getUrlFor(array('dairy', 'index_json'));?>">
     <thead>
       <tr>
         <th>ID</th>

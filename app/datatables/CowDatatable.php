@@ -62,7 +62,7 @@ class CowDatatable Extends Datatable{
       $schemas5 = $dairy->last_n_schema($cant);
       $cant_result = count($schemas5);
       foreach ($this->data as $value) {
-        $data_control = [];
+        $data_control = array();
         for($i = 0; $i < $cant; $i++){
           $rcs = "";
           if($i < $cant_result){
@@ -77,13 +77,13 @@ class CowDatatable Extends Datatable{
           }
           $data_control["control_".($i+1)] = $rcs;
         }
-        $res[]=array_merge(['id' => $value->id,
+        $res[]=array_merge(array('id' => $value->id,
                 'caravana' => $value->caravana,
                 'actions' => $this->buildLinks($value),
-               ], $data_control);
+               ), $data_control);
       }
     }
-    return  json_encode(array_merge($column_name,$this->infoDataTable,["data" => $res]));
+    return  json_encode(array_merge($column_name,$this->infoDataTable,array("data" => $res));
   }
 
 

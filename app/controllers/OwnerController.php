@@ -37,7 +37,8 @@ class OwnerController Extends BaseController {
   }
 
   public function create(){
-      $params = $this->getData()['owner'];
+    $data = $this->getData();
+      $params = $data['owner'];
       $owner = new Owner($params);
       if ($owner->is_valid() && $owner->save()){
         $this->flash->addMessage("Se agrego correctamente la persona");
@@ -51,7 +52,6 @@ class OwnerController Extends BaseController {
   }
 
   public function edit(){
-
       $id = $this->getParameters('id');
       $owner = Owner::find($id);
       if ($owner){
@@ -65,7 +65,8 @@ class OwnerController Extends BaseController {
       }
   }
   public function update(){
-      $params = $this->getData()['owner'];
+    $data = $this->getData();
+      $params = $data['owner'];
       $owner = Owner::find($params['id']);
       if($owner){
           if ($owner->is_valid($params) && $owner->update_attributes($params)){
@@ -106,9 +107,9 @@ class OwnerController Extends BaseController {
   public function canExecute($action, $user){
     if( $user != NULL){
       if(Security::is_veterinary($user)){
-        if (in_array($action, ['index', 'new', 'create']))
+        if (in_array($action, array('index', 'new', 'create')))
           return true;
-        elseif(in_array($action, ['edit', 'update', 'delete'])){
+        elseif(in_array($action, array('edit', 'update', 'delete'))){
           $owner = $this->getOwner();
           return $user->it_create_people($owner);
         }

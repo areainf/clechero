@@ -63,7 +63,7 @@ class DairiesDatatable Extends Datatable{
           $vet = $obj->Veterinary;
           $vet_name = "";
           if($vet) $vet_name = $vet->fullname();
-          $res[]=['id' => $value->id,
+          $res[]=array('id' => $value->id,
                   'name' => $value->name,
                   'owner' => $owner_name,
                   'location' => $location,
@@ -72,10 +72,10 @@ class DairiesDatatable Extends Datatable{
                   'email' => $value->email,
                   'phone' => $value->phone,
                   'actions' => $this->buildLinks($value),
-                 ];
+                 );
         }
     }
-    return  json_encode(array_merge($this->infoDataTable,["data" => $res]));
+    return  json_encode(array_merge($this->infoDataTable, array("data" => $res)));
   }
 
   private function totalRecords(){

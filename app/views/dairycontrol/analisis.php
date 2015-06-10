@@ -121,8 +121,8 @@
       $min = $order_data[0]->dml;
       $max = $order_data[$count_data - 1]->dml;
       $intervals = round(($max - $min) / $cant_interval, 2);
-      $interv_maxs = []; 
-      $count_by_interval =[];//cantidad por intervalos
+      $interv_maxs = array(); 
+      $count_by_interval =array();//cantidad por intervalos
       $index_data = 0; // indice de busqueda
       $int_min = $min;
       for($i = 0; $i < $cant_interval; $i++){
@@ -162,7 +162,7 @@
       $liters_q2 = $order_data[$pos_q2-1]->dml;
       $liters_q3 = $order_data[$pos_q3-1]->dml;
     }
-    $data_cuartil = Array($order_data[0]->dml, $liters_q1, $liters_q2, $liters_q3, $order_data[$count_data-1]->dml);
+    $data_cuartil = array($order_data[0]->dml, $liters_q1, $liters_q2, $liters_q3, $order_data[$count_data-1]->dml);
   ?>
   <h2 class="seccion">CUARTILES</h2>
   <div class="row">

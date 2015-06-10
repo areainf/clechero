@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-md-4 col-md-offset-4">
   	<div id="login">
-  		<form action="<?php echo $this->getUrlFor(['session', 'login']) ?>" method="post" role="form">
+  		<form action="<?php echo $this->getUrlFor(array('session', 'login')) ?>" method="post" role="form">
   			<div class="form-group">
   				<label>Usuario</label>
   				<input type="text" name="username" value="" placeholder="Usuario" class="form-control" />

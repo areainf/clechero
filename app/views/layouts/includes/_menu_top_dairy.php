@@ -45,8 +45,8 @@
                 <?php echo FormHelper::options_for_collection(Security::current_user()->dairies(), 'id', 'fullname', $dairy_id); ?>
             </select>
           </li>
-          <li><a href="<?php echo $this->getUrlFor(['profile', 'index']) ?>">Perfil</a></li>
-          <li class="active"><a href="<?php echo $this->getUrlFor(['session', 'logout']) ?>">Salir <span class="sr-only">(current)</span> <?php echo Security::current_user()->username; ?></a></li>
+          <li><a href="<?php echo $this->getUrlFor(array('profile', 'index')) ?>">Perfil</a></li>
+          <li class="active"><a href="<?php echo $this->getUrlFor(array('session', 'logout')) ?>">Salir <span class="sr-only">(current)</span> <?php echo Security::current_user()->username; ?></a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->

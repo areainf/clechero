@@ -1,5 +1,5 @@
 <div id="id-veterinarian-list">
-  <table id="table-veterinarian" class="display" data-source="<?php echo $this->getUrlFor(['veterinary', 'index_json']);?>">
+  <table id="table-veterinarian" class="display" data-source="<?php echo $this->getUrlFor(array('veterinary', 'index_json'));?>">
     <thead>
       <tr>
         <th>ID</th>

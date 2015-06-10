@@ -16,7 +16,8 @@ class ProfileController Extends BaseController {
     $this->render('_form');
   }
   public function update(){
-      $params = $this->getData()['person'];
+    $data = $this->getData();
+      $params = $data['person'];
       $user = Security::current_user();
       $person = $user->person();
 

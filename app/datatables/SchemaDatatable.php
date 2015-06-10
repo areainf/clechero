@@ -73,23 +73,23 @@ class SchemaDatatable Extends Datatable{
     if(!empty($this->data)){
         foreach ($this->data as $value) {
           $sch = new Schema($value);
-          $res[]=['id' => $value->id,
-                  'dairy' => $sch->dairy()->name,
-                  'date' => DateHelper::db_to_ar($value->date),
-                  'liters_milk' => $value->liters_milk,
-                  'milk_price' => $value->milk_price,
-                  'desinf_pre_o' => $this->getPrecioDias($value->desinf_pre_o_precio, $value->desinf_pre_o_dias),
-                  'desinf_post_o' => $this->getPrecioDias($value->desinf_post_o_precio, $value->desinf_post_o_dias),
-                  'tmc_ab_pomo_pc' => $this->getPrecioCantidad($value->tmc_ab_pomo_precio , $value->tmc_ab_pomo_cantidad),
-                  'tmc_ab_inyect_pc' => $this->getPrecioCantidad($value->tmc_ab_inyect_precio, $value->tmc_ab_inyect_cantidad),
-                  'tmc_ai_inyect_pc' => $this->getPrecioCantidad($value->tmc_ai_inyect_precio, $value->tmc_ai_inyect_cantidad),
-                  'ts_pomo_precio' => $this->getPrecio($value->ts_pomo_precio),
-                  'machine_control_pd' => $this->getPrecioDias($value->maquina_control_precio, $value->maquina_control_dias),
-                  'actions' => $this->buildLinks($value),
-                 ];
+          $res[]= array('id' => $value->id,
+                    'dairy' => $sch->dairy()->name,
+                    'date' => DateHelper::db_to_ar($value->date),
+                    'liters_milk' => $value->liters_milk,
+                    'milk_price' => $value->milk_price,
+                    'desinf_pre_o' => $this->getPrecioDias($value->desinf_pre_o_precio, $value->desinf_pre_o_dias),
+                    'desinf_post_o' => $this->getPrecioDias($value->desinf_post_o_precio, $value->desinf_post_o_dias),
+                    'tmc_ab_pomo_pc' => $this->getPrecioCantidad($value->tmc_ab_pomo_precio , $value->tmc_ab_pomo_cantidad),
+                    'tmc_ab_inyect_pc' => $this->getPrecioCantidad($value->tmc_ab_inyect_precio, $value->tmc_ab_inyect_cantidad),
+                    'tmc_ai_inyect_pc' => $this->getPrecioCantidad($value->tmc_ai_inyect_precio, $value->tmc_ai_inyect_cantidad),
+                    'ts_pomo_precio' => $this->getPrecio($value->ts_pomo_precio),
+                    'machine_control_pd' => $this->getPrecioDias($value->maquina_control_precio, $value->maquina_control_dias),
+                    'actions' => $this->buildLinks($value),
+                 );
         }
     }
-    return  json_encode(array_merge($this->infoDataTable,["data" => $res]));
+    return  json_encode(array_merge($this->infoDataTable, array("data" => $res)));
   }
 
   private function totalRecords(){

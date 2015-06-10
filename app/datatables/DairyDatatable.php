@@ -71,18 +71,18 @@ class DairyDatatable Extends Datatable{
           $vet = $obj->Veterinary;
           $vet_name = "";
           if($vet) $vet_name = $vet->fullname();
-          $res[]=['id' => $value->id,
-                  'name' => $value->name,
-                  'location' => AppHelper::truncate($value->location,40),
-                  'industry' => $value->industry,
-                  'owner' => $owner_name,
-                  'veterinary' => $vet_name,
-                  'cattle' => $obj->countCattle(),
-                  'actions' => $this->buildLinks($value),
-                 ];
+          $res[] = array('id' => $value->id,
+                    'name' => $value->name,
+                    'location' => AppHelper::truncate($value->location,40),
+                    'industry' => $value->industry,
+                    'owner' => $owner_name,
+                    'veterinary' => $vet_name,
+                    'cattle' => $obj->countCattle(),
+                    'actions' => $this->buildLinks($value),
+                   );
         }
     }
-    return  json_encode(array_merge($this->infoDataTable,["data" => $res]));
+    return  json_encode(array_merge($this->infoDataTable, array("data" => $res)));
   }
 
   private function totalRecords(){

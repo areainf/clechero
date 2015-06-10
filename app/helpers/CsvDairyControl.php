@@ -10,8 +10,8 @@ class CsvDairyControl{
   public $count_records_errors;
   public $count_mc;
   public static $delimiter = ',';
-  private $valid_fields = ['numero', 'rcs', 'nop', 'dl', 'mc', 'litros','fecha_dl', 'baja','fecha_baja'];
-  private $strict_fields = ['numero', 'rcs', 'nop', 'mc'];
+  private $valid_fields = array('numero', 'rcs', 'nop', 'dl', 'mc', 'litros','fecha_dl', 'baja','fecha_baja');
+  private $strict_fields = array('numero', 'rcs', 'nop', 'mc');
 
   function __construct($schema, $file) {
     $this->file = $file;
