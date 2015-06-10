@@ -16,6 +16,7 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+          <li><a class="navbar-brand" href="<?php echo URL_SITE;?>"><span class="glyphicon glyphicon-th-large"></span>Inicio</a></li>
           <?php 
             if (Security::is_dairy()) {
           ?>
