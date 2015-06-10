@@ -132,7 +132,7 @@ class SchemaDatatable Extends Datatable{
 
   private function setDairiesIds(){
     $tambos = $this->user->dairies();
-    $ids=[];
+    $ids=array();
     foreach ($tambos as $t) {
       $ids[] = $t->id;
     }

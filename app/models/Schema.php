@@ -101,7 +101,7 @@ class Schema extends Model{
     }
 
     public function erogaciones(){
-        return Erogacion::where(array("conditions" =>array("schema_id = ? ", $this->id));
+        return Erogacion::where(array("conditions" =>array("schema_id = ? ", $this->id)));
     }
     
     /*Cantidad de animales analizados*/

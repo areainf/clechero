@@ -17,13 +17,13 @@ class Calculos{
                                     180 => array( 0.35,  1.02),
                                     195 => array( 0.36,  1.1),
                                     210 => array( 0.38,  1.19),
-                                    225 => array( 0.4, 1.29],
+                                    225 => array( 0.4, 1.29),
                                     240 => array( 0.42,  1.4),
                                     255 => array( 0.45,  1.52),
                                     270 => array( 0.48,  1.66),
                                     285 => array( 0.52,  1.8),
                                     300 => array( 0.52,  1.8)
-                                  ),
+                                  );
   /*
   * Perdidas por dia de lactancia y numero ordinal de parto
   */

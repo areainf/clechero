@@ -235,7 +235,7 @@ class SchemaController Extends BaseController {
       $nro_record = 1;
       foreach ($fileDC->dairy_controls as $dc) {
         if(!$dc->validation->is_valid){
-          $this->flash->addErrors(array_merge(["Registro N°: " . $nro_record], $dc->validation->getErrors()));
+          $this->flash->addErrors(array_merge(array("Registro N°: " . $nro_record), $dc->validation->getErrors()));
         }
         $nro_record++;
       }
@@ -248,7 +248,7 @@ class SchemaController Extends BaseController {
     $vacas_nop1 = 0;
     $litros_nop2 = 0;
     $vacas_nop2 = 0;
-    $without_milk = [];
+    $without_milk = array();
     foreach ($fileDC->dairy_controls as $dc) {
       //si tiene la leche especificada realiza calculos y lo guarda en la bd
       // sino calcula primero cuanto se le va a asignar a cada vaca que no
@@ -323,7 +323,7 @@ class SchemaController Extends BaseController {
           //encontro la vaca en el segundo control
           // si no tienen mc incluirlas
           if(!$dc1->hasMC() && !$v->hasMC())
-            $map[] = [$dc1, $v];
+            $map[] = array($dc1, $v);
           unset($dcs2[$k]);
           $dc2 = $v;
           break;
@@ -386,7 +386,7 @@ class SchemaController Extends BaseController {
           // si no tienen mc evaluarla
           if(!$dc1->hasMC() && !$dc2->hasMC()){
             if($dc1->rcs > $umbral && $dc2->rcs > $umbral)//si es cronica
-              $map[] = [$dc1, $dc2];
+              $map[] = array($dc1, $dc2);
           }
           break;
         }
