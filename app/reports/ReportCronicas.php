@@ -13,6 +13,7 @@ class ReportCronicas{
     $this->schema2 = $schema2;
     $this->umbral = $umbral;
     $this->map = $par_dairycontrol;
+    PHPExcel_Settings::setZipClass(PHPExcel_Settings::PCLZIP);
     // Create new PHPExcel object
     $this->objPHPExcel = new PHPExcel();
     $this->author();

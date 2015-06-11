@@ -22,12 +22,7 @@
           <?php 
             $url_add = Ctrl::getUrl(array('control' => 'cow', 'action' => 'add', 'params'=>array('dairy_id'=>$dairy->id)));
             $url_index = Ctrl::getUrl(array('control' => 'cow', 'action' => 'index', 'params'=>array('dairy_id'=>$dairy->id)));
-          if($this->getAction()=='index'){ 
-          ?>  
-          <li><a href="<?php echo $url_add; ?>" class="btn btn-info btn-xs">Nuevo</a></li>
-          <?php
-            }
-            else{ 
+            if($this->getAction() != 'index'){ 
           ?>  
           <li><a href="<?php echo $url_index ?>" class="btn btn-info btn-xs">Listado</a></li>
           <?php  } ?>  

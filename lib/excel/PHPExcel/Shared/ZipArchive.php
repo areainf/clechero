@@ -166,6 +166,7 @@ class PHPExcel_Shared_ZipArchive
             }
             $extracted = $this->_zip->extractByIndex($list_index, PCLZIP_OPT_EXTRACT_AS_STRING);
         }
+        $contents="";
         if ((is_array($extracted)) && ($extracted != 0)) {
             $contents = $extracted[0]["content"];
         }

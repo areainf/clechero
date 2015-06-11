@@ -195,7 +195,8 @@ class CowController Extends BaseController {
 
   private function loadDairy(){
     //primero busca en el post, si no esta en el get
-    $dairy_id = $this->getData('cow')['dairy_id'];
+    $cow = $this->getData('cow');
+    $dairy_id = $cow['dairy_id'];
     if ($dairy_id == null)
       $dairy_id = $this->getParameters('dairy_id');
 

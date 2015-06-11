@@ -85,7 +85,17 @@ class Schema extends Model{
     }
 
     public function folder_path(){
-        return join(DIRECTORY_SEPARATOR, array(UPLOAD_SCHEMA_PATH, $this->dairy_id, $this->id)).DIRECTORY_SEPARATOR;
+      $d = UPLOAD_SCHEMA_PATH . DIRECTORY_SEPARATOR . $this->dairy_id;
+      if(!file_exists($d)){
+        mkdir($d, 0777, true);
+        chmod($d, 0777);
+     }
+      $s = $d . DIRECTORY_SEPARATOR . $this->id;
+      if(!file_exists($s)){
+        mkdir($s, 0777, true);
+        chmod($d, 0777);
+      }
+      return join(DIRECTORY_SEPARATOR, array(UPLOAD_SCHEMA_PATH, $this->dairy_id, $this->id)).DIRECTORY_SEPARATOR;
     }
 
     public function hasFile(){

@@ -20,7 +20,7 @@
     <div class="col-md-4">        
        <ul class="list-nav list-nav-right">
           <?php 
-            $url_add = Ctrl::getUrl(array('control' => 'dairycontrol', 'action' => 'add', 'params'=>array('schema_id'=>$schema->id));
+            $url_add = Ctrl::getUrl(array('control' => 'dairycontrol', 'action' => 'add', 'params'=>array('schema_id'=>$schema->id)));
             $url_view_cow = Ctrl::getUrl(array('control' => 'dairycontrol', 'action' => 'index', 'params'=>array('schema_id'=>$schema->id)));
             $url_index = Ctrl::getUrl(array('control' => 'schema', 'action' => 'index'));
             $url_compare = Ctrl::getUrl(array('control' => 'schema', 'action' => 'compare'));

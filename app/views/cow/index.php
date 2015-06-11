@@ -41,7 +41,8 @@
     </tbody>
   </table>
 <hr>
-<h2><small>Listado de Animales</small></h2>
+<h2 class="seccion">Listado de Animales.</h2>
+<h2><small>Recuento de Células Somáticas</small></h2>
 
 <div id="id-cow-list">
   <table id="table-cow" class="display" 

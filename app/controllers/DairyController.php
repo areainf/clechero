@@ -83,7 +83,7 @@ class DairyController Extends BaseController {
           $this->registry->veterinarians = $user->veterinarians();
           $this->render('_form_own');
         }
-        elseif($dairy->veterinary_id == $user->id){
+        elseif($user->isVeterinary($dairy)){
           $this->registry->owners = $user->owners();
           $this->render('_form_own');
         }

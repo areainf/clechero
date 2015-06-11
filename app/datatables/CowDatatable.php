@@ -83,7 +83,7 @@ class CowDatatable Extends Datatable{
                ), $data_control);
       }
     }
-    return  json_encode(array_merge($column_name,$this->infoDataTable,array("data" => $res));
+    return  json_encode(array_merge($column_name,$this->infoDataTable,array("data" => $res)));
   }
 
 

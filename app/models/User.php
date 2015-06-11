@@ -36,6 +36,10 @@ class User extends Model{
         return $dairy->owner_id == $this->person_id;
     }
 
+    public function isVeterinary($dairy){
+        return $dairy->veterinary_id == $this->person_id;
+    }
+
     public function it_create_people($person){
         return $person != NULL && $this->id == $person->created_by;
     }

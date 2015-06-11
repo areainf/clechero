@@ -12,10 +12,9 @@ class ExcelDairyControl{
   public $count_records_errors;
   public $count_mc;
   private $objPHPExcel;
-  private $valid_fields = array('numero', 'rcs', 'nop', 'del', 'mc', 'litros','fecha_parto');
+  private $valid_fields = array('numero', 'rcs', 'nop', 'del', 'mc', 'litros','fecha_parto', 'evento','fecha_evento');
   private $strict_fields = array('numero', 'rcs', 'nop', 'mc');
   private $headerKeyColumn = array();
-  
 
 
   public static $delimiter = ',';
@@ -26,6 +25,7 @@ class ExcelDairyControl{
     $this->data = array();
     $this->errors = array();
     $this->count_mc = 0;
+    PHPExcel_Settings::setZipClass(PHPExcel_Settings::PCLZIP);
   }
 
   public  function parseToArray(){
@@ -131,6 +131,12 @@ class ExcelDairyControl{
       }
       elseif($key == 'litros'){
         $new_row['liters_milk'] = (array_key_exists($key, $row)) ? $this->replaceComaPunto($row[$key]) : '';
+      }
+      elseif($key == 'fecha_evento'){
+        $new_row['fecha_baja'] = (array_key_exists($key, $row)) ? DateHelper::ar_to_db($row[$key]) : '';
+      }
+      elseif($key == 'evento'){
+        $new_row['baja'] = (array_key_exists($key, $row)) ? $row[$key] : '';
       }
       else
         if( array_key_exists($key, $row))
