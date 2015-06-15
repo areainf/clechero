@@ -6,7 +6,7 @@ class Dairy extends Model{
 
     function __construct($args=null){
         parent::__construct($args);
-        $this->valid_cols = array ( 'name', 'owner_id', 'veterinary_id', 'email', 'phone', 'location', 'industry');
+        $this->valid_cols = array( 'name', 'owner_id', 'veterinary_id', 'email', 'phone', 'location', 'industry');
     }
 
     public  function is_valid($params=null){
@@ -28,7 +28,7 @@ class Dairy extends Model{
     }
 
     public function countCattle(){
-        return Cow::count(['conditions' => ['dairy_id =?',$this->id]]);
+        return Cow::count(array('conditions' => array('dairy_id =?',$this->id)));
     }
     public function veterinary(){
         return Veterinary::find($this->veterinary_id);
@@ -37,13 +37,30 @@ class Dairy extends Model{
         return Owner::find($this->owner_id);
     }
     public function schemas(){
-        return Schema::where(['conditions' => ['dairy_id =?',$this->id]]);
+        return Schema::where(array('conditions' => array('dairy_id =?',$this->id)));
     }
     public function last_schema(){
-        return Schema::first(['conditions' => ['dairy_id =?',$this->id], 'order' => 'date desc']);
+        return Schema::first(array('conditions' => array('dairy_id =?',$this->id), 'order' => 'date desc'));
     }
+
+    public function last_n_schema($n){
+      global $_SQL;
+      $query = sprintf("SELECT * FROM (SELECT * FROM %s WHERE dairy_id = %s ORDER BY date DESC LIMIT %s) t ORDER BY date asc", Schema::$_table_name, $this->id, $n);
+      $res = $_SQL->get_results($query);
+      if ($_SQL->last_error != null) {
+          throw new Exception($_SQL->last_error, 1);
+      }
+      $arr = array();
+      if($res){
+        foreach ($res as $value) {
+          $arr[] = new Schema($value);
+        }
+      }
+      return $arr;
+    }
+
     public function schemasOrder($str_order){
-        return Schema::where(['conditions' => ['dairy_id =?',$this->id], 'order' => $str_order ]);
+        return Schema::where(array('conditions' => array('dairy_id =?',$this->id), 'order' => $str_order ));
     }
     
 }

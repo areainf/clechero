@@ -5,7 +5,7 @@ class Veterinary extends Person{
 
     function __construct($args=null){
         parent::__construct($args);
-        $this->valid_cols = array ('first_name', 'last_name',  'email', 'phone', 'created_by');
+        $this->valid_cols = array('first_name', 'last_name',  'email', 'phone', 'created_by');
     }
 
     public  function is_valid($params=null){

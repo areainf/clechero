@@ -4,7 +4,7 @@ class AnalisisSchema extends Model{
     
     function __construct($args=null){
         parent::__construct($args);
-        $this->valid_cols = array ('schema_id', 'perdida_msc', 'perdida_mc', 'perdida_lts', 'perdida_costo', 
+        $this->valid_cols = array('schema_id', 'perdida_msc', 'perdida_mc', 'perdida_lts', 'perdida_costo', 
                                    'costo_desinf_pre_o', 'costo_desinf_pos_o', 'costo_tratamiento_mc',
                                    'costo_tratamiento_secado', 'costo_mantenimiento_maquina', 'costo_total',
                                    'costo_extra_mc', 'costo_extra_msc', 'costo_extra_sin_mc', 'costo_extra_tambo',

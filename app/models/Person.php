@@ -4,7 +4,7 @@ class Person extends Model{
 
     function __construct($args=null){
         parent::__construct($args);
-        $this->valid_cols = array ('first_name', 'last_name',  'email', 'phone');
+        $this->valid_cols = array('first_name', 'last_name',  'email', 'phone');
     }
 
     public  function is_valid($params=null){

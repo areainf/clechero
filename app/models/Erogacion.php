@@ -7,7 +7,7 @@ class Erogacion extends Model{
 
     function __construct($args = null){
         parent::__construct($args);
-        $this->valid_cols = array ('name', 'description',  'schema_id', 'price', 'days','apply_to');
+        $this->valid_cols = array('name', 'description',  'schema_id', 'price', 'days','apply_to');
     }
 
     public  function is_valid(){
@@ -22,19 +22,19 @@ class Erogacion extends Model{
     }
 
     public static function getApplyTo_VacasMC($schema_id){
-      return static::where(["conditions" =>["schema_id = ? and apply_to = ?", $schema_id, static::$APPLY_TO['vacas_mc']]]);
+      return static::where(array("conditions" =>array("schema_id = ? and apply_to = ?", $schema_id, static::$APPLY_TO['vacas_mc'])));
     }
     public static function getApplyTo_VacasMSC($schema_id){
-      return static::where(["conditions" =>["schema_id = ? and apply_to = ?", $schema_id, static::$APPLY_TO['vacas_msc']]]);
+      return static::where(array("conditions" =>array("schema_id = ? and apply_to = ?", $schema_id, static::$APPLY_TO['vacas_msc'])));
     }
     public static function getApplyTo_VacasSinMC($schema_id){
-      return static::where(["conditions" =>["schema_id = ? and apply_to = ?", $schema_id, static::$APPLY_TO['vacas_sin_mc']]]);
+      return static::where(array("conditions" =>array("schema_id = ? and apply_to = ?", $schema_id, static::$APPLY_TO['vacas_sin_mc'])));
     }
     public static function getApplyTo_Tambo($schema_id){
-      return static::where(["conditions" =>["schema_id = ? and (apply_to = ? or apply_to is NULL)", $schema_id, static::$APPLY_TO['tambo']]]);
+      return static::where(array("conditions" =>array("schema_id = ? and (apply_to = ? or apply_to is NULL)", $schema_id, static::$APPLY_TO['tambo'])));
     }
     public static function getApplyTo_Vacas($schema_id){
-      return static::where(["conditions" =>["schema_id = ? and apply_to = ?", $schema_id, static::$APPLY_TO['vacas']]]);
+      return static::where(array("conditions" =>array("schema_id = ? and apply_to = ?", $schema_id, static::$APPLY_TO['vacas'])));
     }
 }
 ?>

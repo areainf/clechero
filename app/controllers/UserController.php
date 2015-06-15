@@ -28,7 +28,8 @@ class UserController Extends BaseController {
   }
 
   public function create(){
-      $params = $this->getData()['user'];
+      $data = $this->getData();
+      $params = $data['user'];
       $params['username'] = $params['email'];
       $user = new User($params);
       if(Valid::blank($params['password'])){
@@ -72,7 +73,8 @@ class UserController Extends BaseController {
       }
   }
   public function update(){
-      $params = $this->getData()['user'];
+    $data = $this->getData();
+      $params = $data['user'];
       $params['username'] = $params['email'];
       $user = User::find($params['id']);
       if($user){
@@ -128,7 +130,7 @@ class UserController Extends BaseController {
   public function canExecute($action, $user){
     if ($user != NULL){
       if ($user->role == Role::ROL_ADMIN) return true;
-      if (in_array($action, ['add','create'])) return true;
+      if (in_array($action, array('add','create'))) return true;
       $user_ref = User::find($this->ctrl->getValue('id'));
       if($user_ref != NULL ){
         $person = $user_ref->person();

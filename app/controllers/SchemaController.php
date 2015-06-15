@@ -118,10 +118,17 @@ class SchemaController Extends BaseController {
   }
   public function update(){
     if ($this->isGet())return $this->index();
-
-      $params = $this->getData()['schema'];
+      $data = $this->getData();
+      $params = $data['schema'];
       $schema = Schema::find($params['id']);
       $schema_edit = new Schema($params);
+      $erogaciones = Array();
+      if (array_key_exists('erogaciones', $data)){
+        foreach ($data['erogaciones'] as $key => $ero) {
+           $erogacion = new Erogacion($ero);
+           array_push($erogaciones, $erogacion);
+        }
+      }
       if($schema){
         if($this->existAndValidFile()){
           $params['filename'] = $_FILES['file_data']['name'];
@@ -228,7 +235,7 @@ class SchemaController Extends BaseController {
       $nro_record = 1;
       foreach ($fileDC->dairy_controls as $dc) {
         if(!$dc->validation->is_valid){
-          $this->flash->addErrors(array_merge(["Registro N°: " . $nro_record], $dc->validation->getErrors()));
+          $this->flash->addErrors(array_merge(array("Registro N°: " . $nro_record), $dc->validation->getErrors()));
         }
         $nro_record++;
       }
@@ -241,7 +248,7 @@ class SchemaController Extends BaseController {
     $vacas_nop1 = 0;
     $litros_nop2 = 0;
     $vacas_nop2 = 0;
-    $without_milk = [];
+    $without_milk = array();
     foreach ($fileDC->dairy_controls as $dc) {
       //si tiene la leche especificada realiza calculos y lo guarda en la bd
       // sino calcula primero cuanto se le va a asignar a cada vaca que no
@@ -304,6 +311,10 @@ class SchemaController Extends BaseController {
     $dcs2 =  $schema2->dairy_controls();
     $result = array('sanas' => 0, 'cronicas' => 0, 'nuevas_inf' => 0, 'curadas' => 0,
                     'noanalizadas1' => 0 , 'noanalizadas2' => 0);
+    $list_cronicas = array();
+    $list_infectadas = array();
+    $list_curadas = array();
+
     $map = array();
     $noanalizadas1 = array();
     $count_analizadas = 0;
@@ -316,7 +327,7 @@ class SchemaController Extends BaseController {
           //encontro la vaca en el segundo control
           // si no tienen mc incluirlas
           if(!$dc1->hasMC() && !$v->hasMC())
-            $map[] = [$dc1, $v];
+            $map[] = array($dc1, $v);
           unset($dcs2[$k]);
           $dc2 = $v;
           break;
@@ -328,14 +339,20 @@ class SchemaController Extends BaseController {
         if(!$dc1->hasMC() && !$dc2->hasMC()){
           $count_analizadas++;
           if($dc1->rcs > $umbral){//si enferma 1 control
-            if($dc2->rcs > $umbral)//si cronica
+            if($dc2->rcs > $umbral){//si cronica
               $result['cronicas']++;
-            else
+              $list_cronicas[] = array($dc1, $dc2);
+            }
+            else{
               $result['curadas']++;
+              $list_curadas[] = array($dc1, $dc2);
+            }
           }
           else{
-            if($dc2->rcs > $umbral)//si nueva inf
+            if($dc2->rcs > $umbral){//si nueva inf
               $result['nuevas_inf']++;
+              $list_infectadas[] = array($dc1, $dc2);
+            }
             else
               $result['sanas']++;
           }
@@ -358,6 +375,9 @@ class SchemaController Extends BaseController {
     $this->registry->noanalizadas2 = $dcs2;
     $this->registry->count_analizadas = $count_analizadas;
 
+    $this->registry->list_cronicas = $list_cronicas;
+    $this->registry->list_infectadas = $list_infectadas;
+    $this->registry->list_curadas = $list_curadas;
     $this->render('result_compare');
 
   }
@@ -379,7 +399,7 @@ class SchemaController Extends BaseController {
           // si no tienen mc evaluarla
           if(!$dc1->hasMC() && !$dc2->hasMC()){
             if($dc1->rcs > $umbral && $dc2->rcs > $umbral)//si es cronica
-              $map[] = [$dc1, $dc2];
+              $map[] = array($dc1, $dc2);
           }
           break;
         }

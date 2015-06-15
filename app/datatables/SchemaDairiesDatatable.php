@@ -57,21 +57,21 @@ class SchemaDairiesDatatable Extends Datatable{
     if(!empty($this->data)){
         foreach ($this->data as $value) {
           $dc = new DairyControl($value);
-          $res[]=['id' => $value->id,
-                  'caravana' => $dc->cow()->caravana,
-                  'nop' => ($value->nop == 1)? 'Vaquillona': 'Vaca',
-                  'dl' => $value->dl,
-                  'date_dl' => DateHelper::db_to_ar($value->date_dl),
-                  'rcs' => $value->rcs,
-                  'mc' => ($dc->hasMC()) ? 'Si' : 'No',
-                  'liters_milk' => $value->liters_milk,
-                  'perdida' => $value->perdida,
-                  'dml' => $value->dml,
-                  // 'actions' => $this->buildLinks($value),
-                 ];
+          $res[]= array('id' => $value->id,
+                    'caravana' => $dc->cow()->caravana,
+                    'nop' => ($value->nop == 1)? 'Vaquillona': 'Vaca',
+                    'dl' => $value->dl,
+                    'date_dl' => DateHelper::db_to_ar($value->date_dl),
+                    'rcs' => $value->rcs,
+                    'mc' => ($dc->hasMC()) ? 'Si' : 'No',
+                    'liters_milk' => $value->liters_milk,
+                    'perdida' => $value->perdida,
+                    'dml' => $value->dml,
+                    // 'actions' => $this->buildLinks($value),
+                   );
         }
     }
-    return  json_encode(array_merge($this->infoDataTable,["data" => $res]));
+    return  json_encode(array_merge($this->infoDataTable, array("data" => $res)));
   }
 
 

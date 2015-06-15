@@ -11,7 +11,14 @@ class CowController Extends BaseController {
   }
 
   public function index() {
-     // $this->render('index'); 
+    $navbar_dairy = Security::current_dairy();
+    if($this->ctrl->getValue('dairy_id')){
+      $this->registry->dairy = Dairy::find($this->ctrl->getValue('dairy_id'));
+      Security::set_dairy($this->registry->dairy);
+    }
+    elseif ($navbar_dairy != null)
+      $this->registry->dairy = $navbar_dairy;
+    $this->render('index'); 
   }
 
   public function index_json() {
@@ -173,8 +180,8 @@ class CowController Extends BaseController {
     $caravana = $this->getParameters('q');
     $schema = Schema::find($this->getParameters('schema_id'));
     $dairy_id = $schema->dairy_id;
-    $result = Cow::where(["conditions" => ["dairy_id = ? and caravana like '%". $caravana."%' and 
-      id not in (SELECT cow_id from ".Dairycontrol::$_table_name." WHERE schema_id = ?)", $dairy_id, $schema->id]]);
+    $result = Cow::where(array("conditions" => array("dairy_id = ? and caravana like '%". $caravana."%' and 
+      id not in (SELECT cow_id from ".Dairycontrol::$_table_name." WHERE schema_id = ?)", $dairy_id, $schema->id)));
     $obj_data = array();
     foreach ($result as $key => $value) {
       $obj_data[]=$this->forTokenInput($value);
@@ -188,7 +195,8 @@ class CowController Extends BaseController {
 
   private function loadDairy(){
     //primero busca en el post, si no esta en el get
-    $dairy_id = $this->getData('cow')['dairy_id'];
+    $cow = $this->getData('cow');
+    $dairy_id = $cow['dairy_id'];
     if ($dairy_id == null)
       $dairy_id = $this->getParameters('dairy_id');
 
@@ -197,7 +205,7 @@ class CowController Extends BaseController {
   }
 
   public function canExecute($action, $user){
-    return $user != NULL;
+    return $user != null && (Security::is_dairy($user) || $user->is_veterinary());
   }
 }
 ?>

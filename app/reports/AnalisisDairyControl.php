@@ -7,6 +7,7 @@ class AnalisisDairyControl{
   private $schema;
   function __construct($schema){
     $this->schema = $schema;
+    PHPExcel_Settings::setZipClass(PHPExcel_Settings::PCLZIP);
     // Create new PHPExcel object
     $this->objPHPExcel = new PHPExcel();
     $this->author();

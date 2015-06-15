@@ -26,7 +26,7 @@
           <div class="form-group">
             <label class="control-label col-sm-6" for="cow_id">Caravana:</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" id="cow_id" name="dairycontrol[cow_id]" placeholder="Caravana" data-populate="<?php echo $select_cow; ?>" data-source="<?php echo Ctrl::getUrl(['control' => 'cow', 'action' => '_not_in_control_json', 'params'=>['schema_id'=>$schema->id]]);?>">
+              <input type="text" class="form-control" id="cow_id" name="dairycontrol[cow_id]" placeholder="Caravana" data-populate="<?php echo $select_cow; ?>" data-source="<?php echo Ctrl::getUrl(array('control' => 'cow', 'action' => '_not_in_control_json', 'params'=>array('schema_id'=>$schema->id)));?>">
             </div>
           </div>
           <div class="form-group">

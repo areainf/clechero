@@ -46,7 +46,8 @@ class VeterinaryController Extends BaseController {
   }
 
   public function create(){
-      $params = $this->getData()['veterinary'];
+    $data = $this->getData();
+      $params = $data['veterinary'];
       $user = Security::current_user();
       $params['created_by'] = $user->id;
       $veterinary = new Veterinary($params);
@@ -76,7 +77,8 @@ class VeterinaryController Extends BaseController {
       }
   }
   public function update(){
-      $params = $this->getData()['veterinary'];
+    $data = $this->getData();
+      $params = $data['veterinary'];
       $veterinary = Veterinary::find($params['id']);
       if($veterinary){
           if ($veterinary->is_valid($params) && $veterinary->update_attributes($params)){

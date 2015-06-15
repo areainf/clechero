@@ -10,7 +10,7 @@
       <th width="30%">Descripción</th>
       <th class="required"  width="15%">Precio por vaca</th>
       <th class="required"  width="10%">Días</th>
-      <th class="required"  width="20%">Applicado a</th>
+      <th class="required"  width="20%">Aplicado a</th>
     </tr>
   </thead>
   <tbody>

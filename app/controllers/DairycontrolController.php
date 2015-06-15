@@ -138,7 +138,8 @@ class DairycontrolController Extends BaseController {
   // }
   private function loadSchema(){
     //primero busca en el post, si no esta en el get
-    $schema_id = $this->getData('dairycontrol')['schema_id'];
+    $data = $this->getData('dairycontrol');
+    $schema_id = $data['schema_id'];
     if ($schema_id == null)
       $schema_id = $this->getParameters('schema_id');
     if ($schema_id != null){

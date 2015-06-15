@@ -48,7 +48,8 @@ class DairyController Extends BaseController {
 
 
   public function create(){
-      $params = $this->getData()['dairy'];
+    $data = $this->getData();
+      $params = $data['dairy'];
       $user = Security::current_user();
       $person = $user->person();
       if (Security::is_dairy()){
@@ -82,7 +83,7 @@ class DairyController Extends BaseController {
           $this->registry->veterinarians = $user->veterinarians();
           $this->render('_form_own');
         }
-        elseif($dairy->veterinary_id == $user->id){
+        elseif($user->isVeterinary($dairy)){
           $this->registry->owners = $user->owners();
           $this->render('_form_own');
         }
@@ -101,7 +102,8 @@ class DairyController Extends BaseController {
       }
   }
   public function update(){
-      $params = $this->getData()['dairy'];
+    $data = $this->getData();
+      $params = $data['dairy'];
       $dairy = Dairy::find($params['id']);
       if($dairy){
           if ($dairy->is_valid($params) && $dairy->update_attributes($params)){
@@ -145,7 +147,7 @@ class DairyController Extends BaseController {
     else{
       Security::destroy_dairy();
     }
-    echo json_encode([]);
+    echo json_encode(array());
   }
 
   public function getSchemasJson(){
@@ -157,7 +159,7 @@ class DairyController Extends BaseController {
   private function json_dairy_schema($dairy){
     $schemas = $dairy->schemas();
     if( !$schemas || count($schemas) == 0 )
-      return [];
+      return array();
     $result = array();
     foreach ($schemas as $schema) {
       $sch_attr = $schema->attr_to_json();

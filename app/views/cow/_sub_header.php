@@ -20,14 +20,9 @@
     <div class="col-md-4">        
        <ul class="list-nav list-nav-right">
           <?php 
-            $url_add = Ctrl::getUrl(['control' => 'cow', 'action' => 'add', 'params'=>['dairy_id'=>$dairy->id]]);
-            $url_index = Ctrl::getUrl(['control' => 'cow', 'action' => 'index', 'params'=>['dairy_id'=>$dairy->id]]);
-          if($this->getAction()=='index'){ 
-          ?>  
-          <li><a href="<?php echo $url_add; ?>" class="btn btn-info btn-xs">Nuevo</a></li>
-          <?php
-            }
-            else{ 
+            $url_add = Ctrl::getUrl(array('control' => 'cow', 'action' => 'add', 'params'=>array('dairy_id'=>$dairy->id)));
+            $url_index = Ctrl::getUrl(array('control' => 'cow', 'action' => 'index', 'params'=>array('dairy_id'=>$dairy->id)));
+            if($this->getAction() != 'index'){ 
           ?>  
           <li><a href="<?php echo $url_index ?>" class="btn btn-info btn-xs">Listado</a></li>
           <?php  } ?>  

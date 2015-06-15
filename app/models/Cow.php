@@ -25,7 +25,7 @@ class Cow extends Model{
     public static function findOrCreate($caravana, $dairy_id){
         $obj =  self::first(array('conditions' => array('caravana =? and dairy_id = ?', $caravana, $dairy_id)));
         if(!$obj){
-            $obj = new Cow(['caravana' => $caravana, 'dairy_id'=> $dairy_id]);
+            $obj = new Cow(array('caravana' => $caravana, 'dairy_id'=> $dairy_id));
             $obj->save();
         }
         return $obj;

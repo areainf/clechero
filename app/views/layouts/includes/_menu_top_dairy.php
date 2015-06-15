@@ -16,6 +16,7 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+          <li><a class="navbar-brand" href="<?php echo URL_SITE;?>"><span class="glyphicon glyphicon-th-large"></span>Inicio</a></li>
           <?php 
             if (Security::is_dairy()) {
           ?>
@@ -32,7 +33,7 @@
           <li><a href="<?php echo $this->getUrlFor('schema') ?>">Datos</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li>
+           <li>
             <?php
                 $curr_d = Security::current_dairy();
                 if ($curr_d)
@@ -40,14 +41,17 @@
                 else
                   $dairy_id=0;
             ?>
-            <select class="form-control" id="navbar_select_dairies" data-update="dairy/select">
+            <select class="input-medium" id="navbar_select_dairies" data-update="dairy/select" style="margin-top: 17px;">
               <option value=""></option>
                 <?php echo FormHelper::options_for_collection(Security::current_user()->dairies(), 'id', 'fullname', $dairy_id); ?>
             </select>
           </li>
-          <li><a href="<?php echo $this->getUrlFor(['profile', 'index']) ?>">Perfil</a></li>
-          <li class="active"><a href="<?php echo $this->getUrlFor(['session', 'logout']) ?>">Salir <span class="sr-only">(current)</span> <?php echo Security::current_user()->username; ?></a></li>
-        </ul>
+          <li><a href="public/doc/manual_AVACO.pptx">
+            <img src="public/images/icons/help-icon.png"  class="btn btn-success btn-xs">
+          </a></li>
+          <li><a href="<?php echo $this->getUrlFor(array('profile', 'index')) ?>">Perfil</a></li>
+          <li class="active"><a href="<?php echo $this->getUrlFor(array('session', 'logout')) ?>">Salir <span class="sr-only">(current)</span> <?php echo Security::current_user()->username; ?></a></li>
+         </ul>
       </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->
   </nav>

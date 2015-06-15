@@ -4,7 +4,7 @@ class User extends Model{
 
     function __construct($args = null){
         parent::__construct($args);
-        $this->valid_cols = array ('username', 'password',  'email', 'role', 'disable', 'person_id');
+        $this->valid_cols = array('username', 'password',  'email', 'role', 'disable', 'person_id');
     }
 
     public  function is_valid(){
@@ -28,12 +28,16 @@ class User extends Model{
     }
 
     public function dairies(){
-        if ($this->person_id == null) return [];
+        if ($this->person_id == null) return array();
         return Dairy::where(array("conditions"=>array('owner_id = ? or veterinary_id',$this->person_id,$this->person_id)));
     }
 
     public function isOwn($dairy){
         return $dairy->owner_id == $this->person_id;
+    }
+
+    public function isVeterinary($dairy){
+        return $dairy->veterinary_id == $this->person_id;
     }
 
     public function it_create_people($person){

@@ -55,16 +55,16 @@ class UserDatatable Extends Datatable{
       $person_name = "";
       if($person)
         $person_name = $person->fullname();
-      $res[]=['id' => $value->id,
-              'username' => $value->username,
-              'email' => $value->email,
-              'person' => $person_name,
-              'role' => Role::$roles[$user->role],
-              'disable' => $value->disable ? 'Si' :  'No',
-              'actions' => $this->buildLinks($value),
-             ];
+      $res[]= array('id' => $value->id,
+                'username' => $value->username,
+                'email' => $value->email,
+                'person' => $person_name,
+                'role' => Role::$roles[$user->role],
+                'disable' => $value->disable ? 'Si' :  'No',
+                'actions' => $this->buildLinks($value),
+             );
     }
-    return  json_encode(array_merge($this->infoDataTable,["data" => $res]));
+    return  json_encode(array_merge($this->infoDataTable, array("data" => $res)));
   }
 
   private function totalRecords(){

@@ -7,7 +7,7 @@ class DairyControl  extends Model{
     function __construct($args=null){
         parent::__construct($args);
         if($this->nop !='1') $this->nop = '2'; //default value for nop
-        $this->valid_cols = array ('nop', 'dl',  'rcs', 'mc', 'liters_milk', 'cow_id','schema_id', 'date_dl', 'perdida', 'dml');
+        $this->valid_cols = array('nop', 'dl',  'rcs', 'mc', 'liters_milk', 'cow_id','schema_id', 'date_dl', 'perdida', 'dml', 'baja', 'fecha_baja');
     }
 
     public  function is_valid(){
@@ -18,6 +18,8 @@ class DairyControl  extends Model{
             $this->validation->minInteger($this, 'rcs', 0);
         $this->validation->integer($this, 'liters_milk');
         $this->validation->date($this, 'date_dl');
+        $this->validation->date($this, 'fecha_baja');
+        $this->validation->presentIn($this, 'baja',array("",null, "seca", "muerta", "otro"));
         return $this->validation->is_valid;
     }
     public function cow(){
@@ -66,6 +68,10 @@ class DairyControl  extends Model{
 
     public function hasMC(){
         return $this->mc == 0;
+    }
+
+    public static function find_cow($cow_id, $schema_id){
+      return DairyControl::first(array('conditions' => array('cow_id = ? and schema_id = ?', $cow_id, $schema_id)));
     }
 }
 ?>

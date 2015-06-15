@@ -1,6 +1,6 @@
 <?php
 class I18n{
-  private static $attr =['first_name' => "Nombre", 
+  private static $attr = array('first_name' => "Nombre", 
                          'last_name'=> "Apellido", 
                          'date' => "Fecha", 
                          'dairy_id' => "Tambo",
@@ -9,7 +9,7 @@ class I18n{
                          'vacas' => "Vacas",
                          'vacas_mc' => "Vacas con MC",
                          'vacas_msc' => "Vacas con MSC",
-                         'vacas_sin_mc' => "Vacas sin MC"];
+                         'vacas_sin_mc' => "Vacas sin MC");
 
   /*
    * INPUT: String, claves separadas por coma
