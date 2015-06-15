@@ -37,7 +37,8 @@ class ReportCronicas{
     $sheet = $this->objPHPExcel->setActiveSheetIndex(0);
     $sheet->setTitle("Crónicas"); //establecer titulo de hoja
     
-    $sheet->mergeCells('A1:K1');
+    // $sheet->mergeCells('A1:K1');
+    $sheet->mergeCells('A1:L1');
     $sheet->mergeCells('A4:A5');
     $sheet->mergeCells('B4:F4');
     $sheet->mergeCells('G4:K4');
@@ -69,7 +70,8 @@ class ReportCronicas{
       ->setCellValue('H5','Lts. Leche')
       ->setCellValue('I5','Pérdida Diaria')
       ->setCellValue('J5','NOP')
-      ->setCellValue('K5','Fecha Parto');
+      ->setCellValue('K5','Fecha Parto')
+      ->setCellValue('L5','Estado');
       
     $index = 6;
     foreach ($this->map  as $dcs) {
@@ -85,7 +87,8 @@ class ReportCronicas{
       ->setCellValue('H'.$index, $dc2->liters_milk)
       ->setCellValue('I'.$index, $dc2->dml)
       ->setCellValue('J'.$index, $dc2->nop)
-      ->setCellValue('K'.$index, DateHelper::db_to_ar($dc2->date_dl));
+      ->setCellValue('K'.$index, DateHelper::db_to_ar($dc2->date_dl))
+      ->setCellValue('L'.$index, $this->textCompare($dc1, $dc2));
       $index++;
     }
 
@@ -109,7 +112,8 @@ class ReportCronicas{
     $sheet->setSharedStyle($titulo, "A1");
     $sheet->getRowDimension(1)->setRowHeight(30);
     //ancho automatico de las columnas
-    foreach(range('A','K') as $columnID) {
+    // foreach(range('A','K') as $columnID) {
+    foreach(range('A','L') as $columnID) {
         $sheet->getColumnDimension($columnID)->setAutoSize(true);
     }
 
@@ -131,7 +135,8 @@ class ReportCronicas{
         )
     ));
     
-    $sheet->setSharedStyle($subtitulo, "A4:K5");
+    // $sheet->setSharedStyle($subtitulo, "A4:K5");
+    $sheet->setSharedStyle($subtitulo, "A4:L5");
     //text bold
     $sheet->getStyle("A2:D2")->getFont()->setBold(true);
   }
@@ -141,5 +146,21 @@ class ReportCronicas{
     $objWriter->save($filepath);
   }
     
+  private function textCompare($dc1, $dc2){
+    $result = "";
+    if($dc1->rcs > $this->umbral){//si enferma 1 control
+      if($dc2->rcs > $this->umbral)//si cronica
+        $result = 'Crónica';
+      else
+        $result = 'Curada';
+    }
+    else{
+      if($dc2->rcs > $this->umbral)//si nueva inf
+        $result = 'Nueva Infección';
+      else
+        $result = 'Sana';
+    }
+    return $result;
+  }
 }
 ?>

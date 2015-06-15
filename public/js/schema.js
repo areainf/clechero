@@ -238,4 +238,15 @@ $( document ).ready(function() {
         }
 
     }
+    if ($("#schema-result_compare").length > 0){
+      $(".modal-show-cronicas").on("mouseover", function(){
+        $("#id-modal-cronicas").modal("show");
+      });
+      $(".modal-show-infectadas").on("mouseover", function(){
+        $("#id-modal-infectadas").modal("show");
+      });
+      $(".modal-show-curadas").on("mouseover", function(){
+        $("#id-modal-curadas").modal("show");
+      });
+    }
 });

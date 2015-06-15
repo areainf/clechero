@@ -311,6 +311,10 @@ class SchemaController Extends BaseController {
     $dcs2 =  $schema2->dairy_controls();
     $result = array('sanas' => 0, 'cronicas' => 0, 'nuevas_inf' => 0, 'curadas' => 0,
                     'noanalizadas1' => 0 , 'noanalizadas2' => 0);
+    $list_cronicas = array();
+    $list_infectadas = array();
+    $list_curadas = array();
+
     $map = array();
     $noanalizadas1 = array();
     $count_analizadas = 0;
@@ -335,14 +339,20 @@ class SchemaController Extends BaseController {
         if(!$dc1->hasMC() && !$dc2->hasMC()){
           $count_analizadas++;
           if($dc1->rcs > $umbral){//si enferma 1 control
-            if($dc2->rcs > $umbral)//si cronica
+            if($dc2->rcs > $umbral){//si cronica
               $result['cronicas']++;
-            else
+              $list_cronicas[] = array($dc1, $dc2);
+            }
+            else{
               $result['curadas']++;
+              $list_curadas[] = array($dc1, $dc2);
+            }
           }
           else{
-            if($dc2->rcs > $umbral)//si nueva inf
+            if($dc2->rcs > $umbral){//si nueva inf
               $result['nuevas_inf']++;
+              $list_infectadas[] = array($dc1, $dc2);
+            }
             else
               $result['sanas']++;
           }
@@ -365,6 +375,9 @@ class SchemaController Extends BaseController {
     $this->registry->noanalizadas2 = $dcs2;
     $this->registry->count_analizadas = $count_analizadas;
 
+    $this->registry->list_cronicas = $list_cronicas;
+    $this->registry->list_infectadas = $list_infectadas;
+    $this->registry->list_curadas = $list_curadas;
     $this->render('result_compare');
 
   }

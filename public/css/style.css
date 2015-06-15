@@ -95,6 +95,43 @@ tr.tr-report th{
   margin: 0px;
   padding: 0px;
 }
+.credits{
+  /*background-image: url('../images/bg-home2.png');
+  background-position: center center;  
+  background-repeat: no-repeat;*/
+  background: rgba(255, 255, 255, 0.6) none repeat scroll 0 ;
+  margin-top: 40px;
+
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+}
+.credits ul{
+  list-style-type: none;
+  font-size: 12pt;
+  font-weight: bold;
+}
+.credits .login_text1{
+  font-size: 12pt;
+  font-weight: bold;
+  text-decoration: underline;
+  padding-left: 12px;
+}
+.credits .login_text2{
+  font-size: 12pt;
+  font-weight: bold;
+  text-decoration: underline;    
+  padding-left: 12px;
+}
+.credits .login_text3{
+  color: #330033;
+  padding-left: 12px;
+
+
+}
+
+.mouse-hand{
+  cursor: context-menu;
+}
 
 /*ESTILO PARA LOS BOX DE LA PAGINA PRINCIPAL*/
 /*.box-owner{

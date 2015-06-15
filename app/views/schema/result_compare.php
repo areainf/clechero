@@ -1,3 +1,4 @@
+<div id="schema-result_compare">
 <h3>Tambo <small><?php echo $schema1->dairy()->name; ?></small></h3>
 <!-- INICIO MOSTRAR ESQUEMAS DE CONTROL -->
 <div class="row">
@@ -71,15 +72,27 @@
         Número de Vacas que siguen estando sanas
       </li>
       <li class="list-group-item">
-        <span class="badge"><?php echo $comparacion['nuevas_inf']; ?></span>
+        <span class="badge">
+          <span class="modal-show-infectadas mouse-hand">
+            <?php echo $comparacion['nuevas_inf']; ?>
+          </span>
+        </span>
         Número de Vacas con Nueva Infección
       </li>
       <li class="list-group-item">
-        <span class="badge"><?php echo $comparacion['curadas']; ?></span>
+        <span class="badge">
+          <span class="modal-show-curadas mouse-hand">
+            <?php echo $comparacion['curadas']; ?>
+          </span>
+        </span>
         Número de Vacas que se han curado
       </li>
       <li class="list-group-item">
-        <span class="badge"><?php echo $comparacion['cronicas']; ?></span>
+        <span class="badge">
+          <span class="modal-show-cronicas mouse-hand">
+            <?php echo $comparacion['cronicas']; ?>
+          </span>
+        </span>
         Número de Vacas que continúan enfermas
       </li>
     </ul>
@@ -261,3 +274,148 @@
 </table>
 
 <!-- FIN MOSTRAR CONTROLES POR VACA -->
+<!-- INICIO MODAL CRONICAS -->
+<div id="id-modal-cronicas" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Listado de Crónicas</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Indice</th>
+              <th>Número</th>
+              <th colspan="2">NOP</th>
+              <th colspan="2">DEL</th>
+              <th colspan="2">Producción(Litros)</th>        
+            </tr>
+          </thead>
+          <tbody>
+            <?php 
+              $i=0;
+              foreach ($list_cronicas as $array_dc) {
+                  $i++;
+                  $dc1 = $array_dc[0];
+                  $dc2 = $array_dc[1];
+            ?>
+            <tr>
+              <td><?php echo $i ;?></td>
+              <td><?php echo $dc1->cow()->caravana ;?></td>
+              <td><?php echo $dc1->nop ;?></td>
+              <td><?php echo $dc2->nop ;?></td>
+              <td><?php echo $dc1->dl ;?></td>
+              <td><?php echo $dc2->dl ;?></td>
+              <td><?php echo $dc1->liters_milk ;?></td>
+              <td><?php echo $dc2->liters_milk ;?></td>
+            </tr>
+            <?php 
+              }// fin foreach cronicas
+            ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FIN MODAL CRONICAS -->
+
+<!-- INICIO MODAL INFECTADAS -->
+<div id="id-modal-infectadas" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Listado de Nuevas Infecciones</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Indice</th>
+              <th>Número</th>
+              <th colspan="2">NOP</th>
+              <th colspan="2">DEL</th>
+              <th colspan="2">Producción(Litros)</th>        
+            </tr>
+          </thead>
+          <tbody>
+            <?php 
+              $i=0;
+              foreach ($list_infectadas as $array_dc) {
+                  $i++;
+                  $dc1 = $array_dc[0];
+                  $dc2 = $array_dc[1];
+            ?>
+            <tr>
+              <td><?php echo $i ;?></td>
+              <td><?php echo $dc1->cow()->caravana ;?></td>
+              <td><?php echo $dc1->nop ;?></td>
+              <td><?php echo $dc2->nop ;?></td>
+              <td><?php echo $dc1->dl ;?></td>
+              <td><?php echo $dc2->dl ;?></td>
+              <td><?php echo $dc1->liters_milk ;?></td>
+              <td><?php echo $dc2->liters_milk ;?></td>
+            </tr>
+            <?php 
+              }// fin foreach infectadas
+            ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FIN MODAL INFECTADAS -->
+
+<!-- INICIO MODAL CURADAS -->
+<div id="id-modal-curadas" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Listado de Curadas</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Indice</th>
+              <th>Número</th>
+              <th colspan="2">NOP</th>
+              <th colspan="2">DEL</th>
+              <th colspan="2">Producción(Litros)</th>        
+            </tr>
+          </thead>
+          <tbody>
+            <?php 
+              $i=0;
+              foreach ($list_curadas as $array_dc) {
+                  $i++;
+                  $dc1 = $array_dc[0];
+                  $dc2 = $array_dc[1];
+            ?>
+            <tr>
+              <td><?php echo $i ;?></td>
+              <td><?php echo $dc1->cow()->caravana ;?></td>
+              <td><?php echo $dc1->nop ;?></td>
+              <td><?php echo $dc2->nop ;?></td>
+              <td><?php echo $dc1->dl ;?></td>
+              <td><?php echo $dc2->dl ;?></td>
+              <td><?php echo $dc1->liters_milk ;?></td>
+              <td><?php echo $dc2->liters_milk ;?></td>
+            </tr>
+            <?php 
+              }// fin foreach curadas
+            ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FIN MODAL CURADAS -->
+
+</div>
