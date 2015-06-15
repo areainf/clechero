@@ -39,6 +39,7 @@ ul.list-nav li{
   background: rgb(0, 0, 0);
 background: rgba(0, 0, 0, 0.6);
 color: #fff;
+height: 280px;
 }
 
 /*Para dejar espacio*/
@@ -101,23 +102,20 @@ tr.tr-report th{
   background-repeat: no-repeat;*/
   background: rgba(255, 255, 255, 0.6) none repeat scroll 0 ;
   margin-top: 40px;
-
+  font-size: 11pt;
   border-radius: 10px 10px 10px 10px;
   padding: 10px;
 }
 .credits ul{
   list-style-type: none;
-  font-size: 12pt;
   font-weight: bold;
 }
 .credits .login_text1{
-  font-size: 12pt;
   font-weight: bold;
   text-decoration: underline;
   padding-left: 12px;
 }
 .credits .login_text2{
-  font-size: 12pt;
   font-weight: bold;
   text-decoration: underline;    
   padding-left: 12px;
@@ -125,8 +123,6 @@ tr.tr-report th{
 .credits .login_text3{
   color: #330033;
   padding-left: 12px;
-
-
 }
 
 .mouse-hand{

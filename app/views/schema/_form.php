@@ -300,18 +300,19 @@
                         <th>rcs</th>
                         <th>nop</th>
                         <th>mc</th>
+                        <th>del o fecha_parto</th>
                       </tr>
                       <tr>
                         <td>Número de Caravana</td>
                         <td>Recuento de células somáticas</td>
                         <td>Número ordinal de parto</td>
                         <td>0 si tiene Mastitis Clínia sino 1</td>
+                        <td>Días de lactancia o fecha última lactancia</td>
                       </tr>
                     </table>
                     <p class="help-block">Opcionales. 
                       <ul>
                         <li><strong>litros</strong>: producidos por la vaca</li>
-                        <li><strong>del o fecha_parto</strong>: días de lactancia o fecha última lactancia</li>
                         <li><strong>baja y fecha_baja</strong>: Motivo baja y fecha</li>
                       </ul>
                     </p>
