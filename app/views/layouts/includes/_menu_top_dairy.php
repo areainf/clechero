@@ -32,6 +32,10 @@
           <li><a href="<?php echo $this->getUrlFor('dairy') ?>">Tambos</a></li>
           <li><a href="<?php echo $this->getUrlFor('schema') ?>">Datos</a></li>
         </ul>
+        <ul class="nav navbar-nav">
+          <li><img src="public/images/build.gif" border="0"></li>
+        </ul>
+        <p class="navbar-text"><span class="build">Errores y Sugerencias</span> info@avaco.com.ar</p>
         <ul class="nav navbar-nav navbar-right">
            <li>
             <?php

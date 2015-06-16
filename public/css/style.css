@@ -129,6 +129,10 @@ tr.tr-report th{
   cursor: context-menu;
 }
 
+.build{
+  color: #FF7511 !important;
+  font-weight: bold;
+}
 /*ESTILO PARA LOS BOX DE LA PAGINA PRINCIPAL*/
 /*.box-owner{
   -webkit-box-shadow: 2px 5px 20px 1px #ccc;

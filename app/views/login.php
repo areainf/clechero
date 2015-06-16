@@ -1,6 +1,13 @@
 <div class="loginpage">
-<h1>AVACO</h1>
-<p class="slogan">Una ayuda para el Asesor</p>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <h1>AVACO</h1>
+      <p class="slogan">Una ayuda para el Asesor</p>
+    </div>
+    <div class="col-md-4">
+      <img src="/public/images/icons/contacto.png"> info@avaco.com.ar
+    </div>
+  </div>
 <div class="row">
   <div class="col-md-5 col-md-offset-1">
     <div class="credits"><br>

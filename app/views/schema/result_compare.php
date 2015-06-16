@@ -150,7 +150,7 @@
      <input type="hidden" name="schema_1_id" value="<?php echo $schema1->id;?>">
      <input type="hidden" name="schema_2_id" value="<?php echo $schema2->id;?>">
      <input type="hidden" name="umbral" value="<?php echo $umbral;?>">
-     <input type="submit" class="btn btn-success" value="Descargar listado de Crónicas">
+     <input type="submit" class="btn btn-success" value="Descargar listado en Excel">
   </form>
 </div>
 <table id="table-dairycontrol" class="table table-bordered">

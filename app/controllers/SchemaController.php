@@ -398,7 +398,7 @@ class SchemaController Extends BaseController {
           //encontro la vaca en el segundo control
           // si no tienen mc evaluarla
           if(!$dc1->hasMC() && !$dc2->hasMC()){
-            if($dc1->rcs > $umbral && $dc2->rcs > $umbral)//si es cronica
+          //  if($dc1->rcs > $umbral && $dc2->rcs > $umbral)//si es cronica
               $map[] = array($dc1, $dc2);
           }
           break;
