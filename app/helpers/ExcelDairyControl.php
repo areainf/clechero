@@ -133,7 +133,7 @@ class ExcelDairyControl{
         $new_row['liters_milk'] = (array_key_exists($key, $row)) ? $this->replaceComaPunto($row[$key]) : '';
       }
       elseif($key == 'del'){
-        $new_row['dl'] = $row['del'];
+        $new_row['dl'] = (array_key_exists($key, $row)) ? $row[$key] : '';
       }
       elseif($key == 'fecha_evento'){
         $new_row['fecha_baja'] = (array_key_exists($key, $row)) ? DateHelper::ar_to_db($row[$key]) : '';

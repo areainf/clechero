@@ -101,7 +101,7 @@ class CsvDairyControl{
         $new_row['fecha_baja'] = (array_key_exists($key, $row)) ? DateHelper::ar_to_db($row[$key]) : '';
       }
       elseif($key == 'del'){
-        $new_row['dl'] = $row['del'];
+        $new_row['dl'] = (array_key_exists($key, $row)) ? $row[$key] : '';
       }
       elseif($key == 'evento'){
         $new_row['baja'] = (array_key_exists($key, $row)) ? $row[$key] : '';
