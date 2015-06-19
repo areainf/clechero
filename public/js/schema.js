@@ -249,4 +249,11 @@ $( document ).ready(function() {
         $("#id-modal-curadas").modal("show");
       });
     }
+
+    /*SI ES ANALISIS*/
+    if($("#dairycontrol-analisis").length > 0){
+      $("#show-modal-mc").on("click", function(){
+        $("#id-modal-mc").modal("show");
+      });
+    }
 });

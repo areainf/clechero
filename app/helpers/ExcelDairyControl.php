@@ -12,7 +12,7 @@ class ExcelDairyControl{
   public $count_records_errors;
   public $count_mc;
   private $objPHPExcel;
-  private $valid_fields = array('numero', 'rcs', 'nop', 'del', 'mc', 'litros','fecha_parto', 'evento','fecha_evento');
+  private $valid_fields = array('numero', 'rcs', 'nop', 'del', 'mc', 'litros','fecha_parto', 'baja','fecha_baja');
   private $strict_fields = array('numero', 'rcs', 'nop', 'mc');
   private $headerKeyColumn = array();
 
@@ -135,10 +135,10 @@ class ExcelDairyControl{
       elseif($key == 'del'){
         $new_row['dl'] = $row['del'];
       }
-      elseif($key == 'fecha_evento'){
+      elseif($key == 'fecha_baja'){
         $new_row['fecha_baja'] = (array_key_exists($key, $row)) ? DateHelper::ar_to_db($row[$key]) : '';
       }
-      elseif($key == 'evento'){
+      elseif($key == 'baja'){
         $new_row['baja'] = (array_key_exists($key, $row)) ? $row[$key] : '';
       }
       else

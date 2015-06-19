@@ -313,7 +313,15 @@
                     <p class="help-block">Opcionales. 
                       <ul>
                         <li><strong>litros</strong>: producidos por la vaca</li>
-                        <li><strong>baja y fecha_baja</strong>: Motivo baja y fecha</li>
+                        <li>
+                          <strong>baja y fecha_baja</strong>: Motivo baja y fecha, los motivos pueden ser
+                          <ul>
+                            <li><?php echo DairyControl::BAJA_SECADO ?></li>
+                            <li><?php echo DairyControl::BAJA_MUERTE ?></li>
+                            <li><?php echo DairyControl::BAJA_DESCARTE ?></li>
+                            <li><?php echo DairyControl::BAJA_OTRO ?>: otros tratamientos (por otras enfermedades)</li>
+                          </ul>
+                        </li>
                       </ul>
                     </p>
               </div>

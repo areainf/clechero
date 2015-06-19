@@ -3,6 +3,9 @@
   $url_report = Ctrl::getUrl(array('control'=>'dairycontrol', 'action'=>'analisis_report', 'params'=>array('schema_id'=>$schema->id)));
   $analisis = $schema->analisis();
 ?>
+<?php
+  include "_show_mc.php";
+?>
 <div id="dairycontrol-analisis">
 <input type="hidden" id="url_if_change_dairy" value="dairycontrol/analisis">
 <div class="panel panel-default">
@@ -37,7 +40,7 @@
     <tr>
       <td><p class="resaltado-1"><?php echo $schema->dairy()->name; ?></p></td>
       <td><?php echo $schema->countCow() . ' / ' . $schema->in_ordenio;?></td>
-      <td><?php echo $schema->countCowMC();?></td>
+      <td><button id="show-modal-mc" class="btn btn-default"><?php echo $schema->countCowMC();?></button></td>
       <td>
         <p class="resaltado-1"><?php echo $schema->liters_milk; ?> Lts.</p>
       </td>

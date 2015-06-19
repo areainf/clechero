@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once HELPERS_PATH.'Calculos.php';
 
 class Schema extends Model{
@@ -53,7 +53,7 @@ class Schema extends Model{
     }
 
     public function analisis(){
-      $analisis =  AnalisisSchema::first(array('conditions' => 
+      $analisis =  AnalisisSchema::first(array('conditions' =>
             array("schema_id = ?", $this->id)));
       if(!$analisis)
         $analisis = $this->createAnalisis();
@@ -61,17 +61,17 @@ class Schema extends Model{
     }
 
     public function remove_analisis(){
-        AnalisisSchema::remove(array('conditions' => 
+        AnalisisSchema::remove(array('conditions' =>
             array("schema_id = ?", $this->id)));
     }
 
     public function remove_controls(){
-        DairyControl::remove(array('conditions' => 
+        DairyControl::remove(array('conditions' =>
             array("schema_id = ?", $this->id)));
     }
 
     public function remove_erogaciones(){
-        Erogacion::remove(array('conditions' => 
+        Erogacion::remove(array('conditions' =>
             array("schema_id = ?", $this->id)));
     }
 
@@ -113,7 +113,7 @@ class Schema extends Model{
     public function erogaciones(){
         return Erogacion::where(array("conditions" =>array("schema_id = ? ", $this->id)));
     }
-    
+
     /*Cantidad de animales analizados*/
     public function countCow($force=false){
       if(empty($this->_cant_cow) || $force)
@@ -124,8 +124,12 @@ class Schema extends Model{
     /*Cantidad de animales analizados con MC*/
     public function countCowMC($force=false){
       if(empty($this->_cant_cow_mc) || $force)
-        $this->_cant_cow_mc = DairyControl::count(array('conditions' => array('schema_id = ? and mc = 0',$this->id)));
+        $this->_cant_cow_mc = DairyControl::count(array('conditions' => array('schema_id = ? and mc = 0 and (baja is null || (baja != ? and baja != ?))',$this->id, DairyControl::BAJA_MUERTE, DairyControl::BAJA_DESCARTE)));
       return $this->_cant_cow_mc;
+    }
+    /*Animales analizados con MC*/
+    public function cowMC(){
+      return DairyControl::where(array('conditions' => array('schema_id = ? and mc = 0 and (baja is null || (baja != ? and baja != ?))',$this->id, DairyControl::BAJA_MUERTE, DairyControl::BAJA_DESCARTE)));
     }
 
     /*Cantidad de animales analizados sin MC*/
@@ -141,7 +145,7 @@ class Schema extends Model{
         $this->_cant_cow_msc = DairyControl::count(array('conditions' => array('schema_id = ? and rcs > ?',$this->id, $umbral)));
       return $this->_cant_cow_msc;
     }
-    
+
     /*Total de perdidas diarias por RCS*/
   /*  public function calculoPerdidaDiariaRCS(){
       global $_SQL;
@@ -149,7 +153,7 @@ class Schema extends Model{
       $res_sum = $_SQL->get_row($query);
       if ($_SQL->last_error != null) {
         $this->fatal_error($_SQL->last_error);
-        return NULL;            
+        return NULL;
       }
       return floatval($res_sum->suma);
     }*/
@@ -160,7 +164,7 @@ class Schema extends Model{
       $res_sum = $_SQL->get_row($query);
       if ($_SQL->last_error != null) {
         $this->fatal_error($_SQL->last_error);
-        return NULL;            
+        return NULL;
       }
       return floatval($res_sum->suma);
     }*/
@@ -172,9 +176,9 @@ class Schema extends Model{
       $res_sum = $_SQL->get_row($query);
       if ($_SQL->last_error != null) {
         $this->fatal_error($_SQL->last_error);
-        return NULL;            
+        return NULL;
       }
-      return floatval($res_sum->suma); 
+      return floatval($res_sum->suma);
     }
     /*2 Perdida por MC. sumatoria de `perdida' si mc = 0*/
     public function calculoPerdidaPorMC(){
@@ -183,13 +187,13 @@ class Schema extends Model{
       $res_sum = $_SQL->get_row($query);
       if ($_SQL->last_error != null) {
         $this->fatal_error($_SQL->last_error);
-        return NULL;            
+        return NULL;
       }
-      return floatval($res_sum->suma); 
+      return floatval($res_sum->suma);
     }
 
     /*Costo del tratamiento por mastitis clinica
-      Suma de antibioticos * cantidad de vacas 
+      Suma de antibioticos * cantidad de vacas
     */
     public function costo_tratamiento_mc(){
       //$cmc = $this->countCowMC();
@@ -242,7 +246,7 @@ class Schema extends Model{
       $count_cow_smc = $this->countCowSMC();
       $count_cow_msc = $this->countCowMSC(200);
       $costo_tratamiento_mc = $this->costo_tratamiento_mc() * $count_cow_mc;
-      $costo_tratamiento_secado = $this->costo_tratamiento_secado() ;//* $count_cow_mc;    
+      $costo_tratamiento_secado = $this->costo_tratamiento_secado() ;//* $count_cow_mc;
       $costo_mantenimiento_maquina = $this->costo_mantenimiento_maquina();
 
       $costo_extra_mc = $this->calculoExtraPorMC();
@@ -251,7 +255,7 @@ class Schema extends Model{
       $costo_extra_tambo = $this->calculoExtraPorTambo();
       $costo_extra_vaca = $this->calculoExtraPorVaca();
 
-      $total_erogacion = $desinf_pre_o + $desinf_pos_o + 
+      $total_erogacion = $desinf_pre_o + $desinf_pos_o +
                          $costo_tratamiento_mc +
                          $costo_tratamiento_secado +
                          $costo_mantenimiento_maquina +
@@ -356,25 +360,25 @@ class Schema extends Model{
       if ($_SQL->last_error != null) {
         $this->validation->add($_SQL->last_error);
         $_SQL->query("ROLLBACK");
-        return NULL;            
+        return NULL;
       }
       $_SQL->query("DELETE FROM ".AnalisisSchema::$_table_name." WHERE schema_id = ".$this->id);
       if ($_SQL->last_error != null) {
         $this->validation->add($_SQL->last_error);
         $_SQL->query("ROLLBACK");
-        return NULL;            
+        return NULL;
       }
       $_SQL->query("DELETE FROM ".DairyControl::$_table_name." WHERE schema_id = ".$this->id);
       if ($_SQL->last_error != null) {
         $this->validation->add($_SQL->last_error);
         $_SQL->query("ROLLBACK");
-        return NULL;            
+        return NULL;
       }
       $res = $_SQL->query("DELETE FROM ".static::$_table_name." WHERE id = ".$this->id);
       if ($_SQL->last_error != null) {
         $this->validation->add($_SQL->last_error);
         $_SQL->query("ROLLBACK");
-        return NULL;            
+        return NULL;
       }
       $_SQL->query("COMMIT");
       return $res;

@@ -100,6 +100,8 @@
         <th>RCS<br>(cél/mL x1000)</th>
         <th>MC</th>
         <th>Producción<br>(Litros)</th>
+        <th>Baja</th>
+        <th>Fecha Baja</th>
         <th>Coeficiente</th>
         <th>Pérdida Diaria</th>
         <!-- <th>Acciones</th> -->

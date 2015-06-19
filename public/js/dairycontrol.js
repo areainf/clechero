@@ -17,6 +17,8 @@ $( document ).ready(function() {
             { "data": "rcs" },
             { "data": "mc" },
             { "data": "liters_milk" },
+            { "data": "baja" },
+            { "data": "fecha_baja" },
             { "data": "perdida" },
             { "data": "dml" },
             // { "data": "actions", "bSortable" : false, 'width': '10px' },

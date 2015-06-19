@@ -19,6 +19,9 @@ class Model{
       foreach ($args as $key => $value)
         $this->__set($key, $value);
   }
+
+  protected function before_create(){}
+
   /* cuales son los campos en la db que definen la primary key*/
   static function primary_keys(){
     return array('id');
@@ -63,6 +66,7 @@ class Model{
   }
 
   function _create(){
+    $this->before_create();
     $table_name = static::getTableName();
     $array_info = $this->columns();
     if(isset($this->_type))

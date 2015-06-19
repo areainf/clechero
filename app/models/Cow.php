@@ -5,7 +5,7 @@ class Cow extends Model{
 
     function __construct($args=null){
         parent::__construct($args);
-        $this->valid_cols = array ('caravana', 'dairy_id');
+        $this->valid_cols = array ('caravana', 'dairy_id', 'muerta', 'descarte', 'fecha_baja');
     }
 
     public  function is_valid($params=null){
@@ -33,6 +33,21 @@ class Cow extends Model{
 
     public function dairy(){
         return Dairy::find($this->dairy_id);
+    }
+
+    public function isMuerta(){
+        return $this->muerta == 1;
+    }
+    public function isDescarte(){
+        return $this->descarte == 1;
+    }
+    public function updateMuerta($bool_condition, $fecha_baja){
+        $value = $bool_condition ? 1 : 0;
+        $this->update_attributes(array('muerta'=> $value, 'fecha_baja' => $fecha_baja));
+    }
+    public function updateDescarte($bool_condition, $fecha_baja){
+        $value = $bool_condition ? 1 : 0;
+        $this->update_attributes(array('descarte'=> $value, 'fecha_baja' => $fecha_baja));
     }
 }
 ?>
